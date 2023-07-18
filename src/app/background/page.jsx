@@ -1,5 +1,7 @@
 import Image from "next/image"
 import BackgroundImage from "../../../public/asset/andrea-de-santis-n8ipsZZ5Pww-unsplash.jpg"
+import { AiFillCar } from "react-icons/ai"  
+
 const Background = () => {
     return (
         <div className="h-screen w-full bg-red-400  pt-0.5">
@@ -9,7 +11,8 @@ const Background = () => {
             />
             <div className="relative z-20
             ">
-                  <h5 className=" text-green-600 text-center mt-44">Hola bro</h5>
+                  <h5 className=" text-green-800 text-center mt-44">Hola bro</h5>
+                  <AiFillCar  className=" text-3xl text-primary"/>
 
             </div>
           
