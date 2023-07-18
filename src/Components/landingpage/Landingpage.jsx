@@ -85,7 +85,7 @@ const LandingPage = () => (
           Login
         </button>
       </Link>
-      <Link href="">
+      <Link href="/register">
         <button className="btn bg-secondary hover:bg-primary hover:text-black text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg m-2 text-lg transition-all duration-200">
           Registro
         </button>
