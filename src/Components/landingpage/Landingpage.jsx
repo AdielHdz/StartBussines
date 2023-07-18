@@ -80,12 +80,12 @@ const LandingPage = () => (
     </div>
 
     <div className="bottom-0 left-0 w-full flex justify-center items-center bg-primary p-4">
-      <Link href="/register">
+      <Link href="/logIn">
         <button className="btn bg-secondary hover:bg-primary hover:text-black text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg m-2 text-lg transition-all duration-200">
           Login
         </button>
       </Link>
-      <Link href="/logIn">
+      <Link href="/register">
         <button className="btn bg-secondary hover:bg-primary hover:text-black text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg m-2 text-lg transition-all duration-200">
           Registro
         </button>
