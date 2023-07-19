@@ -22,6 +22,7 @@ export const validateEmail = (email) => {
     return age >= 18;
   };
   
+  //cambiar esta
   //caracter especial 
   export const validatePassword = (password) => {
     // Validar que la contraseña contenga al menos una mayúscula, una minúscula y un número
