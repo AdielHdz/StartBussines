@@ -9,6 +9,7 @@ import {
   validatePassword,
 } from "./formValidations";
 import CustomButton from '../../Components/customButton/CustomButton';
+import Authentication from '../../Components/Authentication/Authentication';
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -219,6 +220,7 @@ const RegisterForm = () => {
             color="blue"
           />
         </form>
+        <Authentication />
       </div>
     </div>
   );
