@@ -29,6 +29,8 @@ const EmprendedorCard = () => {
     setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
+  //comentario
+
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
       prevIndex === 0 ? slides.length - 1 : prevIndex - 1
