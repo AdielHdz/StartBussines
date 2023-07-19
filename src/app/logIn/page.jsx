@@ -45,60 +45,54 @@ export default function LogIn() {
       <div
         className="relative z-20
             ">
-        <NavigationButtons currentPage="/logIn" />
-        <div className="flex justify-center items-center h-screen">
-          <div className=" bg-black bg-opacity-30 p-5 rounded border border-white  ">
-            <div className=" flex items-center justify-center">
-              <div className="container mx-8 my-20">
-                <h1 className="text-white text-center text-6xl mb-10">Logo</h1>
+        <div className=" p-5 mt-10 mb-10 flex flex-col justify-center items-center h-screen">
+          <NavigationButtons currentPage="/logIn" />
+          <form>
+            <div className="flex flex-col mt-9">
+              <label htmlFor="email" className="text-white ">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Type here..."
+                onChange={handleChange}
+                className={`bg-black bg-opacity-30 p-2 border ${
+                  error.email ? "border-red-500" : "border-white"
+                } mt-3  text-white`}
+              />
+              {error.email && <p className="text-red-500">{error.email}</p>}
+            </div>
+
+            <div className="flex flex-col mt-3">
+              <label htmlFor="password" className="text-white">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Type here..."
+                  onChange={handleChange}
+                  className="bg-black bg-opacity-30 p-2 border border-white  text-white "
+                />
+                <button
+                  type="button"
+                  onClick={handlePassword}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
+                  {showPassword ? (
+                    <AiFillEye className="w-6 h-6" />
+                  ) : (
+                    <AiFillEyeInvisible className="w-6 h-6" />
+                  )}
+                </button>
               </div>
             </div>
 
-            <form>
-              <div className="flex flex-col mt-3">
-                <label htmlFor="email" className="text-white">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  onChange={handleChange}
-                  className={`bg-black bg-opacity-30 p-2 border ${
-                    error.email ? "border-red-500" : "border-white"
-                  } mt-3  text-white`}
-                />
-                {error.email && <p className="text-red-500">{error.email}</p>}
-              </div>
+            <CustomButton text="Login" color="blue" />
 
-              <div className="flex flex-col mt-3">
-                <label htmlFor="password" className="text-white">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    onChange={handleChange}
-                    className="bg-black bg-opacity-30 p-2 border border-white  text-white "
-                  />
-                  <button
-                    type="button"
-                    onClick={handlePassword}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-                    {showPassword ? (
-                      <AiFillEye className="w-6 h-6" />
-                    ) : (
-                      <AiFillEyeInvisible className="w-6 h-6" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <CustomButton text="Login" color="blue" />
-
-              <Authentication />
-            </form>
-          </div>
+            <Authentication />
+          </form>
         </div>
       </div>
     </div>
