@@ -1,7 +1,7 @@
 import Link from "next/link";
 import "../../../src/app/globals.css";
-import InversionistaCard from "./Cards/InversionistaCard"; 
-import  EmprendedorCard from "./Cards/EmprendedorCard";
+import InversionistaCard from "./Cards/InversionistaCard";
+import EmprendedorCard from "./Cards/EmprendedorCard";
 const LandingPage = () => (
   <div
     className="h-screen w-screen bg-center"
@@ -28,7 +28,10 @@ const LandingPage = () => (
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
           nam animi dolore tempore ab aspernatur consectetur provident. Facere
           laudantium modi minima ratione quae, sed id. Iusto assumenda dolorem
-          magni veniam?
+          magni veniam? Lorem ipsum dolor sit, amet consectetur adipisicing
+          elit. Reiciendis, vitae quasi vel ut exercitationem sit inventore
+          laudantium ducimus voluptatem nulla quis repudiandae porro officiis
+          dolores, sed dolorem tenetur at? Illum.
         </p>
       </div>
       <EmprendedorCard />
