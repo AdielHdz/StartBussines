@@ -8,6 +8,8 @@ import {
   validateAge,
   validatePassword,
 } from "./formValidations";
+import CustomButton from '../../Components/customButton/CustomButton';
+import Authentication from '../../Components/Authentication/Authentication';
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -213,13 +215,12 @@ const RegisterForm = () => {
               <p className="text-red-500">{confirmPasswordError}</p>
             )}
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4"
-          >
-            Register
-          </button>
+          <CustomButton
+            text="Register"
+            color="blue"
+          />
         </form>
+        <Authentication />
       </div>
     </div>
   );
