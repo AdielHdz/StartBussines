@@ -42,7 +42,7 @@ export default function LogIn() {
         className="absolute h-full w-full object-cover"
       />
       <div
-        className="relative z-20
+        className="relative z-20 text-white
             ">
         <div className="flex justify-center items-center h-screen ">
           <div className="bg-black bg-opacity-30 p-5 rounded border border-white ">
