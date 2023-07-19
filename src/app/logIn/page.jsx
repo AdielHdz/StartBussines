@@ -62,7 +62,7 @@ export default function LogIn() {
           <div className="relative mb-6" data-te-input-wrapper-init>
             <input
               type="password"
-              className ={`peer block min-h-[auto] w-full rounded border-0 bg-slate-400 bg-opacity-50 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 ${
+              className={`peer block min-h-[auto] w-full rounded border-0 bg-slate-400 bg-opacity-50 px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 ${
                 form.password
                   ? "peer-data-[te-input-state-active]:translate-y-[-1.15rem] peer-data-[te-input-state-active]:scale-75"
                   : ""
