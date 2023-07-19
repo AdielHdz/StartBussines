@@ -1,8 +1,7 @@
-
 import React from "react";
 import Link from "next/link";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import './NavigationButtons.css';
+import "./NavigationButtons.css";
 const NavigationButtons = ({ currentPage }) => {
   const isSignUp = currentPage === "/register";
   const isSignIn = currentPage === "/logIn";
@@ -11,26 +10,28 @@ const NavigationButtons = ({ currentPage }) => {
     <div className="grid">
       <div>
         <Link href="/">
-          <AiOutlineArrowLeft size={34} />
+          <AiOutlineArrowLeft size={34} className="text-white" />
         </Link>
       </div>
       <div className="col-11" id="signUpcontene">
         <Link href="/register">
           <span
             className={`${
-              isSignUp ? "font-bold border-b-2 border-white text-white" : "font-normal"
-            } text-gray-300 hover:text-white hover:border-white py-2 px-2`}
-          >
+              isSignUp
+                ? "font-bold border-b-2 border-white text-white"
+                : "font-normal"
+            } text-gray-300 hover:text-white hover:border-white py-2 px-2`}>
             Sign Up
           </span>
         </Link>
-        <span> / </span>
+        <span className="text-white"> / </span>
         <Link href="/logIn">
           <span
-              className={`${
-                isSignIn ? "font-bold border-b-2 border-white text-gray-300" : "font-normal"
-              } text-gray-300 hover:text-white hover:border-white py-2 px-4`}
-          >
+            className={`${
+              isSignIn
+                ? "font-bold border-b-2 border-white text-gray-300"
+                : "font-normal"
+            } text-gray-300 hover:text-white hover:border-white py-2 px-4`}>
             Sign In
           </span>
         </Link>
