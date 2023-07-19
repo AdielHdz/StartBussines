@@ -8,6 +8,7 @@ import Authentication from "@/Components/Authentication/Authentication";
 import CustomButton from "@/Components/customButton/CustomButton";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import NavigationButtons from "@/Components/NavigationButtons/NavigationButtons";
 
 export default function LogIn() {
   const [form, setForm] = useState({
@@ -32,7 +33,7 @@ export default function LogIn() {
   };
 
   return (
-    <div className="h-screen w-full   pt-0.5">
+    <div className="h-screen w-full   pt-0.5 ">
       <div className=" absolute z-10 w-full h-full bg-black opacity-10"></div>
       <Image
         src={Background}
@@ -42,10 +43,11 @@ export default function LogIn() {
         className="absolute h-full w-full object-cover"
       />
       <div
-        className="relative z-20 text-white
+        className="relative z-20
             ">
-        <div className="flex justify-center items-center h-screen ">
-          <div className="bg-black bg-opacity-30 p-5 rounded border border-white ">
+        <NavigationButtons currentPage="/logIn" />
+        <div className="flex justify-center items-center h-screen">
+          <div className=" bg-black bg-opacity-30 p-5 rounded border border-white  ">
             <div className=" flex items-center justify-center">
               <div className="container mx-8 my-20">
                 <h1 className="text-white text-center text-6xl mb-10">Logo</h1>
