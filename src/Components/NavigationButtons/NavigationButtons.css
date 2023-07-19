@@ -1,0 +1,19 @@
+/* NavigationButtons.css */
+
+.grid {
+    display: grid; /* Cambia a display grid para organizar los elementos */
+    grid-template-columns: 34px auto; /* Define las columnas, la primera de 34px y el resto ocupará el espacio restante */
+    gap: 10px; /* Espacio entre los elementos */
+  }
+  
+  #signUpcontene {
+    display: flex; /* Utiliza flexbox para centrar verticalmente los elementos */
+    align-items: center; /* Centra los elementos verticalmente dentro de signUpcontene */
+    justify-content: center; /* Centra los elementos horizontalmente dentro de signUpcontene */
+    margin-top: 30px;
+    margin-bottom: -20px;
+    margin-left: -25px;
+    font-size: 20px;
+  }
+
+  
