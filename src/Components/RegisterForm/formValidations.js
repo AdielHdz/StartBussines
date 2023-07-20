@@ -1,3 +1,10 @@
+export const validateName = (name) => {
+  // Utiliza una expresión regular para validar el nombre
+  const nameRegex = /^[A-Za-z\s]+$/;
+  return nameRegex.test(name) && name !== "";
+}
+
+
 export const validateEmail = (email) => {
     // Utiliza una expresión regular para validar el formato del correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -8,7 +15,8 @@ export const validateEmail = (email) => {
   export const validateDate = (date) => {
     // Validar si la fecha es una fecha válida
     const dateObj = new Date(date);
-    return dateObj instanceof Date && !isNaN(dateObj);
+    const currentDate = new Date();
+    return dateObj instanceof Date && !isNaN(dateObj) && dateObj < currentDate;
   };
   
   export const validateAge = (date) => {
@@ -29,10 +37,19 @@ export const validateEmail = (email) => {
     const uppercaseRegex = /[A-Z]/;
     const lowercaseRegex = /[a-z]/;
     const numberRegex = /[0-9]/;
-    return (
-      uppercaseRegex.test(password) &&
-      lowercaseRegex.test(password) &&
-      numberRegex.test(password)
-    );
-  };
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    if (password.length < 6) {
+      return "Password must be at least 6 characters";
+  } else if (!uppercaseRegex.test(password)) {
+      return "Password must contain at least one uppercase letter";
+  } else if (!lowercaseRegex.test(password)) {
+      return "Password must contain at least one lowercase letter";
+  } else if (!numberRegex.test(password)) {
+      return "Password must contain at least one number";
+  } else if (!specialCharacterRegex.test(password)) {
+      return "Password must contain at least one special character";
+  }
+
+  return "";
+};
   
