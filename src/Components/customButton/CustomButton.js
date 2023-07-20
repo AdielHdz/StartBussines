@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-
+import './CustomButton.css';
 const CustomButton = ({ text, color, onClick }) => {
   return (
     <button
         
-      className={`w-full bg-${color}-500 hover:bg-${color}-600 text-white py-2 px-4 rounded mt-4`}
+      class="btn-custom-blue"
       onClick={onClick}
     >
       {text}

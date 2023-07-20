@@ -1,0 +1,19 @@
+/* Estilos base del botón */
+.btn-custom-blue {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    color: white;
+    background-color: #3490dc; /* Color de fondo azul */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+  }
+  
+  /* Estilos para el color de fondo al pasar el mouse */
+  .btn-custom-blue:hover {
+    background-color: #2779bd; /* Color de fondo azul oscuro al pasar el mouse */
+    transform: scale(1.05); /* Escala del botón al pasar el mouse */
+  }
+  

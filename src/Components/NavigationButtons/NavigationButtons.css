@@ -1,0 +1,17 @@
+.grid {
+    display: grid;
+    grid-template-columns: 34px auto;
+    gap: 10px;
+  }
+  
+  #signUpcontene {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 30px;
+    margin-bottom: -20px;
+    margin-left: -25px;
+    font-size: 20px;
+  }
+
+  

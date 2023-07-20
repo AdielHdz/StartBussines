@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import {
   validateEmail,
   validateDate,
@@ -10,6 +9,7 @@ import {
 } from "./formValidations";
 import CustomButton from '../../Components/customButton/CustomButton';
 import Authentication from '../../Components/Authentication/Authentication';
+import NavigationButtons from '../NavigationButtons/NavigationButtons';
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -18,13 +18,13 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [dobError, setDobError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
-
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -68,8 +68,14 @@ const RegisterForm = () => {
         setConfirmPasswordError("");
       }
 
-    // Resto del código para el envío del formulario
-    console.log(name, email, dob, password, confirmPassword);
+      const day = dob.slice(8, 10);
+      const month = dob.slice(5, 7);
+      const year = dob.slice(0, 4);
+    
+      const formattedDob = `${day}/${month}/${year}`;
+    
+      // Resto del código para el envío del formulario
+      console.log(name, email, formattedDob, password, confirmPassword);
     e.target.reset();
     setName("");
     setEmail("");
@@ -92,9 +98,11 @@ const RegisterForm = () => {
     setShowPassword(!showPassword);
   };
 
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
-  //CONVETIR FECHA DD/MM/YYYY
-
+  const currentPage = "/register";
 
   return (
     <div
@@ -104,18 +112,23 @@ const RegisterForm = () => {
           "url('https://images.pexels.com/photos/5055748/pexels-photo-5055748.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')",
       }}
     >
-      <div className="bg-black bg-opacity-30 p-5 mt-10 mb-10 rounded border border-white text-white">
-        <div className="flex justify-between">
+       <div className="p-5 mt-10 mb-10  text-white">
+      <NavigationButtons currentPage={currentPage} />
+    <div className="bg-black bg-opacity-30 p-5 mt-10 mb-10 rounded border border-white text-white">
+      <div className="flex justify-between"> {/* Utilizamos flexbox */}
+        <div className="flex-1 mr-2"> {/* División en dos partes iguales */}
           <button
-            className={`py-2 px-4 rounded ${
+            className={`w-full py-2 px-4 rounded ${
               isEntrepreneur ? "bg-white text-black" : "bg-gray-300 text-white"
             }`}
             onClick={() => setIsEntrepreneur(true)}
           >
             Entrepreneur
           </button>
+        </div>
+        <div className="flex-1 ml-2"> {/* División en dos partes iguales */}
           <button
-            className={`py-2 px-4 rounded ${
+            className={`w-full py-2 px-4 rounded ${
               !isEntrepreneur ? "bg-white text-black" : "bg-gray-300 text-white"
             }`}
             onClick={() => setIsEntrepreneur(false)}
@@ -123,6 +136,7 @@ const RegisterForm = () => {
             Investor
           </button>
         </div>
+      </div>
         <div className="flex flex-col mt-3">
           <label htmlFor="name" className="text-white">
             Full Name
@@ -183,11 +197,16 @@ const RegisterForm = () => {
                   passwordError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
+              <button
+                type="button"
                 onClick={togglePasswordVisibility}
-              />
+                className="absolute right-1 top-8 transform -translate-y-1/2 ">
+                {showPassword ? (
+                  <AiFillEyeInvisible className="w-6 h-6" />
+                ) : (
+                  <AiFillEye className="w-6 h-6" />
+                )}
+                </button>
             </div>
             {passwordError && <p className="text-red-500">{passwordError}</p>}
           </div>
@@ -198,18 +217,24 @@ const RegisterForm = () => {
             <div className="relative">
               <input
                 id="confirmPassword"
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword  ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`bg-black bg-opacity-30 p-2 border ${
                   confirmPasswordError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className="absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              />
+              <button
+                type="button"
+                onClick={toggleConfirmPasswordVisibility}
+                className="absolute right-1 top-8 transform -translate-y-1/2 "
+              >
+                {showConfirmPassword ? (
+                  <AiFillEyeInvisible className="w-6 h-6" />
+                ) : (
+                  <AiFillEye className="w-6 h-6" />
+                )}
+              </button>
             </div>
             {confirmPasswordError && (
               <p className="text-red-500">{confirmPasswordError}</p>
@@ -222,6 +247,7 @@ const RegisterForm = () => {
         </form>
         <Authentication />
       </div>
+    </div>
     </div>
   );
 };
