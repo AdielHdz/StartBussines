@@ -29,7 +29,7 @@ const InversionistaCard = () => {
     setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
-  //comentario
+  
 
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
@@ -41,12 +41,12 @@ const InversionistaCard = () => {
 
   return (
     <>
-      <h2 className="text-2xl md:text-4xl text-center font-bold text-white mb-4">
-        Emprendedores satisfechos
+      <h2 className="text-2xl md:text-4xl text-center font-bold text-black my-4 shadow-lg">
+        Inversionistas satisfechos
       </h2>
 
-      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
+      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 height: fit-content">
+      <div className="pt-6 md:p-8 text-center md:text-left space-y-4 width: 100% height: 100%">
           <blockquote>
             <p className="text-lg font-medium text-white">
               {currentSlide.content}
@@ -65,21 +65,23 @@ const InversionistaCard = () => {
           </figcaption>
         </div>
 
+
         <div className="flex justify-center mt-4">
           <button
-            className="text-2xl text-white font-bold focus:outline-none hover:text-primary"
+            className="text-2xl text-white font-bold focus:outline-none"
             onClick={handlePreviousSlide}
           >
             <FaArrowLeft className="inline-block align-text-bottom mr-1" />
           </button>
           <button
-            className="text-2xl text-white font-bold focus:outline-none ml-4 hover:text-primary"
+            className="text-2xl text-white font-bold focus:outline-none ml-4"
             onClick={handleNextSlide}
           >
             <FaArrowRight className="inline-block align-text-bottom ml-1" />
           </button>
         </div>
       </figure>
+
     </>
   );
 };
