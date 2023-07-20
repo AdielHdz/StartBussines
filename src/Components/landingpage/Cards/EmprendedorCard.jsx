@@ -41,7 +41,7 @@ const EmprendedorCard = () => {
 
   return (
     <>
-      <h2 className="text-2xl md:text-4xl text-center font-bold text-white mb-4">
+      <h2 className="text-2xl md:text-4xl text-center font-bold text-black mb-4 shadow-lg">
         Emprendedores satisfechos
       </h2>
 
@@ -67,13 +67,13 @@ const EmprendedorCard = () => {
 
         <div className="flex justify-center mt-4">
           <button
-            className="text-2xl text-white font-bold focus:outline-none hover:text-primary"
+            className="text-2xl text-white font-bold focus:outline-none"
             onClick={handlePreviousSlide}
           >
             <FaArrowLeft className="inline-block align-text-bottom mr-1" />
           </button>
           <button
-            className="text-2xl text-white font-bold focus:outline-none ml-4 hover:text-primary"
+            className="text-2xl text-white font-bold focus:outline-none ml-4"
             onClick={handleNextSlide}
           >
             <FaArrowRight className="inline-block align-text-bottom ml-1" />

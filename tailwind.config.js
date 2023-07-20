@@ -13,6 +13,7 @@ module.exports = {
         thirth: "#FFFEC3",
         grayLight: "#EDEDED",
         grayLightMed: "#B0B0B0",
+        labelRed: "#BA3622",
       },
       opacity: {
         10: "45%",
