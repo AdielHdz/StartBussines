@@ -41,14 +41,14 @@ const EmprendedorCard = () => {
 
   return (
     <>
-      <h2 className="text-2xl md:text-4xl text-center font-bold text-black mb-4 shadow-lg">
+      <h2 className="text-xl md:text-xl text-center font-bold text-black mb-4 shadow-lg">
         Emprendedores satisfechos
       </h2>
 
-      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <div className="pt-6 md:p-8 text-center md:text-left space-y-4">
+      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
+        <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4">
           <blockquote>
-            <p className="text-lg font-medium text-white">
+            <p className="text-base font-medium text-white">
               {currentSlide.content}
             </p>
           </blockquote>
