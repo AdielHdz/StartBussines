@@ -41,14 +41,14 @@ const InversionistaCard = () => {
 
   return (
     <>
-      <h2 className="text-2xl md:text-4xl text-center font-bold text-black my-4 shadow-lg">
+      <h2 className="text-xl md:text-xl text-center font-bold text-black my-4 shadow-lg">
         Inversionistas satisfechos
       </h2>
 
       <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 height: fit-content">
       <div className="pt-6 md:p-8 text-center md:text-left space-y-4 width: 100% height: 100%">
           <blockquote>
-            <p className="text-lg font-medium text-white">
+            <p className="text-base font-medium text-white">
               {currentSlide.content}
             </p>
           </blockquote>
