@@ -1,7 +1,9 @@
 import React from 'react';
 
 const ContenedorBusquedaCard = () => (
-  <main className="flex min-h-screen w-full items-center justify-center m-4 sm:m-2">
+
+  <main className="flex min-h-screen w-full items-center justify-center p-4 sm:m-2">
+
     <article className="group relative flex h-[16rem] sm:h-auto md:h-[24rem] w-full md:w-[50rem] rounded-2xl bg-[#3a4448]">
 
       <div className="relative inset-0 w-full overflow-hidden rounded-2xl">
@@ -14,7 +16,7 @@ const ContenedorBusquedaCard = () => (
             <div className="text-lg sm:text-xl md:text-3xl font-medium">Smokin Out The Window</div>
             <div className="font-medium">by Bruno Mars, Anderson .Paak, Silk Sonic</div>
             <div className="text-xs sm:text-sm">
-              mapped by
+              nice to meet you!
               <a href="#" className="text-[#96bacc] transition-all hover:text-yellow-400">Ryafuka</a>
             </div>
           </header>
