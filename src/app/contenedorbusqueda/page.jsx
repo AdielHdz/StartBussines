@@ -16,7 +16,7 @@ const ContenedorBusquedaCard = () => (
             <div className="text-lg sm:text-xl md:text-3xl font-medium">Smokin Out The Window</div>
             <div className="font-medium">by Bruno Mars, Anderson .Paak, Silk Sonic</div>
             <div className="text-xs sm:text-sm">
-              mapped by
+              nice to meet you!
               <a href="#" className="text-[#96bacc] transition-all hover:text-yellow-400">Ryafuka</a>
             </div>
           </header>
