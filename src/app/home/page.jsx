@@ -49,7 +49,7 @@ const Home = () => {
         <h1 className=" absolute top-[4rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Deal Up!
         </h1>
-        <p class=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
         </p>
         {/* <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
