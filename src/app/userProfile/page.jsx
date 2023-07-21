@@ -7,12 +7,51 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 
 export default function userProfile() {
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    birthdate: "",
+    address: "",
+    avatar: null,
+    frontId: null,
+    backId: null,
+  });
   const [inputsDisabled, setInputsDisabled] = useState(true);
 
+  const handleChange = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [property]: value });
+  };
   const toggleInputs = (event) => {
     event.preventDefault();
     setInputsDisabled(!inputsDisabled);
   };
+
+  /* const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    setUserData({ ...userData, avatar: file });
+  };
+  const handleFrontIdChange = (event) => {
+    const file = event.target.files[0];
+    setUserData({ ...userData, frontId: file });
+  };
+  const handleBackIdChange = (event) => {
+    const file = event.target.files[0];
+    setUserData({ ...userData, backIdId: file });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", userData.name);
+    formData.append("email", userData.email);
+    formData.append("phone", userData.phone);
+    formData.append("birthdate", userData.birthdate);
+    formData.append("address", userData.address);
+  }; */
 
   return (
     <div className="flex flex-col items-center h-full w-full pt-0.5">
@@ -38,45 +77,53 @@ export default function userProfile() {
           <hr className="border-black" />
           <form action="">
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="name" className="text-labelRed">
                 Name
               </label>
               <input
                 type="text"
                 className="rounded bg-grayLight h-10"
+                value={userData.name}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
 
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="email" className="text-labelRed">
                 Email
               </label>
               <input
                 type="email"
                 className="rounded bg-grayLight h-10"
+                value={userData.email}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
 
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="phone" className="text-labelRed">
                 Phone
               </label>
               <input
                 type="phone"
                 className="rounded bg-grayLight h-10"
+                value={userData.phone}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
 
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="birthdate" className="text-labelRed">
                 Birthdate
               </label>
               <input
                 type="date"
                 className="rounded bg-grayLight h-10"
+                value={userData.birthdate}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
@@ -85,22 +132,26 @@ export default function userProfile() {
               <hr className="border-black" />
             </div>
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="phone" className="text-labelRed">
                 Phone
               </label>
               <input
                 type="addres"
                 className="rounded bg-grayLight h-10"
+                value={userData.phone}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
             <div className="flex flex-col mt-3">
-              <label htmlFor="" className="text-labelRed">
+              <label htmlFor="address" className="text-labelRed">
                 Address
               </label>
               <input
                 type="addres"
                 className="rounded bg-grayLight h-10"
+                value={userData.address}
+                onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
