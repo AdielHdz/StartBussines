@@ -1,4 +1,4 @@
-import LandingPage from '../Components/LandingPage/Landingpage'
+import LandingPage from '../Components/landingPage/Landingpage'
 import Image from 'next/image'
 
 
