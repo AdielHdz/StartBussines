@@ -33,19 +33,20 @@ export default function LogIn() {
   };
 
   return (
-    <div className="h-screen w-full   pt-0.5 ">
+    <div className="h-screen w-full flex items-center justify-center  ">
       <div className=" absolute z-10 w-full h-full bg-black opacity-10"></div>
       <Image
         src={Background}
         alt="background"
         width={0}
         height={0}
-        className="absolute h-full w-full object-cover"
+        className="absolute top-0 h-full w-full object-cover"
       />
       <div
         className="relative z-20
             ">
-        <div className=" p-5 mt-10 mb-10 flex flex-col justify-center items-center h-screen">
+        <div className=" p-5 mt-10 mb-10  ">
+          
           <NavigationButtons currentPage="/logIn" />
           <form>
             <div className="flex flex-col mt-9">
@@ -59,7 +60,7 @@ export default function LogIn() {
                 onChange={handleChange}
                 className={`bg-black bg-opacity-30 p-2 border ${
                   error.email ? "border-red-500" : "border-white"
-                } mt-3  text-white`}
+                } mt-3  text-white w-full`}
               />
               {error.email && <p className="text-red-500">{error.email}</p>}
             </div>
@@ -74,7 +75,7 @@ export default function LogIn() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Type here..."
                   onChange={handleChange}
-                  className="bg-black bg-opacity-30 p-2 border border-white  text-white "
+                  className="bg-black bg-opacity-30 p-2 border border-white  text-white w-full"
                 />
                 <button
                   type="button"
