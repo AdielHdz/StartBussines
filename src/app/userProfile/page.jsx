@@ -13,16 +13,16 @@ export default function userProfile() {
     phone: "",
     birthdate: "",
     address: "",
-    avatar: null,
+    /* avatar: null,
     frontId: null,
-    backId: null,
+    backId: null, */
   });
   const [inputsDisabled, setInputsDisabled] = useState(true);
 
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
-    setForm({ ...form, [property]: value });
+    setUserData({ ...userData, [property]: value });
   };
   const toggleInputs = (event) => {
     event.preventDefault();
@@ -83,7 +83,6 @@ export default function userProfile() {
               <input
                 type="text"
                 className="rounded bg-grayLight h-10"
-                value={userData.name}
                 onChange={handleChange}
                 disabled={inputsDisabled}
               />
@@ -96,25 +95,10 @@ export default function userProfile() {
               <input
                 type="email"
                 className="rounded bg-grayLight h-10"
-                value={userData.email}
                 onChange={handleChange}
                 disabled={inputsDisabled}
               />
             </div>
-
-            <div className="flex flex-col mt-3">
-              <label htmlFor="phone" className="text-labelRed">
-                Phone
-              </label>
-              <input
-                type="phone"
-                className="rounded bg-grayLight h-10"
-                value={userData.phone}
-                onChange={handleChange}
-                disabled={inputsDisabled}
-              />
-            </div>
-
             <div className="flex flex-col mt-3">
               <label htmlFor="birthdate" className="text-labelRed">
                 Birthdate
@@ -122,7 +106,6 @@ export default function userProfile() {
               <input
                 type="date"
                 className="rounded bg-grayLight h-10"
-                value={userData.birthdate}
                 onChange={handleChange}
                 disabled={inputsDisabled}
               />
@@ -138,7 +121,6 @@ export default function userProfile() {
               <input
                 type="addres"
                 className="rounded bg-grayLight h-10"
-                value={userData.phone}
                 onChange={handleChange}
                 disabled={inputsDisabled}
               />
@@ -150,7 +132,6 @@ export default function userProfile() {
               <input
                 type="addres"
                 className="rounded bg-grayLight h-10"
-                value={userData.address}
                 onChange={handleChange}
                 disabled={inputsDisabled}
               />
