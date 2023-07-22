@@ -7,13 +7,13 @@ const NavigationButtons = ({ currentPage }) => {
   const isSignIn = currentPage === "/logIn";
 
   return (
-    <div className="grid">
+    <div className="grid ">
       <div>
         <Link href="/">
           <AiOutlineArrowLeft size={34} className="text-white" />
         </Link>
       </div>
-      <div className="col-11" id="signUpcontene">
+      <div className="" id="signUpcontene">
         <Link href="/register">
           <span
             className={`${

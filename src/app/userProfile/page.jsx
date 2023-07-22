@@ -6,7 +6,7 @@ import { GrAdd } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 
-export default function userProfile() {
+export default function UserProfile() {
   const [userData, setUserData] = useState({
     name: "",
     email: "",
