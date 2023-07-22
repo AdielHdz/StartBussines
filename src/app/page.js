@@ -1,5 +1,5 @@
 
-import LandingPage from '../Components/landingPage/Landingpage'
+import LandingPage from '../Components/landingpage/Landingpage';
 
 
 
@@ -7,7 +7,7 @@ export default function LandingMain() {
 
   return (
     <main>
-     <LandingPage />
+    <LandingPage /> 
     </main>
   )
 }
