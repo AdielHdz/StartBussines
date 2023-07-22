@@ -12,7 +12,7 @@ const UserProof = () => {
       {users.map((user) => {
         return (
 
-          <div>
+          <div key={user.id}>
             <img src={user.avatar} alt="" />
             <h3>{user.name}</h3>
            
