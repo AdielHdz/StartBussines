@@ -1,8 +1,10 @@
+"use client";
+import { usePathname } from 'next/navigation';
 import Navbar from '../components/Navbar'
 import './globals.css'
-
 import { Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,11 +14,17 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  const router = usePathname();
+ 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}</body>
+        <body className={inter.className}>
+          {
+          router !== "/" && router 
+          !== "/login" && router
+          !== "/register" && <Navbar />
+          }
+          {children}</body>
     </html>
   )
 }
