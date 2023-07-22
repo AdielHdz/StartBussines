@@ -1,8 +1,11 @@
-import Navbar from '../Components/Navbar'
+"use client";
+import { usePathname } from 'next/navigation';
+import Navbar from '../components/Navbar'
 import './globals.css'
 import Providers from "../Redux/providers";
 import { Inter } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,12 +15,18 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  const router = usePathname();
+ 
   return (
     <html lang="en">
-      <body className={inter.className}>
+        <body className={inter.className}>
         <Providers>
-           {/*  <Navbar /> */}
-        {children}
+          {
+          router !== "/" && router 
+          !== "/login" && router
+          !== "/register" && <Navbar />
+          }
+          {children}
         </Providers>
         </body>
       
