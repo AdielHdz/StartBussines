@@ -1,6 +1,6 @@
 import React from "react";
 import { usePathname } from 'next/navigation';
-import Navbar from '../components/Navbar'
+import Navbar from '../Components/Navbar'
 import './globals.css'
 import Providers from "../Redux/providers";
 import { Inter } from 'next/font/google'
