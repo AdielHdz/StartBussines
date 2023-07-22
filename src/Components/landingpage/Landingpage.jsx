@@ -19,8 +19,9 @@ const TEXT = {
   `,
 };
 
-const LandingPage = () => (
-  <div
+const LandingPage = () => {
+  return (
+    <div
     className="h-screen w-screen bg-center"
     style={{
       backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
@@ -53,6 +54,7 @@ const LandingPage = () => (
       <Button text="SIGN IN" href="/register" className="p-1 text-sm" />
     </div>
   </div>
-);
+  )
+  };
 
 export default LandingPage;
