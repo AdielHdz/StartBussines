@@ -23,7 +23,7 @@ export default function UserProfile() {
   const [changesSaved, setChangesSaved] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserById("e0b214e4-b719-48d7-9570-5f3e6b53a4a3"));
+    dispatch(getUserById(params.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -57,10 +57,7 @@ export default function UserProfile() {
     event.preventDefault();
 
     axios
-      .put(
-        "http://localhost:3001/users/e0b214e4-b719-48d7-9570-5f3e6b53a4a3",
-        userData
-      )
+      .put(`http://localhost:3001/users/${params.id}`, userData)
       .then((res) => {
         alert("Edited!");
         setInputsDisabled(true);
