@@ -81,4 +81,4 @@ const User = createSlice({
 });
 
 export const { filterByAge, updateUser } = User.actions;
-export default User.reducer;
+export default User;

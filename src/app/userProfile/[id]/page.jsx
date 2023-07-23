@@ -5,25 +5,26 @@ import Background from "public/asset/login.jpg";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
-import UserInfo from "./UserInfo";
+import UserInfo from "../../../Components/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
-import { getUserById } from "../../Redux/Fetching/UsersSlice/UserSlice";
+import { getUserById } from "../../../Redux/Fetching/UsersSlice/UserSlice";
 import axios from "axios";
-import { updateUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
+import { updateUser } from "../../../Redux/Fetching/UsersSlice/UserSlice";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.user.userDetail);
 
-  const params = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({});
+  console.log(id);
 
   const [inputsDisabled, setInputsDisabled] = useState(true);
   const [changesSaved, setChangesSaved] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserById(params.id));
+    dispatch(getUserById(id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function UserProfile() {
     event.preventDefault();
 
     axios
-      .put(`http://localhost:3001/users/${params.id}`, userData)
+      .put(`http://localhost:3001/users/${id}`, userData)
       .then((res) => {
         alert("Edited!");
         setInputsDisabled(true);
@@ -75,6 +76,7 @@ export default function UserProfile() {
           alt="Avatar"
           src={Background}
         />
+
         <div>
           <button
             className="Sw-10 h-10 text-black  m-2 flex items-center"
