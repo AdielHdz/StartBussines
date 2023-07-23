@@ -57,6 +57,7 @@ const RegisterForm = () => {
 
   const onNameBlur = (e) => {
     const newName = e.target.value;
+    setName (newName);
 
     if (!validateName(newName)) {
       setNameError("Name is invalid");
@@ -103,6 +104,16 @@ const RegisterForm = () => {
     const newConfirmPassword = e.target.value;
 
     if (newConfirmPassword !== password) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
+  };
+
+  const onPasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword)
+    if (newPassword !== confirmPassword) {
       setConfirmPasswordError("Passwords do not match");
     } else {
       setConfirmPasswordError("");
@@ -232,7 +243,7 @@ const RegisterForm = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={onPasswordChange}
                   onBlur={onPasswordBlur}
                   className={`bg-black bg-opacity-30 p-2 border ${
                     passwordError ? "border-red-500" : "border-white"
