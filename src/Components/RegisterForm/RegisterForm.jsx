@@ -11,8 +11,12 @@ import {
 import CustomButton from "../../Components/customButton/CustomButton";
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../Redux/Fetching/UsersSlice/UserSlice';
+
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
@@ -27,9 +31,29 @@ const RegisterForm = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
 
-  //!Validaciones en tiempo real
-
-  // !Validaciones en tiempo real
+  const onSubmit = (e) => {
+    e.preventDefault();
+  
+    if (
+      nameError ||
+      emailError ||
+      dobError ||
+      passwordError ||
+      confirmPasswordError
+    ) {
+      console.log("There are errors in the form");
+      return;
+    }
+  
+    dispatch(registerUser({ 
+      name, 
+      email, 
+      dob, 
+      password,
+      confirmPassword,
+    }));
+  };
+  
 
   const onNameBlur = (e) => {
     const newName = e.target.value;
@@ -105,20 +129,7 @@ const RegisterForm = () => {
 
   const currentPage = "/register";
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (
-      nameError ||
-      emailError ||
-      dobError ||
-      passwordError ||
-      confirmPasswordError
-    ) {
-      console.log("There are errors in the form");
-      return;
-    }
-  };
+ 
 
   return (
     <div
