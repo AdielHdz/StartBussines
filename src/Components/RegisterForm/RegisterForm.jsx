@@ -45,13 +45,28 @@ const RegisterForm = () => {
       return;
     }
   //aqui error envio
+/////esto tiene que darlo dependiendo el boton que se palique 
+  const rol = "entrepreneur";
+///aqui se cambia los nombres
+    const fullName = name;
+    const birthdate = dob;
+
     dispatch(registerUser({ 
-      name, 
+      fullName, 
       email, 
-      dob, 
+      rol,
+      birthdate, 
       password,
-      confirmPassword,
+      
     }));
+
+    e.target.reset();
+    setName("");
+    setEmail("");
+    setDob("");
+    setPassword("");
+    setConfirmPassword("");
+
   };
   
 
