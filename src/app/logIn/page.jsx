@@ -1,6 +1,5 @@
 'use client';
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import validation from './validations/validations';
 import Background from 'public/asset/login.jpg';
@@ -53,6 +52,23 @@ export default function LogIn() {
     setForm({ ...form, [property]: value });
     setErrors(validation({ ...form, [property]: value }));
   };
+
+  useEffect(() => {
+    setUserSession({
+      fullName: '',
+      email: '',
+      rol: '',
+      address: '',
+      password: '',
+      gender: '',
+      birthdate: '',
+      phone: '',
+      country: '',
+      avatar: '',
+      status: '',
+      thirdPartyCreated: null,
+    });
+  }, []);
 
   const handlePassword = () => {
     setShowPassword(!showPassword);
