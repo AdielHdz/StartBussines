@@ -1,23 +1,24 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Background from "public/asset/login.jpg";
+import Background from "public/asset/avatar2.jpg";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
-import UserInfo from "../../../Components/userInfo";
+import UserInfo from "../../../Components/userProfilecomponents/userInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { getUserById } from "../../../Redux/Fetching/UsersSlice/UserSlice";
 import axios from "axios";
 import { updateUser } from "../../../Redux/Fetching/UsersSlice/UserSlice";
-
+import validation from "../../../Components/userProfilecomponents/validations";
 export default function UserProfile() {
   const user = useSelector((state) => state.user.userDetail);
 
   const { id } = useParams();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({});
+  const [error, setErrors] = useState({});
   console.log(id);
 
   const [inputsDisabled, setInputsDisabled] = useState(true);
@@ -41,9 +42,11 @@ export default function UserProfile() {
   }, [user]);
 
   const handleChange = (event) => {
+    event.preventDefault();
     const property = event.target.name;
     const value = event.target.value;
     setUserData({ ...userData, [property]: value });
+    setErrors(validation({ ...userData, [property]: value }));
     setChangesSaved(false);
   };
   const toggleInputs = (event) => {
@@ -108,6 +111,7 @@ export default function UserProfile() {
                   disabled={inputsDisabled}
                   value={userData.name}
                 />
+                {error.name && <p className="text-red-500">{error.name}</p>}
               </div>
 
               <div className="flex flex-col mt-3">
@@ -122,6 +126,7 @@ export default function UserProfile() {
                   disabled={inputsDisabled}
                   value={userData.email}
                 />
+                {error.email && <p className="text-red-500">{error.email}</p>}
               </div>
               <div className="flex flex-col mt-3">
                 <label htmlFor="birthdate" className="text-labelRed">
@@ -135,6 +140,9 @@ export default function UserProfile() {
                   disabled={inputsDisabled}
                   value={userData.birthdate}
                 />
+                {error.birthdate && (
+                  <p className="text-red-500">{error.birthdate}</p>
+                )}
               </div>
               <div>
                 <h1 className="mt-5 mb-2">Important data</h1>
@@ -142,7 +150,7 @@ export default function UserProfile() {
               </div>
               <div className="flex flex-col mt-3">
                 <label htmlFor="phone" className="text-labelRed">
-                  Phone
+                  Phone Number
                 </label>
                 <input
                   name="phone"
@@ -152,6 +160,7 @@ export default function UserProfile() {
                   disabled={inputsDisabled}
                   value={userData.phone}
                 />
+                {error.phone && <p className="text-red-500">{error.phone}</p>}
               </div>
               <div className="flex flex-col mt-3">
                 <label htmlFor="address" className="text-labelRed">
