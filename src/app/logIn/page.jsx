@@ -58,7 +58,7 @@ export default function LogIn() {
                 name="email"
                 placeholder="Type here..."
                 onChange={handleChange}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-green-400 bg-opacity-30 p-2 border  ${
                   error.email ? "border-red-500" : "border-white"
                 } mt-3  text-white w-full`}
               />

@@ -247,7 +247,7 @@ const RegisterForm = () => {
                   onBlur={onPasswordBlur}
                   className={`bg-black bg-opacity-10 p-2 border ${
                     passwordError ? "border-red-500" : "border-white"
-                  } mt-3`}
+                  } mt-3 w-full`}
                 />
                 <button
                   type="button"

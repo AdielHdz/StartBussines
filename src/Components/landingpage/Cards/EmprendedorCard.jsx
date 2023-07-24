@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "../../../app/globals.css";
+
 import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
 
 const EmprendedorCard = () => {
@@ -41,29 +41,25 @@ const EmprendedorCard = () => {
 
   return (
     <>
-      <h2 className="text-xl md:text-xl text-center font-bold text-black mb-4 shadow-lg">
-        Emprendedores satisfechos
-      </h2>
+      <h2 className="text-center p-2">Entrepreneur</h2>
 
-      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4">
-          <blockquote>
-            <p className="text-base font-medium text-white">
-              {currentSlide.content}
-            </p>
-          </blockquote>
-          <figcaption className="font-medium">
-            <div className="flex items-center justify-center mb-2">
-              <FaUser className="mr-2" />
-              <div className="text-sky-500 dark:text-sky-400">
-                {currentSlide.name}
-              </div>
+      <figure className=" bg-purple-800  rounded-xl p-4 w-full   shadow-lg hover:shadow-2xl transition-shadow duration-300">
+        <blockquote className="">
+          <p className="text-sm text-white text-center">
+            {currentSlide.content}
+          </p>
+        </blockquote>
+        <figcaption className="font-medium">
+          <div className="flex items-center justify-center mb-2">
+            <FaUser className="mr-2" />
+            <div className="text-sky-500 dark:text-sky-400">
+              {currentSlide.name}
             </div>
-            <div className="text-slate-700 dark:text-slate-500">
-              {currentSlide.job}
-            </div>
-          </figcaption>
-        </div>
+          </div>
+          <div className="text-slate-700 dark:text-slate-500">
+            {currentSlide.job}
+          </div>
+        </figcaption>
 
         <div className="flex justify-center mt-4">
           <button
