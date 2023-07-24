@@ -16,15 +16,24 @@ module.exports = {
         labelRed: "#BA3622",
         greenPrimary: "#1C997F",
       },
-      opacity: {
-        10: "45%",
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      // Puedes agregar más opciones de opacidad si es necesario
+      opacity: {},
+      // Puedes agregar más opciones de fondo de imagen si es necesario
+      backgroundImage: {},
     },
+    // Nueva clase para quitar la línea de abajo de los enlaces
+    // Aquí establecemos la propiedad `text-decoration-line: none;`
+    // para eliminar la decoración de línea de los enlaces
+    // que tengan la clase `.no-underline`
+    typography: (theme) => ({
+      DEFAULT: {
+        css: {
+          a: {
+            textDecorationLine: "none",
+          },
+        },
+      },
+    }),
   },
   plugins: [],
 };

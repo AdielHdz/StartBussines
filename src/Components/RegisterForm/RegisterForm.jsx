@@ -11,8 +11,12 @@ import {
 import CustomButton from "../../Components/customButton/CustomButton";
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../Redux/Fetching/UsersSlice/UserSlice';
+
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
@@ -27,12 +31,33 @@ const RegisterForm = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
 
-  //!Validaciones en tiempo real
-
-  // !Validaciones en tiempo real
+  const onSubmit = (e) => {
+    e.preventDefault();
+  
+    if (
+      nameError ||
+      emailError ||
+      dobError ||
+      passwordError ||
+      confirmPasswordError
+    ) {
+      console.log("There are errors in the form");
+      return;
+    }
+  
+    dispatch(registerUser({ 
+      name, 
+      email, 
+      dob, 
+      password,
+      confirmPassword,
+    }));
+  };
+  
 
   const onNameBlur = (e) => {
     const newName = e.target.value;
+    setName (newName);
 
     if (!validateName(newName)) {
       setNameError("Name is invalid");
@@ -85,6 +110,16 @@ const RegisterForm = () => {
     }
   };
 
+  const onPasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword)
+    if (newPassword !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
+  };
+
   const onNameChange = (e) => {
     const value = e.target.value;
     const words = value.split(" ");
@@ -105,20 +140,7 @@ const RegisterForm = () => {
 
   const currentPage = "/register";
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (
-      nameError ||
-      emailError ||
-      dobError ||
-      passwordError ||
-      confirmPasswordError
-    ) {
-      console.log("There are errors in the form");
-      return;
-    }
-  };
+ 
 
   return (
     <div
@@ -130,7 +152,7 @@ const RegisterForm = () => {
     >
       <div className="p-5 mt-10 mb-10  text-white">
         <NavigationButtons currentPage={currentPage} />
-        <div className="bg-black bg-opacity-30 p-5 mt-10 mb-10 rounded border border-white text-white">
+        <div className="bg-black bg-opacity-25 p-5 mt-10 mb-10 rounded border border-white text-white">
           <div className="flex justify-between">
             {" "}
             {/* Utilizamos flexbox */}
@@ -174,7 +196,7 @@ const RegisterForm = () => {
                 value={name}
                 onChange={onNameChange}
                 onBlur={onNameBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   nameError ? "border-red-500" : "border-white"
                 } mt-2`}
               />
@@ -190,7 +212,7 @@ const RegisterForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={onEmailBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   emailError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
@@ -206,7 +228,7 @@ const RegisterForm = () => {
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 onBlur={onDobBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   dobError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
@@ -221,9 +243,9 @@ const RegisterForm = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={onPasswordChange}
                   onBlur={onPasswordBlur}
-                  className={`bg-black bg-opacity-30 p-2 border ${
+                  className={`bg-black bg-opacity-10 p-2 border ${
                     passwordError ? "border-red-500" : "border-white"
                   } mt-3`}
                 />
@@ -252,7 +274,7 @@ const RegisterForm = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   onBlur={onConfirmPasswordBlur}
-                  className={`bg-black bg-opacity-30 p-2 border ${
+                  className={`bg-black bg-opacity-10 p-2 border  ${
                     confirmPasswordError ? "border-red-500" : "border-white"
                   } mt-3`}
                 />
