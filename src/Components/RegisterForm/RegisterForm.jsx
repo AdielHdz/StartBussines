@@ -44,7 +44,7 @@ const RegisterForm = () => {
       console.log("There are errors in the form");
       return;
     }
-  
+  //aqui error envio
     dispatch(registerUser({ 
       name, 
       email, 
