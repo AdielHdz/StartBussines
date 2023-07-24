@@ -4,11 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import validation from "./validations/validations";
 import Background from "public/asset/login.jpg";
-import Authentication from "@/Components/Authentication/Authentication";
-import CustomButton from "@/Components/customButton/CustomButton";
+import Authentication from "../../Components/Authentication/Authentication";
+import CustomButton from "../../Components/customButton/CustomButton";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
-import NavigationButtons from "@/Components/NavigationButtons/NavigationButtons";
+import NavigationButtons from "../../Components/NavigationButtons/NavigationButtons";
 
 export default function LogIn() {
   const [form, setForm] = useState({
@@ -33,8 +33,8 @@ export default function LogIn() {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center  ">
-      <div className=" absolute z-10 w-full h-full bg-black opacity-10"></div>
+    <div className="h-screen w-full flex items-center justify-center text-white ">
+      <div className=" absolute z-10 w-full h-full bg-black opacity-30"></div>
       <Image
         src={Background}
         alt="background"

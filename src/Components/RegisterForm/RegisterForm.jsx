@@ -44,7 +44,7 @@ const RegisterForm = () => {
       console.log("There are errors in the form");
       return;
     }
-  
+  //aqui error envio
     dispatch(registerUser({ 
       name, 
       email, 
@@ -152,7 +152,7 @@ const RegisterForm = () => {
     >
       <div className="p-5 mt-10 mb-10  text-white">
         <NavigationButtons currentPage={currentPage} />
-        <div className="bg-black bg-opacity-30 p-5 mt-10 mb-10 rounded border border-white text-white">
+        <div className="bg-black bg-opacity-25 p-5 mt-10 mb-10 rounded border border-white text-white">
           <div className="flex justify-between">
             {" "}
             {/* Utilizamos flexbox */}
@@ -196,7 +196,7 @@ const RegisterForm = () => {
                 value={name}
                 onChange={onNameChange}
                 onBlur={onNameBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   nameError ? "border-red-500" : "border-white"
                 } mt-2`}
               />
@@ -212,7 +212,7 @@ const RegisterForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={onEmailBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   emailError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
@@ -228,7 +228,7 @@ const RegisterForm = () => {
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 onBlur={onDobBlur}
-                className={`bg-black bg-opacity-30 p-2 border ${
+                className={`bg-black bg-opacity-10 p-2 border ${
                   dobError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
@@ -245,7 +245,7 @@ const RegisterForm = () => {
                   value={password}
                   onChange={onPasswordChange}
                   onBlur={onPasswordBlur}
-                  className={`bg-black bg-opacity-30 p-2 border ${
+                  className={`bg-black bg-opacity-10 p-2 border ${
                     passwordError ? "border-red-500" : "border-white"
                   } mt-3`}
                 />
@@ -274,7 +274,7 @@ const RegisterForm = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   onBlur={onConfirmPasswordBlur}
-                  className={`bg-black bg-opacity-30 p-2 border ${
+                  className={`bg-black bg-opacity-10 p-2 border  ${
                     confirmPasswordError ? "border-red-500" : "border-white"
                   } mt-3`}
                 />
