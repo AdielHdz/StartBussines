@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(
     console.log("Datos enviados a la API:", newUser);
 
     const response = await fetch(
-      "/Api_dealUp/src/controllers/User/createNewUser.js",
+      `http://localhost:3001/user`,
       {
         method: "POST",
         headers: {
