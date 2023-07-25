@@ -31,7 +31,7 @@ export default function UserProfile() {
   useEffect(() => {
     if (user) {
       setUserData({
-        name: user.name,
+        fullName: user.fullName,
         email: user.email,
         rol: user.rol,
         birthdate: user.birthdate,
@@ -41,6 +41,7 @@ export default function UserProfile() {
     }
   }, [user]);
 
+  console.log(user);
   const handleChange = (event) => {
     event.preventDefault();
     const property = event.target.name;
@@ -109,7 +110,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.name}
+                  value={userData.fullName}
                 />
                 {error.name && <p className="text-red-500">{error.name}</p>}
               </div>
