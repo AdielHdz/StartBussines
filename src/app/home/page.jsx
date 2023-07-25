@@ -5,6 +5,8 @@ import { SearchProjectsList } from "../../Components/SearchProjectsList";
 import TopTenProjects from "../../Components/TopTenProjects";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useRef, useState } from "react";
+import Modal from '../../Components/Modal/Modal';
+import ProjectRegister from '../../Components/ProjectRegister/ProjectRegister';
 
 const Home = () => {
   //traer el estado de users para el hacer la vista de emprendedor o inversor (probablemente el localStorage)
@@ -12,6 +14,17 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
+
+  
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
 
   const closeSuggestions = () => {
     setSuggestions([]);
@@ -84,11 +97,18 @@ const Home = () => {
         )} */}{" "}
         {/* Deje listo la condición para mostrar el botón solo cuando el user_role es "entrepreneur" */}
         <div className="flex items-center justify-center">
-          {/* Link hacia la pagina donde me lleve a crear el proyecto */}
-          <button className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
-            Start Project
-            <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
-          </button>
+          <button
+          className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+          onClick={handleOpenModal}
+        >
+          Start Project
+          <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
+        </button>
+
+        <Modal isVisible={isModalVisible} onClose={handleCloseModal}>
+          {/* Render the ProjectRegister component inside the modal */}
+          <ProjectRegister />
+        </Modal>
         </div>
         <div className="flex items-center justify-center mt-3">
           <SearchProjects setSuggestions={handleSetSuggestions} />

@@ -4,11 +4,11 @@ import { usePathname } from 'next/navigation';
 import Navbar from '../Components/Navbar'
 import './globals.css'
 import Providers from "../Redux/providers";
-import { Inter } from 'next/font/google'
+import { Sora } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const inter = Inter({ subsets: ['latin'] })
+const sora = Sora({ subsets: ['latin'] })
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
  
   return (
     <html lang="en">
-        <body className={inter.className}>
+        <body className={sora.className}>
         <Providers>
           {
           router !== "/" && router 

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import {
   validateEmail,
@@ -11,9 +12,8 @@ import {
 import CustomButton from "../../Components/customButton/CustomButton";
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../Redux/Fetching/UsersSlice/UserSlice';
-
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -24,16 +24,31 @@ const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [dobError, setDobError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [nameError, setNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [dobError, setDobError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
+  const [emailExist, setEmailExist] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const onSubmit = (e) => {
+  //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-  
+    const isFormValid =
+    name !== "" &&
+    email !== "" &&
+    dob !== "" &&
+    password !== "" &&
+    confirmPassword !== "";
+  if (!isFormValid) {
+    alert("There are fields that are not completed");
+    return;
+  }
+   
     if (
       nameError ||
       emailError ||
@@ -44,20 +59,43 @@ const RegisterForm = () => {
       console.log("There are errors in the form");
       return;
     }
-  //aqui error envio
-    dispatch(registerUser({ 
-      name, 
-      email, 
-      dob, 
-      password,
-      confirmPassword,
-    }));
+
+    const rol = "entrepreneur";
+    const fullName = name;
+    const birthdate = new Date(dob).toLocaleDateString("es-ES");
+
+    try {
+      dispatch(
+        registerUser({
+          fullName,
+          email,
+          rol,
+          birthdate,
+          password,
+        })
+      );
+      setSuccessMessage("Registration successful!");
+
+      e.target.reset();
+      setName("");
+      setEmail("");
+      setDob("");
+      setPassword("");
+      setConfirmPassword("");
+      setEmailExist("");
+    } catch (error) {
+      console.error("An error occurred during registration: ", error);
+      if (error.response && error.response.data.error) {
+        setEmailExist(error.response.data.error);
+      } else {
+        setEmailError("Error registering user");
+      }
+    }
   };
-  
 
   const onNameBlur = (e) => {
     const newName = e.target.value;
-    setName (newName);
+    setName(newName);
 
     if (!validateName(newName)) {
       setNameError("Name is invalid");
@@ -93,12 +131,11 @@ const RegisterForm = () => {
 
     const errorMessage = validatePassword(newPassword);
     if (errorMessage) {
-        setPasswordError(errorMessage);
+      setPasswordError(errorMessage);
     } else {
-        setPasswordError("");
+      setPasswordError("");
     }
-};
-
+  };
 
   const onConfirmPasswordBlur = (e) => {
     const newConfirmPassword = e.target.value;
@@ -112,7 +149,7 @@ const RegisterForm = () => {
 
   const onPasswordChange = (e) => {
     const newPassword = e.target.value;
-    setPassword(newPassword)
+    setPassword(newPassword);
     if (newPassword !== confirmPassword) {
       setConfirmPasswordError("Passwords do not match");
     } else {
@@ -138,9 +175,47 @@ const RegisterForm = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const currentPage = "/register";
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
 
- 
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    if (
+      name !== "" &&
+      email !== "" &&
+      dob !== "" &&
+      password !== "" &&
+      confirmPassword !== "" &&
+      (nameError === null || nameError === "") &&
+      (emailError === null || emailError === "") &&
+      (dobError === null || dobError === "") &&
+      (passwordError === null || passwordError === "") &&
+      (confirmPasswordError === null || confirmPasswordError === "")
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [
+    name,
+    email,
+    dob,
+    password,
+    confirmPassword,
+    nameError,
+    emailError,
+    dobError,
+    passwordError,
+    confirmPasswordError,
+  ]);
+
+  const currentPage = "/register";
 
   return (
     <div
@@ -216,6 +291,7 @@ const RegisterForm = () => {
                   emailError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
+              {emailExist && <p className="text-red-500">{emailExist}</p>}
               {emailError && <p className="text-red-500">{emailError}</p>}
             </div>
             <div className="flex flex-col mt-3">
@@ -247,7 +323,7 @@ const RegisterForm = () => {
                   onBlur={onPasswordBlur}
                   className={`bg-black bg-opacity-10 p-2 border ${
                     passwordError ? "border-red-500" : "border-white"
-                  } mt-3`}
+                  } mt-3 w-full`}
                 />
                 <button
                   type="button"
@@ -276,7 +352,7 @@ const RegisterForm = () => {
                   onBlur={onConfirmPasswordBlur}
                   className={`bg-black bg-opacity-10 p-2 border  ${
                     confirmPasswordError ? "border-red-500" : "border-white"
-                  } mt-3`}
+                  } mt-3 w-full`}
                 />
                 <button
                   type="button"
@@ -294,8 +370,18 @@ const RegisterForm = () => {
                 <p className="text-red-500">{confirmPasswordError}</p>
               )}
             </div>
-            <CustomButton text="Register" color="blue" />
+            <CustomButton
+              text="Register"
+              color="blue"
+              disabled={!isFormValid}
+            />
           </form>
+          {successMessage && (
+            <p className="text-green-500 text-center uppercase text-xl">
+              {successMessage}
+            </p>
+          )}
+
           <Authentication />
         </div>
       </div>

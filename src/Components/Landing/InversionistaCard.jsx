@@ -1,25 +1,24 @@
 "use client";
 import React, { useState } from "react";
-import "../../../app/globals.css";
+
 import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
 
-const EmprendedorCard = () => {
+const InversionistaCard = () => {
   const [slides, setSlides] = useState([
     {
-      content:
-        "Tailwinds CSS is the only framework that I've seen scale on large teams. It’s easy to customize, adapts to any design, and the build size is tiny.",
-      name: "Diego",
-      job: "Estudiante",
+      content: "Ia , pum , pam . kame kame ha",
+      name: "Enrique",
+      job: "Estudiante de Taekwondo",
     },
     {
-      content: "Esta es la diapositiva 2.",
-      name: "Diego",
-      job: "Estudiante",
+      content: "Lunes otra vez",
+      name: "Charly",
+      job: "Cantante",
     },
     {
-      content: "Esta es la diapositiva 3.",
-      name: "Juan",
-      job: "Estudiante de Mecánica Dental",
+      content: "Ia Ia Ie Oh Oh",
+      name: "Xuxa",
+      job: "Cantante",
     },
   ]);
 
@@ -28,8 +27,6 @@ const EmprendedorCard = () => {
   const handleNextSlide = () => {
     setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
-
-  //comentario
 
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
@@ -41,12 +38,12 @@ const EmprendedorCard = () => {
 
   return (
     <>
-      <h2 className="text-xl md:text-xl text-center font-bold text-black mb-4 shadow-lg">
-        Emprendedores satisfechos
+      <h2 className="text-xl md:text-xl text-center font-bold text-black my-4 shadow-lg">
+        Inversionistas satisfechos
       </h2>
 
-      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4">
+      <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 height: fit-content">
+        <div className="pt-6 md:p-8 text-center md:text-left space-y-4 width: 100% height: 100%">
           <blockquote>
             <p className="text-base font-medium text-white">
               {currentSlide.content}
@@ -84,4 +81,4 @@ const EmprendedorCard = () => {
   );
 };
 
-export default EmprendedorCard;
+export default InversionistaCard;
