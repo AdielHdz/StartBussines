@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk(
     console.log("Datos enviados a la API:", newUser);
 
     try {
-      const response = await axios.post(`http://localhost:3001/user/`, newUser);
+      const response = await axios.post(`http://localhost:3001/user`, newUser);
       
       if (response.data.error && response.data.error === 'User already exists') {
        
@@ -33,7 +33,7 @@ export const registerUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error("Failed to register user", error);
-      throw new Error("Failed to register user");
+      throw new Error("Failed to register user:" + error.message);
     }
   }
 );
