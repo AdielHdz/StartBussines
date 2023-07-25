@@ -1,8 +1,8 @@
 "use client";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { SearchBar } from "./SearchBar";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -14,6 +14,9 @@ function classNames(...classes) {
 };
 
 export default function Navbar() {
+
+  // traer estado de los users para la imagen del icono de perfil
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -35,13 +38,9 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 items-center">
                   <a
                     href="/home"
-                    className="flex text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center"
+                    className="flex text-transparent bg-clip-text bg-gradient-to-r to-sky-50 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center"
                   >
-                    <img
-                      className="h-8 w-auto mr-2"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
+                    
                     <span className="pl-2">Deal Up!</span>
                   </a>
                 </div>
@@ -65,17 +64,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              {/* <SearchBar /> */}
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <button
-                  type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button> */}
-
-                {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">

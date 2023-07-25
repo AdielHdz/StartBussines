@@ -1,12 +1,14 @@
 "use client";
-import { NewProjects } from "../../Components/NewProjects";
+import NewProjects from "../../Components/NewProjects";
 import { SearchProjects } from "../../Components/SearchProjects";
 import { SearchProjectsList } from "../../Components/SearchProjectsList";
-import { TopTenProjects } from "../../Components/TopTenProjects";
+import TopTenProjects from "../../Components/TopTenProjects";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
+  //traer el estado de users para el hacer la vista de emprendedor o inversor (probablemente el localStorage)
+
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
@@ -42,14 +44,14 @@ const Home = () => {
     <div>
       <div className="relative">
         <img
-          src="https://shjlawfirm.com/wp-content/uploads/2022/08/handshake-1024x683.jpeg"
+          src="https://uwm.edu/set/wp-content/uploads/sites/631/2023/04/HandshakeBanner.png"
           alt=""
-          className="w-full h-[39rem] opacity-75"
+          className="w-full h-[27rem] opacity-75"
         />
         <h1 className=" absolute top-[4rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Deal Up!
         </h1>
-        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
         </p>
         {/* <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
@@ -58,19 +60,19 @@ const Home = () => {
             : "Investor"}
         </div> */}{" "}
         {/* esto seria dejar listo el div, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
-        <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
+        <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
           Entrepreneur
         </div>
       </div>
       <div>
         {/* <h1 className="text-blue-500 fw-semibold text-xl text-center">
         {currentUser.user_role === "entrepreneur"
-            ? "¡Get the help you need to start!"
+            ? "¡Get the support you need to start!"
             : "Help to start and win in the way"}
         </h1> */}{" "}
         {/* esto seria dejar listo el h1, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
         <h1 className="text-blue-500 fw-semibold text-xl text-center">
-          ¡Get the help you need to start!
+          Get the support you need to start!
         </h1>
         {/* {currentUser.user_role === "entrepreneur" && (  
           <div className="flex items-center justify-center mt-3">
@@ -82,6 +84,7 @@ const Home = () => {
         )} */}{" "}
         {/* Deje listo la condición para mostrar el botón solo cuando el user_role es "entrepreneur" */}
         <div className="flex items-center justify-center">
+          {/* Link hacia la pagina donde me lleve a crear el proyecto */}
           <button className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
             Start Project
             <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
