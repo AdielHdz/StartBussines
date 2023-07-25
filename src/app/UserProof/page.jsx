@@ -8,14 +8,17 @@ const UserProof = () => {
   console.log(users);
   return (
     <div>
-         <button className="bg-red-400 text-white border border-pink-700  px-10 py-3 w-full" onClick={() => dispatch(filterByAge())}>Filtrar</button>
+      <button
+        className="bg-purple-100 text-white border border-pink-700  px-10 py-3 w-full"
+        onClick={() => dispatch(filterByAge())}
+      >
+        Filtrar
+      </button>
       {users.map((user) => {
         return (
-
           <div key={user.id}>
             <img src={user.avatar} alt="" />
             <h3>{user.name}</h3>
-           
           </div>
         );
       })}
