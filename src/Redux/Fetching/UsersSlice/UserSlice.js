@@ -9,36 +9,37 @@ const users = [
 
 export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
   console.log("Funcionando correctamente");
-  return await fetch("https://reqres.in/api/users")
+  return await axios("https://reqres.in/api/users")
     .then((response) => response.json())
     .then((data) => data.data);
 });
+
+
 
 export const registerUser = createAsyncThunk(
   "registerUser",
   async (newUser) => {
     console.log("Datos enviados a la API:", newUser);
 
-    const response = await fetch(
-      "/Api_dealUp/src/controllers/User/createNewUser.js",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
+    try {
+      const response = await axios.post(`http://localhost:3001/user`, newUser);
+      
+      if (response.data.error && response.data.error === 'User already exists') {
+       
+        throw new Error("User already exists");
       }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to register user");
+      
+      console.log("Datos recibidos de la API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to register user", error);
+      throw new Error("Failed to register user:" + error.message);
     }
-
-    const data = await response.json();
-    console.log("Datos recibidos de la API:", data);
-    return data;
   }
 );
+
+
+
 
 export const getUserById = createAsyncThunk("getUserById", async (id) => {
   const response = await axios.get(`http://localhost:3001/users/${id}`);

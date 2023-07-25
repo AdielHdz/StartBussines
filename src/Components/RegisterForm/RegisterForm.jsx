@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect } from "react";
+
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import {
   validateEmail,
@@ -11,9 +12,8 @@ import {
 import CustomButton from "../../Components/customButton/CustomButton";
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../Redux/Fetching/UsersSlice/UserSlice';
-
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -30,10 +30,14 @@ const RegisterForm = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
+  const [emailExist, setEmailExist] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const onSubmit = (e) => {
+  //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (
       nameError ||
       emailError ||
@@ -44,20 +48,43 @@ const RegisterForm = () => {
       console.log("There are errors in the form");
       return;
     }
-  //aqui error envio
-    dispatch(registerUser({ 
-      name, 
-      email, 
-      dob, 
-      password,
-      confirmPassword,
-    }));
+
+    const rol = "entrepreneur";
+    const fullName = name;
+    const birthdate = dob;
+
+    try {
+      dispatch(
+        registerUser({
+          fullName,
+          email,
+          rol,
+          birthdate,
+          password,
+        })
+      );
+      setSuccessMessage("Registration successful!");
+
+      e.target.reset();
+      setName("");
+      setEmail("");
+      setDob("");
+      setPassword("");
+      setConfirmPassword("");
+      setEmailExist("");
+    } catch (error) {
+      console.error("An error occurred during registration: ", error);
+      if (error.response && error.response.data.error) {
+        setEmailExist(error.response.data.error);
+      } else {
+        setEmailError("Error registering user");
+      }
+    }
   };
-  
 
   const onNameBlur = (e) => {
     const newName = e.target.value;
-    setName (newName);
+    setName(newName);
 
     if (!validateName(newName)) {
       setNameError("Name is invalid");
@@ -93,12 +120,11 @@ const RegisterForm = () => {
 
     const errorMessage = validatePassword(newPassword);
     if (errorMessage) {
-        setPasswordError(errorMessage);
+      setPasswordError(errorMessage);
     } else {
-        setPasswordError("");
+      setPasswordError("");
     }
-};
-
+  };
 
   const onConfirmPasswordBlur = (e) => {
     const newConfirmPassword = e.target.value;
@@ -112,7 +138,7 @@ const RegisterForm = () => {
 
   const onPasswordChange = (e) => {
     const newPassword = e.target.value;
-    setPassword(newPassword)
+    setPassword(newPassword);
     if (newPassword !== confirmPassword) {
       setConfirmPasswordError("Passwords do not match");
     } else {
@@ -138,9 +164,18 @@ const RegisterForm = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const currentPage = "/register";
 
- 
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
+  const currentPage = "/register";
 
   return (
     <div
@@ -216,6 +251,7 @@ const RegisterForm = () => {
                   emailError ? "border-red-500" : "border-white"
                 } mt-3`}
               />
+              {emailExist && <p className="text-red-500">{emailExist}</p>}
               {emailError && <p className="text-red-500">{emailError}</p>}
             </div>
             <div className="flex flex-col mt-3">
@@ -296,6 +332,8 @@ const RegisterForm = () => {
             </div>
             <CustomButton text="Register" color="blue" />
           </form>
+          {successMessage && <p className="text-green-500 text-center uppercase text-xl">{successMessage}</p>}
+
           <Authentication />
         </div>
       </div>
