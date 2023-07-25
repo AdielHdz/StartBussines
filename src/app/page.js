@@ -12,7 +12,7 @@ const Landing = () => {
   const TEXT = {
     title: "DEAL UP!",
     description:
-      "Around the earth there are many people who have excellent business ideas but not all can carry them out, the economic question does not favor us all. That's why Deal Up! connects people who want to generate income while helping others start their ideas. Deal Up! it is a place where investors and entrepreneurs win.",
+      "Around the earth there are many people who have excellent business ideas but not all can carry them out, the economic question does not favor us all. That´s why Deal Up! connects people who want to generate income while helping others start their ideas. Deal Up! it is a place where investors and entrepreneurs win.",
   };
   return (
     <div>
