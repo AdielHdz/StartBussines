@@ -1,5 +1,5 @@
 "use client";
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import {
@@ -24,20 +24,31 @@ const RegisterForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [dobError, setDobError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [nameError, setNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [dobError, setDobError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const [isEntrepreneur, setIsEntrepreneur] = useState(true);
   const [emailExist, setEmailExist] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    const isFormValid =
+    name !== "" &&
+    email !== "" &&
+    dob !== "" &&
+    password !== "" &&
+    confirmPassword !== "";
+  if (!isFormValid) {
+    alert("There are fields that are not completed");
+    return;
+  }
+   
     if (
       nameError ||
       emailError ||
@@ -51,7 +62,7 @@ const RegisterForm = () => {
 
     const rol = "entrepreneur";
     const fullName = name;
-    const birthdate = dob;
+    const birthdate = new Date(dob).toLocaleDateString("es-ES");
 
     try {
       dispatch(
@@ -164,16 +175,45 @@ const RegisterForm = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
-  
+
       return () => clearTimeout(timer);
     }
   }, [successMessage]);
+
+  useEffect(() => {
+    if (
+      name !== "" &&
+      email !== "" &&
+      dob !== "" &&
+      password !== "" &&
+      confirmPassword !== "" &&
+      (nameError === null || nameError === "") &&
+      (emailError === null || emailError === "") &&
+      (dobError === null || dobError === "") &&
+      (passwordError === null || passwordError === "") &&
+      (confirmPasswordError === null || confirmPasswordError === "")
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [
+    name,
+    email,
+    dob,
+    password,
+    confirmPassword,
+    nameError,
+    emailError,
+    dobError,
+    passwordError,
+    confirmPasswordError,
+  ]);
 
   const currentPage = "/register";
 
@@ -312,7 +352,7 @@ const RegisterForm = () => {
                   onBlur={onConfirmPasswordBlur}
                   className={`bg-black bg-opacity-10 p-2 border  ${
                     confirmPasswordError ? "border-red-500" : "border-white"
-                  } mt-3`}
+                  } mt-3 w-full`}
                 />
                 <button
                   type="button"
@@ -330,9 +370,17 @@ const RegisterForm = () => {
                 <p className="text-red-500">{confirmPasswordError}</p>
               )}
             </div>
-            <CustomButton text="Register" color="blue" />
+            <CustomButton
+              text="Register"
+              color="blue"
+              disabled={!isFormValid}
+            />
           </form>
-          {successMessage && <p className="text-green-500 text-center uppercase text-xl">{successMessage}</p>}
+          {successMessage && (
+            <p className="text-green-500 text-center uppercase text-xl">
+              {successMessage}
+            </p>
+          )}
 
           <Authentication />
         </div>
