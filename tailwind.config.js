@@ -1,21 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/Components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#5691FC",
-        secondary: "#65E0C7",
+        primary: "#1C997F",
+        secondary: "#5691FC",
         thirth: "#FFFEC3",
         grayLight: "#EDEDED",
-        grayLightMed: "#B0B0B0",
+        grayLightMedium: "#B0B0B0",
+        darkGray: "#5A5A5A",
         labelRed: "#BA3622",
-        greenPrimary: "#1C997F",
+        redError: "#FF2E2E",
+        greenActive: "#2FB401",
+        yellowWarning: "#D9B704",
+        redBrown: "#851E25",
+        darkViolet: "#520C30",
+        orangeMedium: "#BA3622",
       },
       // Puedes agregar más opciones de opacidad si es necesario
       opacity: {},

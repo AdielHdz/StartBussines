@@ -6,8 +6,7 @@ import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
 const InversionistaCard = () => {
   const [slides, setSlides] = useState([
     {
-      content:
-        "Ia , pum , pam . kame kame ha",
+      content: "Ia , pum , pam . kame kame ha",
       name: "Enrique",
       job: "Estudiante de Taekwondo",
     },
@@ -29,8 +28,6 @@ const InversionistaCard = () => {
     setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
   };
 
-  
-
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
       prevIndex === 0 ? slides.length - 1 : prevIndex - 1
@@ -46,7 +43,7 @@ const InversionistaCard = () => {
       </h2>
 
       <figure className="flex flex-col md:flex-row bg-slate-100 rounded-xl p-4 md:p-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 height: fit-content">
-      <div className="pt-6 md:p-8 text-center md:text-left space-y-4 width: 100% height: 100%">
+        <div className="pt-6 md:p-8 text-center md:text-left space-y-4 width: 100% height: 100%">
           <blockquote>
             <p className="text-base font-medium text-white">
               {currentSlide.content}
@@ -65,7 +62,6 @@ const InversionistaCard = () => {
           </figcaption>
         </div>
 
-
         <div className="flex justify-center mt-4">
           <button
             className="text-2xl text-white font-bold focus:outline-none"
@@ -81,7 +77,6 @@ const InversionistaCard = () => {
           </button>
         </div>
       </figure>
-
     </>
   );
 };

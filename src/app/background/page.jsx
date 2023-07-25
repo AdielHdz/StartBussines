@@ -25,7 +25,7 @@ const Background = () => {
           <label htmlFor="">Email</label>
           <input type="text" className="w-full border-2 border-blue-300" />
         </div>
-        <Image src={Logo} alt="Hola" className="w-52 bg-orange-800" />
+        <Image src={Logo} alt="Hola" className="w-52 bg-red-800" />
       </div>
     </div>
   );

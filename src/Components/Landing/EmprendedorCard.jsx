@@ -41,39 +41,29 @@ const EmprendedorCard = () => {
 
   return (
     <>
-      <h2 className="text-center p-2">Entrepreneur</h2>
+      <h2 className="text-center text-black text-xl p-2">Entrepreneur</h2>
 
-      <figure className=" bg-purple-800  rounded-xl p-4 w-full   shadow-lg hover:shadow-2xl transition-shadow duration-300">
+      <figure className=" rounded-xl p-4 w-2/3l text-gray-400 md:w-1/2  shadow-lg hover:shadow-2xl transition-shadow duration-300">
         <blockquote className="">
-          <p className="text-sm text-white text-center">
-            {currentSlide.content}
-          </p>
+          <p className="text-sm text-center">{currentSlide.content}</p>
         </blockquote>
         <figcaption className="font-medium">
-          <div className="flex items-center justify-center mb-2">
-            <FaUser className="mr-2" />
-            <div className="text-sky-500 dark:text-sky-400">
-              {currentSlide.name}
-            </div>
+          <div className="flex items-center justify-center text-darkViolet mb-2">
+            <FaUser className="mr-2 " />
+            <div className=" ">{currentSlide.name}</div>
           </div>
-          <div className="text-slate-700 dark:text-slate-500">
-            {currentSlide.job}
-          </div>
+          <div className="text-darkViolet text-center">{currentSlide.job}</div>
         </figcaption>
 
         <div className="flex justify-center mt-4">
-          <button
-            className="text-2xl text-white font-bold focus:outline-none"
+          <FaArrowLeft
+            className="inline-block align-text-bottom mr-1 cursor-pointer"
             onClick={handlePreviousSlide}
-          >
-            <FaArrowLeft className="inline-block align-text-bottom mr-1" />
-          </button>
-          <button
-            className="text-2xl text-white font-bold focus:outline-none ml-4"
+          />
+          <FaArrowRight
+            className="inline-block align-text-bottom ml-1 cursor-pointer"
             onClick={handleNextSlide}
-          >
-            <FaArrowRight className="inline-block align-text-bottom ml-1" />
-          </button>
+          />
         </div>
       </figure>
     </>
