@@ -2,8 +2,7 @@ import Image from "next/image";
 import Ilustration from "../../public/asset/imageLanding.png";
 import Logo from "../../public/asset/DealUp.png";
 import SliderCards from "../Components/LandingComponents/SliderCards";
-import EmprendedorCard from "../Components/Landing/EmprendedorCard";
-import InversionistaCard from "../Components/Landing/InversionistaCard";
+import Cards from "../Components/Landing/Cards";
 
 const BACKGROUND_IMAGE_URL =
   "https://images.unsplash.com/photo-1661956602153-23384936a1d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80";
@@ -32,7 +31,11 @@ const Landing = () => {
           </p>
         </div>
 
-        <EmprendedorCard />
+        <div>
+          <h3 className="text-darkGray">History our clients</h3>
+        </div>
+
+        <Cards />
       </div>
 
       <div className="bottom-0 left-0 w-full flex justify-center items-center bg-primary p-4"></div>
