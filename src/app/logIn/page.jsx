@@ -28,7 +28,7 @@ export default function LogIn() {
   const [tokenSession, setTokenSession] = useLocalStorage('token_DealUp', '');
   const [idSession, setIdSession] = useLocalStorage('idSession', '');
   const [userNameSession, setUserNameSession] = useLocalStorage('fullName', '');
-  const [avatarSession, setAvatarSession] = useLocalStorage('avatar', ['']);
+  const [avatarSession, setAvatarSession] = useLocalStorage('avatar', '');
   const [rolSession, setRolSession] = useLocalStorage('rol', '');
   const [savedEmail, setSavedEmail] = useLocalStorage('savedEmail', '');
   const [userSession, setUserSession] = useLocalStorage('userData', {
@@ -53,22 +53,7 @@ export default function LogIn() {
     setErrors(validation({ ...form, [property]: value }));
   };
 
-  useEffect(() => {
-    setUserSession({
-      fullName: '',
-      email: '',
-      rol: '',
-      address: '',
-      password: '',
-      gender: '',
-      birthdate: '',
-      phone: '',
-      country: '',
-      avatar: '',
-      status: '',
-      thirdPartyCreated: null,
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const handlePassword = () => {
     setShowPassword(!showPassword);
