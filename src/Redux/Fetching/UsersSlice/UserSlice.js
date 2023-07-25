@@ -33,6 +33,7 @@ export const registerUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log('Failed to register user:', error.response.data);
+      alert (error.response.data.error); 
     }
   }
 );
