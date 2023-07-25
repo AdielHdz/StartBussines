@@ -1,12 +1,21 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const ProjectRegister = () => {
+  
+  const [userState, setUserState] = useLocalStorage('user', {});
   const [businessName, setBusinessName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [targetAmount, setTargetAmount] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [deadline, setDeadline] = useState(''); // Agregamos el estado para la fecha límite
+  const [description, setDescription] = useState(''); // Agregamos el estado para la descripción
+  const [minAmount, setMinAmount] = useState('');
+  const [maxAmount, setMaxAmount] = useState(''); // Agregamos el estado para el monto máximo
   const [photos, setPhotos] = useState([]);
   const [imageDescriptions, setImageDescriptions] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
 
   const categories = [
     'Art',
@@ -30,33 +39,85 @@ const ProjectRegister = () => {
   const handlePhotoUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-  
+
     reader.onloadend = () => {
       setPhotos((prevPhotos) => [...prevPhotos, reader.result]);
       setImageDescriptions((prevDescriptions) => [...prevDescriptions, '']);
     };
-  
+
     if (file) {
       reader.readAsDataURL(file);
     }
   };
-  
 
   const handleRemovePhoto = (index) => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    const isCategorySelected = selectedCategories.includes(selectedCategory);
+  
+    if (!isCategorySelected && selectedCategory.trim() !== '') {
+      setSelectedCategories((prevCategories) => [...prevCategories, selectedCategory]);
+    } 
+    setSelectedCategory('');
+  };
+
+  function formatDateToBackendFormat(date) {
+    const day = date.slice(8, 10);
+    const month = date.slice(5, 7);
+    const year = date.slice(0, 4);
+    return `${day}/${month}/${year}`;
+  }
+
+  const startDateFormt = formatDateToBackendFormat(startDate);
+  const deadlineFormt = formatDateToBackendFormat(deadline);
+  
+  
+  
+  const id = "df423186-ef36-4910-a42b-31df6c941b8f";
+  const foto ="https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
+
+  console.log("Nombre: ", businessName);
   const handlePostProject = () => {
-    // Aquí puedes enviar los datos, incluyendo las imágenes y descripciones,
-    // al servidor o realizar cualquier otra acción necesaria.
+    const projectData = {
+      name: businessName,
+      description: description,
+      min_amount: minAmount,
+      max_amount: maxAmount,
+      goal_amount: targetAmount,
+      initial_date: startDateFormt,
+      deadline: deadlineFormt,
+      gallery: [],
+      category: selectedCategories,
+      status:"Pending",
+      userId: id
+    };
+
+    console.log("ID USUARIO: ", id );
+    console.log("Lista de categorias: ", selectedCategories);
+
+    axios
+      .post('http://localhost:3001/projects', projectData)
+      .then((response) => {
+        // Aquí puedes manejar la respuesta del backend si es necesario
+        console.log('Proyecto creado exitosamente:', response.data);
+      })
+      .catch((error) => {
+        // Aquí puedes manejar errores, si ocurre algún problema en la solicitud
+        console.error('Error al crear el proyecto:', error);
+      });
   };
   
-
+ 
   return (
     <div className="container mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Project Register</h2>
       <div className="mb-4">
-        <label className="block mb-2 font-bold" htmlFor="businessName">Business Name</label>
+        <label className="block mb-2 font-bold" htmlFor="businessName">
+          Business Name
+        </label>
         <input
           className="w-full px-4 py-2 border rounded-lg"
           type="text"
@@ -66,7 +127,9 @@ const ProjectRegister = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-bold" htmlFor="startDate">Start Date</label>
+        <label className="block mb-2 font-bold" htmlFor="startDate">
+          Start Date
+        </label>
         <input
           className="w-full px-4 py-2 border rounded-lg"
           type="date"
@@ -76,7 +139,9 @@ const ProjectRegister = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-bold" htmlFor="targetAmount">Target Amount</label>
+        <label className="block mb-2 font-bold" htmlFor="targetAmount">
+          Target Amount
+        </label>
         <input
           className="w-full px-4 py-2 border rounded-lg"
           type="number"
@@ -86,12 +151,64 @@ const ProjectRegister = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-bold" htmlFor="category">Categories</label>
+        <label className="block mb-2 font-bold" htmlFor="minAmount">
+          Min Amount
+        </label>
+        <input
+          className="w-full px-4 py-2 border rounded-lg"
+          type="number"
+          id="minAmount"
+          value={minAmount}
+          onChange={(e) => setMinAmount(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 font-bold" htmlFor="maxAmount">
+          Max Amount
+        </label>
+        <input
+          className="w-full px-4 py-2 border rounded-lg"
+          type="number"
+          id="maxAmount"
+          value={maxAmount}
+          onChange={(e) => setMaxAmount(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 font-bold" htmlFor="description">
+          Description
+        </label>
+        <textarea
+          className="w-full px-4 py-2 border rounded-lg"
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 font-bold" htmlFor="deadline">
+          Deadline
+        </label>
+        <input
+          className="w-full px-4 py-2 border rounded-lg"
+          type="date"
+          id="deadline"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2 font-bold" htmlFor="category">
+          Categories
+        </label>
         <select
           className="w-full px-4 py-2 border rounded-lg"
           id="category"
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => {
+            handleCategoryChange(e); // Agregamos esta línea para llamar a la función handleCategoryChange al cambiar la selección
+            setSelectedCategory(e.target.value);
+          }}
         >
           <option value="">Select a category</option>
           {categories.map((category) => (
@@ -100,6 +217,21 @@ const ProjectRegister = () => {
             </option>
           ))}
         </select>
+      </div>
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-2">
+            {selectedCategories.map((category) => (
+              <div key={category} className="bg-gray-200 p-2 rounded-lg">
+                {category}
+                <button
+                  className="ml-2 text-red-500"
+                  onClick={() => setSelectedCategories((prevCategories) => prevCategories.filter((c) => c !== category))}
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-bold">Photos</label>
@@ -114,38 +246,38 @@ const ProjectRegister = () => {
         </div>
         {/* Flexbox container to display images */}
         <div className="flex flex-wrap gap-4">
-        {photos.map((photo, index) => (
+          {photos.map((photo, index) => (
             <div key={index} className="w-full">
-            <div className="relative w-full max-w-full h-64">
+              <div className="relative w-full max-w-full h-64">
                 <img
-                src={photo}
-                alt={`Photo ${index + 1}`}
-                className="w-full h-64 object-cover rounded-lg"
+                  src={photo}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-64 object-cover rounded-lg"
                 />
                 <input
-                type="text"
-                value={imageDescriptions[index]}
-                onChange={(e) => {
+                  type="text"
+                  value={imageDescriptions[index]}
+                  onChange={(e) => {
                     const newDescriptions = [...imageDescriptions];
                     newDescriptions[index] = e.target.value;
                     setImageDescriptions(newDescriptions);
-                }}
-                placeholder="Image Description"
-                className="w-full px-4 py-2 border rounded-lg mt-2 mb-4"
+                  }}
+                  placeholder="Image Description"
+                  className="w-full px-4 py-2 border rounded-lg mt-2 mb-4"
                 />
-            
+
                 <button
-                className="absolute top-2 right-2 text-red-500"
-                onClick={() => handleRemovePhoto(index)}
+                  className="absolute top-2 right-2 text-red-500"
+                  onClick={() => handleRemovePhoto(index)}
                 >
-                X
+                  X
                 </button>
+              </div>
+              <br></br>
+              <br></br>
             </div>
-            <br></br>
-            <br></br>
-            </div>
-        ))}
-                  <label
+          ))}
+          <label
             className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer"
             htmlFor="photo-upload"
           >
@@ -153,14 +285,14 @@ const ProjectRegister = () => {
           </label>
         </div>
         <div className="my-4 mt-8 ">
-        <button
+          <button
             className="px-4 py-2 bg-green-500 text-white rounded-lg"
             onClick={handlePostProject}
-        >
+          >
             Post Project
-        </button>
+          </button>
         </div>
-     </div>
+      </div>
     </div>
   );
 };

@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#1C997F",
-        secondary: "#5691FC",
+        primar: "#1C997F",
+        second: "#5691FC",
         thirth: "#FFFEC3",
         grayLight: "#EDEDED",
         grayLightMedium: "#B0B0B0",
@@ -22,6 +22,30 @@ module.exports = {
         darkViolet: "#520C30",
         orangeMedium: "#BA3622",
       },
+      boxShadow: {
+        cards: "0 0 20px 1px rgba(0,0,0,0.2)",
+      },
+      height: {
+        cards: "10rem",
+        containerCards: "15rem",
+      },
+      width: {
+        allContent: "100%",
+      },
+      minHeight: {
+        cards: "10rem",
+        desktop: "15rem",
+      },
+      maxWidth: {
+        cards: "20rem",
+      },
+      maxHeight: {
+        cards: "15rem",
+      },
+      minWidth: {
+        cards: "20rem",
+      },
+
       // Puedes agregar más opciones de opacidad si es necesario
       opacity: {},
       // Puedes agregar más opciones de fondo de imagen si es necesario

@@ -24,6 +24,7 @@ export default function LogIn() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [errorLogin, setErrorLogin] = useState("");
 
   const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
   const [idSession, setIdSession] = useLocalStorage("idSession", "");
@@ -53,7 +54,9 @@ export default function LogIn() {
     setErrors(validation({ ...form, [property]: value }));
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(errorLogin);
+  }, [errorLogin]);
 
   const handlePassword = () => {
     setShowPassword(!showPassword);
@@ -95,6 +98,7 @@ export default function LogIn() {
       })
       .catch((error) => {
         console.log("Error:", error.response.data);
+        setErrorLogin(error.response.data.error);
       });
   };
 
@@ -110,8 +114,7 @@ export default function LogIn() {
       />
       <div
         className="relative z-20
-            "
-      >
+            ">
         <div className=" p-5 mt-10 mb-10  ">
           <NavigationButtons currentPage="/logIn" />
           <form>
@@ -147,8 +150,7 @@ export default function LogIn() {
                 <button
                   type="button"
                   onClick={handlePassword}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
-                >
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
                   {showPassword ? (
                     <AiFillEye className="w-6 h-6" />
                   ) : (
@@ -156,6 +158,9 @@ export default function LogIn() {
                   )}
                 </button>
               </div>
+              {errorLogin && errorLogin && (
+                <p className="text-red-500 m-0">{errorLogin}</p>
+              )}
             </div>
 
             <CustomButton text="Login" color="blue" onClick={handleClick} />
