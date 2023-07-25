@@ -8,13 +8,12 @@ import InversionistaCard from "../Components/Landing/InversionistaCard";
 const BACKGROUND_IMAGE_URL =
   "https://images.unsplash.com/photo-1661956602153-23384936a1d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80";
 
-const TEXT = {
-  title: "DEAL UP!",
-  description:
-    "Around the earth there are many people who have excellent business ideas but not all can carry them out, the economic question does not favor us all. That's why Deal Up! connects people who want to generate income while helping others start their ideas. Deal Up! it is a place where investors and entrepreneurs win.",
-};
-
 const Landing = () => {
+  const TEXT = {
+    title: "DEAL UP!",
+    description:
+      "Around the earth there are many people who have excellent business ideas but not all can carry them out, the economic question does not favor us all. That's why Deal Up! connects people who want to generate income while helping others start their ideas. Deal Up! it is a place where investors and entrepreneurs win.",
+  };
   return (
     <div>
       <div className=" flex flex-col justify-center items-center py-10">
