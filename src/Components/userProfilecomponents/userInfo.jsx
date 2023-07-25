@@ -6,7 +6,7 @@ export default function UserInfo({ user }) {
     <div>
       <div>
         <p className="text-labelRed m-0">Name</p>
-        <p className="rounded bg-grayLight h-10 w-full pt-2">{user.name}</p>
+        <p className="rounded bg-grayLight h-10 w-full pt-2">{user.fullName}</p>
       </div>
       <div>
         <p className="text-labelRed m-0">Email</p>

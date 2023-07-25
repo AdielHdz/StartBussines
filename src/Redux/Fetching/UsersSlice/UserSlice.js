@@ -14,8 +14,6 @@ export const getAllUsers = createAsyncThunk("getAllUsers", async () => {
     .then((data) => data.data);
 });
 
-
-
 export const registerUser = createAsyncThunk(
   "registerUser",
   async (newUser) => {
@@ -23,12 +21,14 @@ export const registerUser = createAsyncThunk(
 
     try {
       const response = await axios.post(`http://localhost:3001/user`, newUser);
-      
-      if (response.data.error && response.data.error === 'User already exists') {
-       
+
+      if (
+        response.data.error &&
+        response.data.error === "User already exists"
+      ) {
         throw new Error("User already exists");
       }
-      
+
       console.log("Datos recibidos de la API:", response.data);
       return response.data;
     } catch (error) {
@@ -38,12 +38,9 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
-
-
 export const getUserById = createAsyncThunk("getUserById", async (id) => {
-  const response = await axios.get(`http://localhost:3001/users/${id}`);
-  return response.data[0];
+  const response = await axios.get(`http://localhost:3001/user/${id}`);
+  return response.data;
 });
 
 const User = createSlice({
