@@ -33,7 +33,7 @@ const RegisterForm = () => {
   const [emailExist, setEmailExist] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  //! FALTA EL MENSAJE FAILED MENSSAGE DESPÚES DE ENVIAR EL FORM
+  //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const RegisterForm = () => {
     const birthdate = dob;
 
     try {
-      await dispatch(
+      dispatch(
         registerUser({
           fullName,
           email,
