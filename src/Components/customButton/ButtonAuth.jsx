@@ -6,7 +6,7 @@ const ButtonAuth = ({ text, doThis, rute }) => {
   return (
     <button
       onClick={() => doThis(router, rute)}
-      className="bg-primar text-whites rounded-sm   hover:bg-whites hover:shadow-cards hover:text-orangeMedium transition duration-300 w-full h-full py-2 "
+      className="bg-primar text-whites rounded-sm   hover:bg-orangeMedium  hover:text-whites transition duration-300 w-full h-full  "
     >
       {text}
     </button>
