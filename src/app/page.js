@@ -17,7 +17,7 @@ const Landing = () => {
       </div>
 
       <div className="mb-10 flex items-center justify-center">
-        <p className=" text-center font-medium md:w-1/2">
+        <p className=" text-center font-medium md:w-1/2 px-3 text-sm">
           Around the earth there are many people who have excellent business
           ideas but not all can carry them out, the economic question does not
           favor us all.

@@ -11,7 +11,8 @@ import NavigationButtons from "../../Components/NavigationButtons/NavigationButt
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
+import ButtonAuth from "../../Components/customButton/ButtonAuth";
+import background from "../../../public/asset/backgroundLogin.jpg";
 export default function LogIn() {
   const router = useRouter();
 
@@ -103,71 +104,74 @@ export default function LogIn() {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center text-white ">
-      <div className=" absolute z-10 w-full h-full bg-black opacity-30"></div>
-      <Image
-        src={Background}
-        alt="background"
-        width={0}
-        height={0}
-        className="absolute top-0 h-full w-full object-cover"
-      />
+    <div className="h-screen flex items-center justify-center p-2 ">
       <div
-        className="relative z-20
-            ">
-        <div className=" p-5 mt-10 mb-10  ">
-          <NavigationButtons currentPage="/logIn" />
-          <form>
-            <div className="flex flex-col mt-9">
-              <label htmlFor="email" className="text-white ">
-                Email
-              </label>
+        className="w-full md:max-w-registerMd max-w-registerXs md:shadow-cards bg-whites rounded-xl 
+            "
+      >
+        <NavigationButtons currentPage="/logIn" />
+        <form className=" flex flex-col gap-2 p-2 rounded-xl ">
+          <div className="flex flex-col gap-1 ">
+            <label htmlFor="email" className="text-orangeMedium text-sm ">
+              Email
+            </label>
+            <div>
               <input
                 type="email"
                 name="email"
                 placeholder="Type here..."
                 onChange={handleChange}
-                className={`bg-black bg-opacity-30 p-2 border ${
-                  error.email ? "border-red-500" : "border-white"
-                } mt-3  text-white w-full`}
+                className={`pl-1 h-10 border-2 rounded-md outline-none  ${
+                  error.email
+                    ? "border-redError"
+                    : " border-grayLightMedium focus:border-orangeMedium"
+                }  text-darkViolet font-medium text-xs placeholder:text-xs placeholder:font-light w-full`}
               />
-              {error.email && <p className="text-red-500">{error.email}</p>}
-            </div>
-
-            <div className="flex flex-col mt-3">
-              <label htmlFor="password" className="text-white">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Type here..."
-                  onChange={handleChange}
-                  className="bg-black bg-opacity-30 p-2 border border-white  text-white w-full"
-                />
-                <button
-                  type="button"
-                  onClick={handlePassword}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-                  {showPassword ? (
-                    <AiFillEye className="w-6 h-6" />
-                  ) : (
-                    <AiFillEyeInvisible className="w-6 h-6" />
-                  )}
-                </button>
-              </div>
-              {errorLogin && errorLogin && (
-                <p className="text-red-500 m-0">{errorLogin}</p>
+              {error.email && (
+                <p className=" text-redError text-xs py-1 m-0">{error.email}</p>
               )}
             </div>
+          </div>
 
-            <CustomButton text="Login" color="blue" onClick={handleClick} />
+          <div className="flex flex-col gap-1 ">
+            <label htmlFor="password" className="text-orangeMedium text-sm ">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                /*  id="password" */
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Type here..."
+                onChange={handleChange}
+                className={`pl-1 h-10 border-2 rounded-md outline-none   border-grayLightMedium focus:border-orangeMedium
+                text-darkViolet font-medium text-xs placeholder:text-xs placeholder:font-light w-full`}
+              />
+              <div
+                type="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white"
+              >
+                {showPassword ? (
+                  <AiFillEye
+                    className="text-xl text-blacks"
+                    onClick={handlePassword}
+                  />
+                ) : (
+                  <AiFillEyeInvisible
+                    className="text-xl text-blacks"
+                    onClick={handlePassword}
+                  />
+                )}
+              </div>
+            </div>
+            {errorLogin && errorLogin && (
+              <p className="text-red-500 m-0">{errorLogin}</p>
+            )}
+          </div>
+          <ButtonAuth text={"Login"} doThis={handleClick} />
 
-            <Authentication />
-          </form>
-        </div>
+          <Authentication />
+        </form>
       </div>
     </div>
   );

@@ -40,6 +40,8 @@ module.exports = {
       },
       maxWidth: {
         cards: "20rem",
+        registerMd: "30rem",
+        registerXs: "30rem",
       },
       maxHeight: {
         cards: "15rem",
