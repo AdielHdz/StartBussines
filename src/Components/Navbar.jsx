@@ -3,6 +3,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useRouter } from "next/navigation";
+
 // import { SearchBar } from "./SearchBar";
 
 const navigation = [
@@ -15,7 +17,26 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const router = useRouter();
+  const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
   const [idSession, setIdSession] = useLocalStorage("idSession", "");
+  const [userNameSession, setUserNameSession] = useLocalStorage("fullName", "");
+  const [avatarSession, setAvatarSession] = useLocalStorage("avatar", "");
+  const [rolSession, setRolSession] = useLocalStorage("rol", "");
+  const [savedEmail, setSavedEmail] = useLocalStorage("savedEmail", "");
+
+  const signOutHandler = () => {
+    setTokenSession("");
+    setIdSession("");
+    setUserNameSession("");
+    setAvatarSession([""]);
+    setRolSession("");
+    localStorage.removeItem("userData");
+    router.push("/logIn");
+  };
+  const profileHandler = () => {
+    router.push(`/userProfile/${idSession}`);
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -99,26 +120,26 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href={`/userProfile/${idSession}`}
+                          <button
+                            onClick={profileHandler}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}>
                             Profile
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={signOutHandler}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}>
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

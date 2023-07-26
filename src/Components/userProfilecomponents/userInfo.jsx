@@ -28,10 +28,7 @@ export default function UserInfo({ form }) {
         <p className="text-labelRed m-0">Country</p>
         <p className="rounded bg-grayLight h-10 w-full pt-2">{form.country}</p>
       </div>
-      <div>
-        <p className="text-labelRed m-0">Address</p>
-        <p className="rounded bg-grayLight h-10 w-full pt-2">{form.address}</p>
-      </div>
+
       {/* <Image  alt="front" />
       <Image alt="back" /> */}
     </div>
