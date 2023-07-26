@@ -15,6 +15,7 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.user.userDetail);
+  const dispatch = useDispatch();
 
   const [idSession, setIdSession] = useLocalStorage("idSession", "");
   const [userSession, setUserSession] = useLocalStorage("userData", {
@@ -31,7 +32,6 @@ export default function UserProfile() {
     status: "",
     thirdPartyCreated: null,
   });
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -57,7 +57,6 @@ export default function UserProfile() {
         birthdate: userSession.birthdate,
         phone: userSession.phone,
         country: userSession.country,
-        address: userSession.address,
       });
     }
   }, [userSession]);
@@ -200,19 +199,6 @@ export default function UserProfile() {
                 />
               </div>
 
-              <div className="flex flex-col mt-3">
-                <label htmlFor="address" className="text-labelRed">
-                  Address
-                </label>
-                <input
-                  name="address"
-                  type="address"
-                  className="rounded bg-grayLight h-10"
-                  onChange={handleChange}
-                  disabled={inputsDisabled}
-                  value={form.address}
-                />
-              </div>
               {/* <div className="mt-3">
                 <label htmlFor="" className="text-labelRed ">
                   ID photo
