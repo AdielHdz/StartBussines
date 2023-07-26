@@ -33,23 +33,29 @@ export const validateEmail = (email) => {
   //cambiar esta
   //caracter especial 
   export const validatePassword = (password) => {
-    // Validar que la contraseña contenga al menos una mayúscula, una minúscula y un número
+    const errors = [];
     const uppercaseRegex = /[A-Z]/;
     const lowercaseRegex = /[a-z]/;
     const numberRegex = /[0-9]/;
     const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  
     if (password.length < 6) {
-      return "Password must be at least 6 characters";
-  } else if (!uppercaseRegex.test(password)) {
-      return "Password must contain at least one uppercase letter";
-  } else if (!lowercaseRegex.test(password)) {
-      return "Password must contain at least one lowercase letter";
-  } else if (!numberRegex.test(password)) {
-      return "Password must contain at least one number";
-  } else if (!specialCharacterRegex.test(password)) {
-      return "Password must contain at least one special character";
-  }
-
-  return "";
-};
+      errors.push("Password must be at least 6 characters");
+    }
+    if (!uppercaseRegex.test(password)) {
+      errors.push("Password must contain at least one uppercase letter");
+    }
+    if (!lowercaseRegex.test(password)) {
+      errors.push("Password must contain at least one lowercase letter");
+    }
+    if (!numberRegex.test(password)) {
+      errors.push("Password must contain at least one number");
+    }
+    if (!specialCharacterRegex.test(password)) {
+      errors.push("Password must contain at least one special character");
+    }
+  
+    return errors.join(", ");
+  };
+  
   
