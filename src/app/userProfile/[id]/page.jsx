@@ -7,46 +7,68 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 import UserInfo from "../../../Components/userProfilecomponents/userInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "next/navigation";
 import { getUserById } from "../../../Redux/Fetching/UsersSlice/UserSlice";
 import axios from "axios";
 import { updateUser } from "../../../Redux/Fetching/UsersSlice/UserSlice";
 import validation from "../../../Components/userProfilecomponents/validations";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+
 export default function UserProfile() {
   const user = useSelector((state) => state.user.userDetail);
-
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState({});
-  const [error, setErrors] = useState({});
-  console.log(id);
 
+  const [idSession, setIdSession] = useLocalStorage("idSession", "");
+  const [userSession, setUserSession] = useLocalStorage("userData", {
+    fullName: "",
+    email: "",
+    rol: "",
+    address: "",
+    password: "",
+    gender: "",
+    birthdate: "",
+    phone: "",
+    country: "",
+    avatar: "",
+    status: "",
+    thirdPartyCreated: null,
+  });
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    address: "",
+    birthdate: "",
+    phone: "",
+    country: "",
+  });
+  const [error, setErrors] = useState({});
   const [inputsDisabled, setInputsDisabled] = useState(true);
   const [changesSaved, setChangesSaved] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserById(id));
+    dispatch(getUserById(idSession));
   }, [dispatch]);
 
   useEffect(() => {
-    if (user) {
-      setUserData({
-        name: user.name,
-        email: user.email,
-        rol: user.rol,
-        birthdate: user.birthdate,
-        phone: user.phone,
-        address: user.address,
+    if (userSession) {
+      setForm({
+        fullName: userSession.fullName,
+        email: userSession.email,
+        rol: userSession.rol,
+        birthdate: userSession.birthdate,
+        phone: userSession.phone,
+        country: userSession.country,
       });
     }
-  }, [user]);
+  }, [userSession]);
+
+  console.log(userSession);
 
   const handleChange = (event) => {
     event.preventDefault();
     const property = event.target.name;
     const value = event.target.value;
-    setUserData({ ...userData, [property]: value });
-    setErrors(validation({ ...userData, [property]: value }));
+    setForm({ ...form, [property]: value });
+    setErrors(validation({ ...form, [property]: value }));
     setChangesSaved(false);
   };
   const toggleInputs = (event) => {
@@ -61,14 +83,15 @@ export default function UserProfile() {
     event.preventDefault();
 
     axios
-      .put(`http://localhost:3001/users/${id}`, userData)
+      .put(`http://localhost:3001/user/${idSession}`, form)
       .then((res) => {
         alert("Edited!");
         setInputsDisabled(true);
         setChangesSaved(true);
-        dispatch(updateUser(userData));
+        dispatch(updateUser(form));
+        setUserSession(form);
       })
-      .catch((err) => console.log(err.response.data));
+      .catch((err) => alert("Sorry, try again"));
   };
 
   return (
@@ -96,12 +119,12 @@ export default function UserProfile() {
           <hr className="border-black" />
 
           {inputsDisabled ? (
-            <UserInfo user={user} />
+            <UserInfo form={form} />
           ) : (
             <form action="">
               <div className="flex flex-col mt-3">
                 <label htmlFor="name" className="text-labelRed">
-                  Name
+                  Fullname
                 </label>
                 <input
                   name="name"
@@ -109,7 +132,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.name}
+                  value={form.fullName}
                 />
                 {error.name && <p className="text-red-500">{error.name}</p>}
               </div>
@@ -124,7 +147,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.email}
+                  value={form.email}
                 />
                 {error.email && <p className="text-red-500">{error.email}</p>}
               </div>
@@ -138,7 +161,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.birthdate}
+                  value={form.birthdate}
                 />
                 {error.birthdate && (
                   <p className="text-red-500">{error.birthdate}</p>
@@ -158,23 +181,24 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.phone}
+                  value={form.phone}
                 />
                 {error.phone && <p className="text-red-500">{error.phone}</p>}
               </div>
               <div className="flex flex-col mt-3">
                 <label htmlFor="address" className="text-labelRed">
-                  Address
+                  Country
                 </label>
                 <input
-                  name="address"
-                  type="address"
+                  name="country"
+                  type="country"
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userData.address}
+                  value={form.country}
                 />
               </div>
+
               {/* <div className="mt-3">
                 <label htmlFor="" className="text-labelRed ">
                   ID photo
