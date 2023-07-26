@@ -1,8 +1,8 @@
 "use client";
-import NewProjects from "../../Components/NewProjects";
-import { SearchProjects } from "../../Components/SearchProjects";
-import { SearchProjectsList } from "../../Components/SearchProjectsList";
-import TopTenProjects from "../../Components/TopTenProjects";
+import NewProjects from "../../Components/HomeSlides/NewProjects";
+import { SearchProjects } from "../../Components/SearchBar/SearchProjects";
+import { SearchProjectsList } from "../../Components/SearchBar/SearchProjectsList";
+import TopTenProjects from "../../Components/HomeSlides/TopTenProjects";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useRef, useState } from "react";
 import Modal from '../../Components/Modal/Modal';
