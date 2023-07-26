@@ -10,12 +10,12 @@ const CardClients = ({ name, content, job }) => {
             alt="avatar"
             className="absolute left-2 top-2 w-12 h-12 object-cover rounded-full"
           />
-          <h5 className="font-medium text-lg text-darkViolet">{name}</h5>
+          <h5 className="font-medium  text-darkViolet">{name}</h5>
         </div>
       </figcaption>
-      <p className="text-darkGray text-center font-normal">{job}</p>
+      <p className="text-darkGray text-center text-xs font-normal">{job}</p>
       <blockquote className="">
-        <p className=" text-center font-normal text-xs">
+        <p className=" text-darkGray text-center font-normal text-xs">
           {content.length > 80 ? content.substring(0, 80) + "..." : content}
         </p>
       </blockquote>
