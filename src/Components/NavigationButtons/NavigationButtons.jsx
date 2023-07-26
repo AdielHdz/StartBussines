@@ -14,13 +14,13 @@ const NavigationButtons = ({ currentPage }) => {
           href="/"
           className="absolute pl-2 h-full flex justify-start items-center "
         >
-          <FiArrowLeft className="text-3xl text-primar hover:text-orangeMedium " />
+          <FiArrowLeft className="text-3xl text-second hover:text-orangeMedium " />
         </Link>
         <div className="flex items-center justify-center">
           <Image
             src="/asset/DealUp.png"
             alt="logo"
-            className=" w-1/2"
+            className=" w-2/3"
             width={2000}
             height={2000}
           />
@@ -32,8 +32,8 @@ const NavigationButtons = ({ currentPage }) => {
           href="/register"
           className={`${
             isSignUp
-              ? "font-medium no-underline text-darkGray cursor-default"
-              : "font-normal text-sm text-second hover:text-orangeMedium "
+              ? "font-medium text-lg no-underline text-darkGray cursor-default"
+              : "font-normal  text-second hover:text-orangeMedium "
           } `}
         >
           Sign Up
@@ -43,8 +43,8 @@ const NavigationButtons = ({ currentPage }) => {
           href="/logIn"
           className={`${
             isSignIn
-              ? "font-medium no-underline text-darkGray cursor-default"
-              : "font-normal text-sm text-second hover:text-orangeMedium"
+              ? "font-medium text-lg no-underline text-darkGray cursor-default"
+              : "font-normal  text-second hover:text-orangeMedium"
           }  `}
         >
           Sign In

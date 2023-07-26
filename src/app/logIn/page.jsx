@@ -110,9 +110,9 @@ export default function LogIn() {
             "
       >
         <NavigationButtons currentPage="/logIn" />
-        <form className=" flex flex-col gap-2 p-2 rounded-xl ">
+        <form className=" flex flex-col gap-3 p-2 rounded-xl ">
           <div className="flex flex-col gap-1 ">
-            <label htmlFor="email" className="text-orangeMedium text-sm ">
+            <label htmlFor="email" className="text-orangeMedium  ">
               Email
             </label>
             <div>
@@ -121,11 +121,9 @@ export default function LogIn() {
                 name="email"
                 placeholder="Type here..."
                 onChange={handleChange}
-                className={`pl-1 h-10 border-2 rounded-md outline-none  ${
-                  error.email
-                    ? "border-redError"
-                    : " border-grayLightMedium focus:border-orangeMedium"
-                }  text-darkViolet font-medium text-xs placeholder:text-xs placeholder:font-light w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                  error.email ? "border-redError" : " border-grayLightMedium "
+                }  text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
               />
               {error.email && (
                 <p className=" text-redError text-xs py-1 m-0">{error.email}</p>
@@ -134,7 +132,7 @@ export default function LogIn() {
           </div>
 
           <div className="flex flex-col gap-1 ">
-            <label htmlFor="password" className="text-orangeMedium text-sm ">
+            <label htmlFor="password" className="text-orangeMedium  ">
               Password
             </label>
             <div className="relative">
@@ -144,8 +142,8 @@ export default function LogIn() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Type here..."
                 onChange={handleChange}
-                className={`pl-1 h-10 border-2 rounded-md outline-none   border-grayLightMedium focus:border-orangeMedium
-                text-darkViolet font-medium text-xs placeholder:text-xs placeholder:font-light w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none   border-grayLightMedium 
+                text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
               />
               <div
                 type="button"
@@ -168,7 +166,9 @@ export default function LogIn() {
               <p className="text-red-500 m-0">{errorLogin}</p>
             )}
           </div>
-          <ButtonAuth text={"Login"} doThis={handleClick} />
+          <div className="h-12 w-full">
+            <ButtonAuth text={"Login"} doThis={handleClick} />
+          </div>
 
           <Authentication />
         </form>
