@@ -26,6 +26,7 @@ module.exports = {
       },
       boxShadow: {
         cards: "0 0 20px 1px rgba(0,0,0,0.2)",
+        cardsInset: "inset 0 0 20px 1px rgba(0,0,0,0.2)",
       },
       height: {
         cards: "10rem",

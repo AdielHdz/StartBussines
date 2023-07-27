@@ -15,6 +15,8 @@ import NavigationButtons from "../NavigationButtons/NavigationButtons";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
 import SelectWay from "../SelectWay/SelectWay";
+import ButtonAuth from "../customButton/ButtonAuth";
+import { useRouter } from "next/navigation";
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -35,6 +37,7 @@ const RegisterForm = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
+  const router = useRouter();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -75,8 +78,9 @@ const RegisterForm = () => {
         })
       );
       setSuccessMessage("Registration successful!");
+      router.push("/home");
 
-      e.target.reset();
+      /* e.target.reset(); */
       setName("");
       setEmail("");
       setDob("");
@@ -218,20 +222,15 @@ const RegisterForm = () => {
   const currentPage = "/register";
 
   return (
-    <div className=" border-2 border-green-800 flex justify-center items-center ">
-      <div className=" p-2  rounded border-2 border-green-400 text-white w-full md:max-w-registerMd">
+    <div className="py-20 flex justify-center items-center ">
+      <div className="p-4  md:shadow-cards max-w-md rounded-xl">
         <NavigationButtons currentPage={currentPage} />
-        <div className="flex justify-center items-center border-2 border-red-600 p-2">
-          <SelectWay entrepreneur={"active"} />
-          <SelectWay investor={"active"} />
+        <div className="flex justify-center items-center gap-3 rounded-xl py-2">
+          <SelectWay />
         </div>
-
-        <form
-          onSubmit={onSubmit}
-          className="max-w-md mx-auto border-2 border-purple-500"
-        >
-          <div className="flex flex-col mt-3">
-            <label htmlFor="name" className="text-white">
+        <form onSubmit={onSubmit} className="max-w-md   flex flex-col gap-2">
+          <div className="flex flex-col gap-1 mt-3">
+            <label htmlFor="name" className="text-orangeMedium  ">
               Full Name
             </label>
             <input
@@ -240,14 +239,16 @@ const RegisterForm = () => {
               value={name}
               onChange={onNameChange}
               onBlur={onNameBlur}
-              className={`bg-black bg-opacity-10 p-2 border ${
-                nameError ? "border-red-500" : "border-white"
-              } mt-2`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                nameError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {nameError && <p className="text-red-500">{nameError}</p>}
+            {nameError && (
+              <p className=" text-redError text-xs py-1 m-0">{nameError}</p>
+            )}
           </div>
-          <div className="flex flex-col mt-3">
-            <label htmlFor="email" className="text-white">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="email" className="text-orangeMedium  ">
               Email
             </label>
             <input
@@ -256,15 +257,19 @@ const RegisterForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={onEmailBlur}
-              className={`bg-black bg-opacity-10 p-2 border ${
-                emailError ? "border-red-500" : "border-white"
-              } mt-3`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                emailError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {emailExist && <p className="text-red-500">{emailExist}</p>}
-            {emailError && <p className="text-red-500">{emailError}</p>}
+            {emailExist && (
+              <p className=" text-redError text-xs py-1 m-0">{emailExist}</p>
+            )}
+            {emailError && (
+              <p className=" text-redError text-xs py-1 m-0">{emailError}</p>
+            )}
           </div>
-          <div className="flex flex-col mt-3">
-            <label htmlFor="dob" className="text-white">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="dob" className="text-orangeMedium  ">
               Date of Birth
             </label>
             <input
@@ -273,14 +278,16 @@ const RegisterForm = () => {
               value={dob}
               onChange={(e) => setDob(e.target.value)}
               onBlur={onDobBlur}
-              className={`bg-black bg-opacity-10 p-2 border ${
-                dobError ? "border-red-500" : "border-white"
-              } mt-3`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                dobError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {dobError && <p className="text-red-500">{dobError}</p>}
+            {dobError && (
+              <p className=" text-redError text-xs py-1 m-0">{dobError}</p>
+            )}
           </div>
-          <div className="flex flex-col mt-3">
-            <label htmlFor="password" className="text-white">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="password" className="text-orangeMedium  ">
               Password
             </label>
             <div className="relative">
@@ -290,26 +297,28 @@ const RegisterForm = () => {
                 value={password}
                 onChange={onPasswordChange}
                 onBlur={onPasswordBlur}
-                className={`bg-black bg-opacity-10 p-2 border ${
-                  passwordError ? "border-red-500" : "border-white"
-                } mt-3 w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                  passwordError ? "border-redError" : " border-grayLightMedium "
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute right-1 top-8 transform -translate-y-1/2 "
+                className="absolute  transform top-2.5 right-2 text-orangeMedium "
               >
                 {showPassword ? (
-                  <AiFillEyeInvisible className="w-6 h-6" />
+                  <AiFillEyeInvisible className="text-3xl " />
                 ) : (
-                  <AiFillEye className="w-6 h-6" />
+                  <AiFillEye className="text-3xl " />
                 )}
               </button>
             </div>
-            {passwordError && <p className="text-red-500">{passwordError}</p>}
+            {passwordError && (
+              <p className=" text-redError text-xs py-1 m-0">{passwordError}</p>
+            )}
           </div>
-          <div className="flex flex-col mt-3">
-            <label htmlFor="confirmPassword" className="text-white">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="confirmPassword" className="text-orangeMedium  ">
               Confirm Password
             </label>
             <div className="relative">
@@ -319,28 +328,39 @@ const RegisterForm = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 onBlur={onConfirmPasswordBlur}
-                className={`bg-black bg-opacity-10 p-2 border  ${
-                  confirmPasswordError ? "border-red-500" : "border-white"
-                } mt-3 w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                  confirmPasswordError
+                    ? "border-redError"
+                    : " border-grayLightMedium "
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <button
                 type="button"
                 onClick={toggleConfirmPasswordVisibility}
-                className="absolute right-1 top-8 transform -translate-y-1/2 "
+                className="absolute   transform top-2.5 right-2   text-orangeMedium "
               >
                 {showConfirmPassword ? (
-                  <AiFillEyeInvisible className="w-6 h-6" />
+                  <AiFillEyeInvisible className="text-3xl " />
                 ) : (
-                  <AiFillEye className="w-6 h-6" />
+                  <AiFillEye className="text-3xl " />
                 )}
               </button>
             </div>
             {confirmPasswordError && (
-              <p className="text-red-500">{confirmPasswordError}</p>
+              <p className=" text-redError text-xs py-1 m-0">
+                {confirmPasswordError}
+              </p>
             )}
           </div>
-          <CustomButton text="Register" color="blue" disabled={!isFormValid} />
+          <div className="h-12">
+            <ButtonAuth
+              text={"Register"}
+              doThis={onSubmit}
+              disabled={!isFormValid}
+            />
+          </div>
         </form>
+
         {successMessage && (
           <p className="text-green-500 text-center uppercase text-xl">
             {successMessage}

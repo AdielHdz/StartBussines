@@ -1,35 +1,28 @@
-import Image from "next/image";
-import IconEntrepreneur from "./entrepreneurIcon.svg";
-import IconInvestor from "./investorIcon.svg";
+import OptionEntrepreneur from "./OptionEntrepreneur";
+import OptionInvestor from "./OptionInvestor";
+import { useState } from "react";
 
-const SelectWay = ({ entrepreneur, investor }) => {
-  if (entrepreneur) {
-    return (
-      <button className="flex flex-col items-center justify-center border text-blacks hover:shadow-cards hover:scale-105 transform transition-all duration-200 rounded-xl p-2 w-32">
-        <Image
-          src={IconEntrepreneur}
-          alt="icons"
-          width={1000}
-          height={1000}
-          className="w-24 h-28 object-cover "
-        />
-        <h5 className="text-sm w-full text-center">Entrepreneur</h5>
-      </button>
-    );
-  } else if (investor) {
-    return (
-      <button className="flex flex-col items-center justify-center border text-blacks hover:shadow-cards hover:scale-105 transform transition-all duration-200 rounded-xl w-32  h-40">
-        <Image
-          src={IconInvestor}
-          alt="icons"
-          width={1000}
-          height={1000}
-          className=" w-20 h-20 object-cover "
-        />
-        <h5 className="text-sm w-full text-center">Investor</h5>
-      </button>
-    );
-  }
+const SelectWay = () => {
+  const [enIsActive, setEntrepreneur] = useState(false);
+  const [inIsActive, setInvestor] = useState(false);
+
+  const handleEntrepreneur = () => {
+    setEntrepreneur(!enIsActive);
+    setInvestor(false);
+  };
+  const handleInvestor = () => {
+    setInvestor(!inIsActive);
+    setEntrepreneur(false);
+  };
+  return (
+    <>
+      <OptionEntrepreneur
+        selected={enIsActive}
+        handleEntrepreneur={handleEntrepreneur}
+      />
+      <OptionInvestor selected={inIsActive} handleInvestor={handleInvestor} />
+    </>
+  );
 };
 
 export default SelectWay;
