@@ -85,7 +85,9 @@ const Home = () => {
         </h1> */}
         {rolSession === "entrepreneur" && (
           <div className="flex items-center justify-center mt-3">
-            <button className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
+            <button
+              className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+              onClick={handleOpenModal}>
               Start Project
               <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
             </button>
