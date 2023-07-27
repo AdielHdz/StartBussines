@@ -69,7 +69,7 @@ const Home = () => {
         <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
         </p>
-        <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
+        <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
         {/* esto seria dejar listo el div, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
