@@ -48,7 +48,7 @@ export default function LogIn() {
     thirdPartyCreated: null,
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event, form) => {
     const property = event.target.name;
     const value = event.target.value;
     setForm({ ...form, [property]: value });
@@ -123,7 +123,7 @@ export default function LogIn() {
                 onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none  ${
                   error.email ? "border-redError" : " border-grayLightMedium "
-                }  text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               {error.email && (
                 <p className=" text-redError text-xs py-1 m-0">{error.email}</p>
@@ -143,7 +143,7 @@ export default function LogIn() {
                 placeholder="Type here..."
                 onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none   border-grayLightMedium 
-                text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
+                text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <div
                 type="button"
@@ -167,7 +167,7 @@ export default function LogIn() {
             )}
           </div>
           <div className="h-12 w-full">
-            <ButtonAuth text={"Login"} doThis={handleClick} />
+            <ButtonAuth text={"Login"} doThis={handleClick} form={form} />
           </div>
 
           <Authentication />
