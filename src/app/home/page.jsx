@@ -9,7 +9,9 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../../Components/Modal/Modal";
 import ProjectRegister from "../../Components/ProjectRegister/ProjectRegister";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+
 const Home = () => {
+  
   const [rolSession, setRolSession] = useLocalStorage("rol", "");
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
