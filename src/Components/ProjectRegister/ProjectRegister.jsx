@@ -175,6 +175,7 @@ const ProjectRegister = () => {
           id="targetAmount"
           value={targetAmount}
           onChange={(e) => setTargetAmount(e.target.value)}
+          min={1}
         />
       </div>
       <div className="mb-4">
@@ -187,6 +188,7 @@ const ProjectRegister = () => {
           id="minAmount"
           value={minAmount}
           onChange={(e) => setMinAmount(e.target.value)}
+          min={1}
         />
       </div>
       <div className="mb-4">
