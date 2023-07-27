@@ -51,6 +51,7 @@ export default function LogIn() {
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
+
     setForm({ ...form, [property]: value });
     setErrors(validation({ ...form, [property]: value }));
   };
@@ -63,7 +64,7 @@ export default function LogIn() {
     setShowPassword(!showPassword);
   };
 
-  const handleClick = (event) => {
+  const handleClick = (event, form) => {
     event.preventDefault();
     console.log(form);
 
@@ -107,8 +108,7 @@ export default function LogIn() {
     <div className="h-screen flex items-center justify-center p-2 ">
       <div
         className="w-full md:max-w-registerMd max-w-registerXs md:shadow-cards bg-whites rounded-xl 
-            "
-      >
+            ">
         <NavigationButtons currentPage="/logIn" />
         <form className=" flex flex-col gap-3 p-2 rounded-xl ">
           <div className="flex flex-col gap-1 ">
@@ -117,13 +117,14 @@ export default function LogIn() {
             </label>
             <div>
               <input
+                value={form.email}
                 type="email"
                 name="email"
                 placeholder="Type here..."
                 onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none  ${
                   error.email ? "border-redError" : " border-grayLightMedium "
-                }  text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               {error.email && (
                 <p className=" text-redError text-xs py-1 m-0">{error.email}</p>
@@ -138,17 +139,17 @@ export default function LogIn() {
             <div className="relative">
               <input
                 /*  id="password" */
+                value={form.password}
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Type here..."
                 onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none   border-grayLightMedium 
-                text-darkViolet font-medium text-xs placeholder:text-sm placeholder:font-light w-full`}
+                text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <div
                 type="button"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white"
-              >
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white">
                 {showPassword ? (
                   <AiFillEye
                     className="text-xl text-blacks"
@@ -163,11 +164,11 @@ export default function LogIn() {
               </div>
             </div>
             {errorLogin && errorLogin && (
-              <p className="text-red-500 m-0">{errorLogin}</p>
+              <p className=" text-redError text-xs py-1 m-0">{errorLogin}</p>
             )}
           </div>
           <div className="h-12 w-full">
-            <ButtonAuth text={"Login"} doThis={handleClick} />
+            <ButtonAuth text={"Login"} doThis={handleClick} form={form} />
           </div>
 
           <Authentication />
