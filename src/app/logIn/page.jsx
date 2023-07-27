@@ -48,9 +48,10 @@ export default function LogIn() {
     thirdPartyCreated: null,
   });
 
-  const handleChange = (event, form) => {
+  const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
+    console.log({ ...form, [property]: value });
     setForm({ ...form, [property]: value });
     setErrors(validation({ ...form, [property]: value }));
   };
@@ -63,7 +64,7 @@ export default function LogIn() {
     setShowPassword(!showPassword);
   };
 
-  const handleClick = (event) => {
+  const handleClick = (event, form) => {
     event.preventDefault();
     console.log(form);
 
@@ -117,6 +118,7 @@ export default function LogIn() {
             </label>
             <div>
               <input
+                value={form.email}
                 type="email"
                 name="email"
                 placeholder="Type here..."
@@ -138,6 +140,7 @@ export default function LogIn() {
             <div className="relative">
               <input
                 /*  id="password" */
+                value={form.password}
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Type here..."
@@ -163,7 +166,7 @@ export default function LogIn() {
               </div>
             </div>
             {errorLogin && errorLogin && (
-              <p className="text-red-500 m-0">{errorLogin}</p>
+              <p className=" text-redError text-xs py-1 m-0">{errorLogin}</p>
             )}
           </div>
           <div className="h-12 w-full">

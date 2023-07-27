@@ -218,10 +218,14 @@ const RegisterForm = () => {
   const currentPage = "/register";
 
   return (
-    <div className="p-2 mt-10 mb-10  text-white border-2 border-green-800">
-      <div className=" p-2 mt-10 mb-10 rounded border-2 border-green-400 text-white">
+    <div className=" border-2 border-green-800 flex justify-center items-center ">
+      <div className=" p-2  rounded border-2 border-green-400 text-white w-full md:max-w-registerMd">
         <NavigationButtons currentPage={currentPage} />
-        <SelectWay />
+        <div className="flex justify-center items-center border-2 border-red-600 p-2">
+          <SelectWay entrepreneur={"active"} />
+          <SelectWay investor={"active"} />
+        </div>
+
         <form
           onSubmit={onSubmit}
           className="max-w-md mx-auto border-2 border-purple-500"
