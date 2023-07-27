@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import {startData} from './validations/validationProject';
 
 const ProjectRegister = () => {
-  
+  const [formData, setFormData] = useLocalStorage('user', {});
   const [userState, setUserState] = useLocalStorage('user', {});
   const [businessName, setBusinessName] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -50,6 +51,8 @@ const ProjectRegister = () => {
     }
   };
 
+
+
   const handleRemovePhoto = (index) => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
@@ -80,6 +83,19 @@ const ProjectRegister = () => {
   const foto ="https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
 
   console.log("Nombre: ", businessName);
+  const isStartDateValid = (startDate) => {
+    // Obtiene la fecha actual
+    const today = new Date();
+
+    // Compara la fecha de inicio con la fecha actual
+    const selectedStartDate = new Date(startDate);
+    if (selectedStartDate < today) {
+      return false; // La fecha de inicio es anterior a la fecha actual, no es válida
+    }
+
+    return true; // La fecha de inicio es válida
+  };
+
   const handlePostProject = () => {
     const projectData = {
       name: businessName,
@@ -93,7 +109,13 @@ const ProjectRegister = () => {
       category: selectedCategories,
       status:"Pending",
       userId: id
-    };
+
+       // Validamos la fecha de inicio utilizando la función startDate
+      }
+      if (!isStartDateValid(startDateFormt)) { 
+        console.log('La fecha de inicio no es válida o es posterior a la fecha actual.');
+        return; 
+      }
 
     console.log("ID USUARIO: ", id );
     console.log("Lista de categorias: ", selectedCategories);
@@ -138,6 +160,11 @@ const ProjectRegister = () => {
           onChange={(e) => setStartDate(e.target.value)}
         />
       </div>
+      {isStartDateValid(startDate) ? null : (
+        <p className="text-red-500">
+          La fecha de inicio no es válida o es posterior a la fecha actual.
+        </p>
+      )}
       <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="targetAmount">
           Target Amount
@@ -183,6 +210,7 @@ const ProjectRegister = () => {
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder='Describe your project...'
         />
       </div>
       <div className="mb-4">
