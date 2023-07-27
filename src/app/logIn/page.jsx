@@ -51,7 +51,7 @@ export default function LogIn() {
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
-    console.log({ ...form, [property]: value });
+
     setForm({ ...form, [property]: value });
     setErrors(validation({ ...form, [property]: value }));
   };
@@ -108,8 +108,7 @@ export default function LogIn() {
     <div className="h-screen flex items-center justify-center p-2 ">
       <div
         className="w-full md:max-w-registerMd max-w-registerXs md:shadow-cards bg-whites rounded-xl 
-            "
-      >
+            ">
         <NavigationButtons currentPage="/logIn" />
         <form className=" flex flex-col gap-3 p-2 rounded-xl ">
           <div className="flex flex-col gap-1 ">
@@ -150,8 +149,7 @@ export default function LogIn() {
               />
               <div
                 type="button"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white"
-              >
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white">
                 {showPassword ? (
                   <AiFillEye
                     className="text-xl text-blacks"
