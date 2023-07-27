@@ -4,11 +4,10 @@ import { usePathname } from 'next/navigation';
 import Navbar from '../Components/Navbar/Navbar'
 import './globals.css'
 import Providers from "../Redux/providers";
-import { Sora } from 'next/font/google'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Sora } from "next/font/google";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-
-const sora = Sora({ subsets: ['latin'] })
+const sora = Sora({ subsets: ["latin"] });
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -17,20 +16,17 @@ const sora = Sora({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
   const router = usePathname();
- 
+
   return (
     <html lang="en">
-        <body className={sora.className}>
+      <body className={sora.className}>
         <Providers>
-          {
-          router !== "/" && router 
-          !== "/login" && router
-          !== "/register" && <Navbar />
-          }
+          {router !== "/" && router !== "/logIn" && router !== "/register" && (
+            <Navbar />
+          )}
           {children}
         </Providers>
-        </body>
-      
+      </body>
     </html>
-  )
+  );
 }

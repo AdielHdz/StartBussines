@@ -11,7 +11,7 @@ export const SearchProjectsSuggestions = ({ suggestions, closeSuggestions }) => 
         {/* <NavLink to={`/profile/${suggestions.id_users}`} onClick={handleClick}> */}
           <div className="p-10px 20px hover:bg-efefef cursor-pointer">
             <span className="text-gray-800 font-semibold ">
-              {suggestions.projectName}
+              {suggestions.name}
             </span>
           </div>
         {/* </NavLink> */}

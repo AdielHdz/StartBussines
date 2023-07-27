@@ -28,11 +28,13 @@ const Cards = () => {
     },
   ]);
 
-  console.log(SlidesStyles);
-
   return (
     <>
       <SlidesStyles dataLength={slides.length} inverter={false} />
+
+      <h5 className=" text-start w-full text-primar font-medium">
+        Entrepreneurs
+      </h5>
       <div className="slider relative w-full  h-containerCards items-center  ">
         <div className="slide-track py-4 gap-x-5">
           {slides.map((container) => (
@@ -53,6 +55,9 @@ const Cards = () => {
           ))}
         </div>
 
+        <h5 className=" text-start w-full text-primar font-medium">
+          Investors
+        </h5>
         <div className="slide-track-reverse py-4 gap-x-5">
           {slides.map((container) => (
             <CardClients

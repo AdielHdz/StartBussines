@@ -1,39 +1,53 @@
 import React from "react";
 import Link from "next/link";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { FiArrowLeft } from "react-icons/fi";
 import "./NavigationButtons.css";
+import Image from "next/image";
 const NavigationButtons = ({ currentPage }) => {
   const isSignUp = currentPage === "/register";
   const isSignIn = currentPage === "/logIn";
 
   return (
-    <div className="gridnavigationbuttons ">
-      <div>
-        <Link href="/">
-          <AiOutlineArrowLeft size={34} className="text-white" />
+    <div className=" ">
+      <div className="relative w-full flex">
+        <Link
+          href="/"
+          className="absolute pl-2 h-full flex justify-start items-center "
+        >
+          <FiArrowLeft className="text-3xl text-second hover:text-orangeMedium " />
         </Link>
+        <div className="flex items-center justify-center">
+          <Image
+            src="/asset/DealUp.png"
+            alt="logo"
+            className=" w-2/3"
+            width={2000}
+            height={2000}
+          />
+        </div>
       </div>
-      <div  id="signUpcontene">
-        <Link href="/register">
-          <span
-            className={`${
-              isSignUp
-                ? "font-bold border-b-2 border-white text-white"
-                : "font-normal"
-            } text-gray-300 hover:text-white hover:border-white py-2 px-2`}>
-            Sign Up
-          </span>
+
+      <div className="flex justify-center items-center gap-2 ">
+        <Link
+          href="/register"
+          className={`${
+            isSignUp
+              ? "font-medium text-lg no-underline text-darkGray cursor-default"
+              : "font-normal  text-second hover:text-orangeMedium "
+          } `}
+        >
+          Sign Up
         </Link>
-        <span className="text-white"> / </span>
-        <Link href="/logIn">
-          <span
-            className={`${
-              isSignIn
-                ? "font-bold border-b-2 border-white text-gray-300"
-                : "font-normal"
-            } text-gray-300 hover:text-white hover:border-white py-2 px-4`}>
-            Sign In
-          </span>
+        <span className="text-darkGray">/</span>
+        <Link
+          href="/logIn"
+          className={`${
+            isSignIn
+              ? "font-medium text-lg no-underline text-darkGray cursor-default"
+              : "font-normal  text-second hover:text-orangeMedium"
+          }  `}
+        >
+          Sign In
         </Link>
       </div>
     </div>

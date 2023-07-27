@@ -1,4 +1,5 @@
 "use client";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import NewProjects from "../../Components/HomeSlides/NewProjects";
 import { SearchProjects } from "../../Components/SearchBar/SearchProjects";
 import { SearchProjectsList } from "../../Components/SearchBar/SearchProjectsList";
@@ -14,7 +15,7 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
-
+  const searchResults = useSelector((state) => state.user.searchProjects); //selector al array de resultados de proyectos
   
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -111,7 +112,7 @@ const Home = () => {
         </Modal>
         </div>
         <div className="flex items-center justify-center mt-3">
-          <SearchProjects setSuggestions={handleSetSuggestions} />
+          <SearchProjects setSuggestions={handleSetSuggestions} projects={searchResults} /> {/*le paso projects q seria el useSelector a la search*/}
         </div>
         <div>
           <SearchProjectsList

@@ -1,66 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getProjects } from "../redux/actions";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useDispatch } from "react-redux";
+import { getProjects } from "../../Redux/Fetching/UsersSlice/UserSlice";
 import { SearchCategories } from "./SearchCategories";
 
-export const SearchProjects = ({ setSuggestions }) => {
-  //traer estado de los proyectos para hacer el filtrado
-
-  // const [name, setName] = useState("");
-  // const dispatch = useDispatch();
-  // const usersYcompanies = useSelector((state) => state.usersYcompanies);
-
-  // useEffect(() => {
-  //   dispatch(getUsersAndCompanies());
-  // }, [dispatch]);
-
-  // const handleChange = (event) => {
-  //   const searchValue = event.target.value.toLowerCase();
-  //   setName(searchValue);
-
-  //   // Filtrar la lista de nombres según el valor de búsqueda
-  //   const filteredSuggestions = usersYcompanies.filter(
-  //     (user) => user.userName.toLowerCase().includes(searchValue)
-  //   );
-
-  //   setSuggestions(searchValue ? filteredSuggestions : []);
-  // };
+export const SearchProjects = ({ setSuggestions, projects }) => {
+  //el estado de los proyectos lo recibo como parametro (projects)
 
   const [name, setName] = useState("");
   const [showCategories, setShowCategories] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]); //los valores de este array le voy a pasar por query para que la ruta tome los valores y filtre los proyectos
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProjects());
+  }, [dispatch])
   
-  // Array simulado de proyectos 
-  const projects = [
-    {
-      id: 1,
-      projectName: "Proyecto 1",
-      projectImage: "ruta/del/proyecto1.jpg",
-      projectDescription: "Descripción del Proyecto 1...",
-    },
-    {
-      id: 2,
-      projectName: "Proyecto 2",
-      projectImage: "ruta/del/proyecto2.jpg",
-      projectDescription: "Descripción del Proyecto 2...",
-    },
-    {
-      id: 3,
-      projectName: "Proyecto 3",
-      projectImage: "ruta/del/proyecto3.jpg",
-      projectDescription: "Descripción del Proyecto 3...",
-    },
-    // Puedes agregar más proyectos simulados aquí
-  ];
 
   const handleChange = (event) => {
     const searchValue = event.target.value.toLowerCase();
     setName(searchValue);
 
-    // Filtrar la lista de proyectos simulados según el valor de búsqueda
     const filteredSuggestions = projects.filter((project) =>
       project.projectName.toLowerCase().includes(searchValue)
     );
@@ -71,13 +31,6 @@ export const SearchProjects = ({ setSuggestions }) => {
   const handleInputFocus = () => {
     setShowCategories(true);
   };
-
-  const handleInputBlur = () => { //no es necesaria esta funcion
-    setTimeout(() => {
-      setShowCategories(false);
-    }, 100);
-  };
-
 
   const handleSelectTag = (tags) => {
     setSelectedTags(tags);
@@ -101,7 +54,6 @@ export const SearchProjects = ({ setSuggestions }) => {
         value={name}
         onChange={handleChange}
         onFocus={handleInputFocus}
-        // onBlur={handleInputBlur} comento el onBlur porque no es necesario
       />
       {name === "" && showCategories && (
         <div className="relative top-full left-1/2 transform -translate-x-1/2">
