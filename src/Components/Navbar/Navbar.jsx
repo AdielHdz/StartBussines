@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
-  { name: "Projects", href: "#", current: false },
+  // { name: "Projects", href: "#", current: false },
 ];
 
 function classNames(...classes) {
