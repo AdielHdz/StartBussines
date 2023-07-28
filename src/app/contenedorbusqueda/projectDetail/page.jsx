@@ -84,7 +84,7 @@ const ProjectDetail = () => {
               description={"Asi es la idea de como se veria el local"}
             />
             <TextPair text1={"My comments"} />
-            <CommentsSection name={"Adiel Luciano Hernandez OrtegonS"} />
+            <CommentsSection name={"Adiel Luciano Hernandez Ortegon"} />
             <TextPair text1={"Comments"} />
           </div>
         </div>
