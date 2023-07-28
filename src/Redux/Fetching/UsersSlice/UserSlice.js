@@ -69,6 +69,28 @@ export const getProjectsByName = createAsyncThunk(
   }
 );
 
+export const getProjects = createAsyncThunk(
+  "getProjects",
+  async () => {
+
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/projects`
+      );
+
+      console.log("Datos recibidos de la API:", response.data);
+
+      if (response.data.error) {
+        throw new Error(response.data.error);
+      }
+
+      return response.data;
+    } catch (error) {
+      console.log(`Failed to get projects: ${error.message}`);
+      return [];
+    }
+  }
+);
 
 const User = createSlice({
   name: "user",
@@ -78,6 +100,7 @@ const User = createSlice({
     users: users,
     usersFilter: users,
     searchResults: [],
+    searchProjects: []
   },
   reducers: {
     filterByAge: (state, action) => {
@@ -106,7 +129,10 @@ const User = createSlice({
       })
       .addCase(getProjectsByName.fulfilled, (state, action) => {
         state.searchResults = action.payload;
-      });
+      })
+      .addCase(getProjects.fulfilled, (state, action) => {
+        state.searchProjects = action.payload;
+      });;
   },
 });
 
