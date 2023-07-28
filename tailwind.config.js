@@ -31,6 +31,7 @@ module.exports = {
       height: {
         cards: "10rem",
         containerCards: "15rem",
+        inputs: "3rem",
       },
       width: {
         allContent: "100%",
@@ -43,6 +44,7 @@ module.exports = {
         cards: "20rem",
         registerMd: "30rem",
         registerXs: "30rem",
+        images: "25rem",
       },
       maxHeight: {
         cards: "15rem",
