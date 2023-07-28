@@ -2,12 +2,11 @@
 import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
-import DefautImage from "../../public/asset/avatar2.jpg";
+import DefautImage from "../../../public/asset/avatar2.jpg";
 import Image from "next/image";
 import { useState } from "react";
-import { isBrowser } from "@/utils/isBrowser";
+import { isBrowser } from "../../utils/isBrowser";
 
 // import { SearchBar } from "./SearchBar";
 
