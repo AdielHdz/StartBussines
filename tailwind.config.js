@@ -32,6 +32,7 @@ module.exports = {
         cards: "10rem",
         containerCards: "15rem",
         inputs: "3rem",
+        textArea: "6rem",
       },
       width: {
         allContent: "100%",
@@ -39,6 +40,7 @@ module.exports = {
       minHeight: {
         cards: "10rem",
         desktop: "15rem",
+        textArea: "6rem",
       },
       maxWidth: {
         cards: "20rem",
