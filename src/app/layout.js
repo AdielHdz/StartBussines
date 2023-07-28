@@ -4,6 +4,7 @@ import Providers from '../Redux/providers';
 import { Sora } from 'next/font/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavbarRenderer } from '../utils/NavbarRenderer';
+import AuthProvider from '../features/AuthProvider';
 
 const sora = Sora({ subsets: ['latin'] });
 
@@ -17,8 +18,10 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={sora.className}>
         <Providers>
-          <NavbarRenderer />
-          {children}
+          <AuthProvider>
+            <NavbarRenderer />
+            {children}
+          </AuthProvider>
         </Providers>
       </body>
     </html>
