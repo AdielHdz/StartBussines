@@ -1,9 +1,13 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
+import DefautImage from "../../public/asset/avatar2.jpg";
+import Image from "next/image";
+import { useState } from "react";
+import { isBrowser } from "@/utils/isBrowser";
 
 // import { SearchBar } from "./SearchBar";
 
@@ -18,7 +22,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const router = useRouter();
-  const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
+  /* const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
   const [idSession, setIdSession] = useLocalStorage("idSession", "");
   const [userNameSession, setUserNameSession] = useLocalStorage("fullName", "");
   const [avatarSession, setAvatarSession] = useLocalStorage("avatar", "");
@@ -34,10 +38,26 @@ export default function Navbar() {
     localStorage.removeItem("userData");
     router.push("/logIn");
   };
+  */
+  const [idSession, setIdSession] = useState("");
+  useEffect(() => {
+    if (isBrowser) {
+      const id = localStorage.getItem("idSession");
+      setIdSession(id);
+    }
+  }, []);
   const profileHandler = () => {
-    router.push(`/userProfile/${idSession}`);
+    router.push(`userProfile/${idSession}`);
   };
-
+  const signOutHandler = () => {
+    localStorage.setItem("token_DealUp", "");
+    localStorage.setItem("idSession", "");
+    localStorage.setItem("fullName", "");
+    localStorage.setItem("avatar", "");
+    localStorage.setItem("savedEmail", "");
+    localStorage.setItem("rol", "");
+    router.push("/logIn");
+  };
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -102,9 +122,9 @@ export default function Navbar() {
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
-                      <img
+                      <Image
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={/* avatarSession || */ DefautImage}
                         alt=""
                       />
                     </Menu.Button>
@@ -121,11 +141,11 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={profileHandler}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
-                            )}>
+                            )}
+                            onClick={profileHandler}>
                             Profile
                           </button>
                         )}

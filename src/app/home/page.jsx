@@ -8,8 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "../../Components/Modal/Modal";
 import ProjectRegister from "../../Components/ProjectRegister/ProjectRegister";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { isBrowser } from "../../utils/isBrowser";
 const Home = () => {
-  const [rolSession, setRolSession] = useLocalStorage("rol", "");
+  /* const [rolSession, setRolSession] = useLocalStorage("rol", ""); */
+
+  const [rolSession, setRolSession] = useState("");
+
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
@@ -27,6 +31,12 @@ const Home = () => {
   const closeSuggestions = () => {
     setSuggestions([]);
   };
+  useEffect(() => {
+    if (isBrowser) {
+      const rol = localStorage.getItem("rol");
+      setRolSession(rol);
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

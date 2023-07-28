@@ -1,10 +1,3 @@
-/* name: user.name,
-        email: user.email,
-        rol: user.rol,
-        birthdate: user.birthdate,
-        phone: user.phone,
-        address: user.address, */
-
 function isAdult(birthdate) {
   const currentDate = new Date();
   const birthDate = new Date(birthdate);
