@@ -8,6 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        whites: "#FFFFFF",
+        blacks: "#000000",
         primar: "#1C997F",
         second: "#5691FC",
         thirth: "#FFFEC3",
@@ -24,6 +26,7 @@ module.exports = {
       },
       boxShadow: {
         cards: "0 0 20px 1px rgba(0,0,0,0.2)",
+        cardsInset: "inset 0 0 20px 1px rgba(0,0,0,0.2)",
       },
       height: {
         cards: "10rem",
@@ -38,6 +41,8 @@ module.exports = {
       },
       maxWidth: {
         cards: "20rem",
+        registerMd: "30rem",
+        registerXs: "30rem",
       },
       maxHeight: {
         cards: "15rem",
