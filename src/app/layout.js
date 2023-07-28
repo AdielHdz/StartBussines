@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
-import Navbar from "../Components/Navbar";
-import "./globals.css";
+import { usePathname } from 'next/navigation';
+import Navbar from '../Components/Navbar/Navbar'
+import './globals.css'
 import Providers from "../Redux/providers";
 import { Sora } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";

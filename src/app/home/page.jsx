@@ -1,8 +1,9 @@
 "use client";
-import { NewProjects } from "../../Components/NewProjects";
-import { SearchProjects } from "../../Components/SearchProjects";
-import { SearchProjectsList } from "../../Components/SearchProjectsList";
-import { TopTenProjects } from "../../Components/TopTenProjects";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import NewProjects from "../../Components/HomeSlides/NewProjects";
+import { SearchProjects } from "../../Components/SearchBar/SearchProjects";
+import { SearchProjectsList } from "../../Components/SearchBar/SearchProjectsList";
+import TopTenProjects from "../../Components/HomeSlides/TopTenProjects";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useEffect, useRef, useState } from "react";
 import Modal from "../../Components/Modal/Modal";
@@ -17,6 +18,7 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
+  const searchResults = useSelector((state) => state.user.searchProjects); //selector al array de resultados de proyectos
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -65,17 +67,17 @@ const Home = () => {
     <div>
       <div className="relative">
         <img
-          src="https://shjlawfirm.com/wp-content/uploads/2022/08/handshake-1024x683.jpeg"
+          src="https://uwm.edu/set/wp-content/uploads/sites/631/2023/04/HandshakeBanner.png"
           alt=""
-          className="w-full h-[39rem] opacity-75"
+          className="w-full h-[27rem] opacity-75"
         />
         <h1 className=" absolute top-[4rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Deal Up!
         </h1>
-        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
         </p>
-        <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
+        <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
         {/* esto seria dejar listo el div, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
@@ -118,7 +120,11 @@ const Home = () => {
           </Modal>
         </div>
         <div className="flex items-center justify-center mt-3">
-          <SearchProjects setSuggestions={handleSetSuggestions} />
+          <SearchProjects
+            setSuggestions={handleSetSuggestions}
+            projects={searchResults}
+          />{" "}
+          {/*le paso projects q seria el useSelector a la search*/}
         </div>
         <div>
           <SearchProjectsList
