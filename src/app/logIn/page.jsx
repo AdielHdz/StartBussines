@@ -10,7 +10,6 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import NavigationButtons from "../../Components/NavigationButtons/NavigationButtons";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import ButtonAuth from "../../Components/customButton/ButtonAuth";
 import background from "../../../public/asset/backgroundLogin.jpg";
 export default function LogIn() {
@@ -27,7 +26,7 @@ export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorLogin, setErrorLogin] = useState("");
 
-  const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
+  /* const [tokenSession, setTokenSession] = useLocalStorage("token_DealUp", "");
   const [idSession, setIdSession] = useLocalStorage("idSession", "");
   const [userNameSession, setUserNameSession] = useLocalStorage("fullName", "");
   const [avatarSession, setAvatarSession] = useLocalStorage("avatar", "");
@@ -46,7 +45,7 @@ export default function LogIn() {
     avatar: "",
     status: "",
     thirdPartyCreated: null,
-  });
+  }); */
 
   const handleChange = (event) => {
     const property = event.target.name;
@@ -74,7 +73,7 @@ export default function LogIn() {
         // console.log(response.data.userRegistered.data); // Muestra la respuesta en la consola
         // console.log(response.data.userRegistered.accessToken);
 
-        setTokenSession(response.data.userRegistered.accessToken);
+        /*  setTokenSession(response.data.userRegistered.accessToken);
         setIdSession(response.data.userRegistered.data.id);
         setUserNameSession(response.data.userRegistered.data.fullName);
         setAvatarSession(response.data.userRegistered.data.avatar);
@@ -95,12 +94,49 @@ export default function LogIn() {
           thirdPartyCreated:
             response.data.userRegistered.data.thirdPartyCreated,
         });
+ */
+        localStorage.setItem(
+          "token_DealUp",
+          response.data.userRegistered.accessToken
+        );
+        localStorage.setItem("idSession", response.data.userRegistered.data.id);
+        localStorage.setItem(
+          "fullName",
+          response.data.userRegistered.data.fullName
+        );
+        localStorage.setItem(
+          "avatar",
+          response.data.userRegistered.data.avatar
+        );
+        localStorage.setItem("rol", response.data.userRegistered.data.rol);
+        localStorage.setItem(
+          "savedEmail",
+          response.data.userRegistered.data.email
+        );
 
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            fullName: response.data.userRegistered.data.fullName,
+            email: response.data.userRegistered.data.email,
+            rol: response.data.userRegistered.data.rol,
+            address: response.data.userRegistered.data.address,
+            password: response.data.userRegistered.data.password,
+            gender: response.data.userRegistered.data.gender,
+            birthdate: response.data.userRegistered.data.birthdate,
+            phone: response.data.userRegistered.data.phone,
+            country: response.data.userRegistered.data.country,
+            avatar: response.data.userRegistered.data.avatar,
+            status: response.data.userRegistered.data.status,
+            thirdPartyCreated:
+              response.data.userRegistered.data.thirdPartyCreated,
+          })
+        );
         router.push("/home");
       })
       .catch((error) => {
-        console.log("Error:", error.response.data);
-        setErrorLogin(error.response.data.error);
+        console.log("Email or password does not match!");
+        setErrorLogin("Email or password does not match!");
       });
   };
 
