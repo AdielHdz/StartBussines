@@ -2,49 +2,32 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import DefautImage from "public/asset/avatar2.jpg";
-import { GrAdd } from "react-icons/gr";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 import UserInfo from "../../../Components/userProfilecomponents/userInfo";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import validation from "../../../Components/userProfilecomponents/validations";
-import { useLocalStorage } from "../../../hooks/useLocalStorage";
 
 export default function UserProfile() {
-  const dispatch = useDispatch();
   const [userSession, setUserSession] = useState({});
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setErrors] = useState({});
   const [inputsDisabled, setInputsDisabled] = useState(true);
   const [changesSaved, setChangesSaved] = useState(true);
+  const [idSession, setIdSession] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("userData"));
+      const id = localStorage.getItem("idSession");
+      setIdSession(id);
       setUserSession(user);
-      setDataLoaded(true);
     }
   }, []);
-
-  /*   useEffect(() => {
-    setForm({
-      fullName: userSession.fullName,
-      email: userSession.email,
-      rol: userSession.rol,
-      birthdate: userSession.birthdate,
-      phone: userSession.phone,
-      country: userSession.country,
-    });
-  }, [userSession]); */
-
-  console.log(userSession);
 
   const handleChange = (event) => {
     event.preventDefault();
     const property = event.target.name;
     const value = event.target.value;
-    /* setForm({ ...form, [property]: value }); */
     setUserSession({ ...userSession, [property]: value });
     setErrors(validation({ ...userSession, [property]: value }));
     setChangesSaved(false);
@@ -79,15 +62,13 @@ export default function UserProfile() {
     event.preventDefault();
 
     axios
-      .put(`http://localhost:3001/user/${userSession.idSession}`, userSession)
+      .put(`http://localhost:3001/user/${idSession}`, userSession)
       .then((res) => {
-        alert("Edited!");
         setInputsDisabled(true);
         setChangesSaved(true);
-        setUserSession(...userSession);
-        localStorage.setItem("userData", JSON.stringify(...userSession));
+        localStorage.setItem("userData", JSON.stringify(userSession));
       })
-      .catch((err) => alert("Sorry, try again"));
+      .catch((err) => console.log("Error"));
   };
 
   return (
@@ -191,7 +172,7 @@ export default function UserProfile() {
               </div>
 
               <button
-                className=" w-full h-10 border text-white bg-greenPrimary rounded mt-2 mb-3"
+                className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
                 onClick={handleSaveChanges}>
                 Save changes
               </button>
