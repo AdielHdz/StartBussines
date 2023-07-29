@@ -1,39 +1,41 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import {startData} from './validations/validationProject';
+import { useState } from "react";
+import axios from "axios";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { startData, description } from "./validations/validationProject";
 
 const ProjectRegister = () => {
-  const [formData, setFormData] = useLocalStorage('user', {});
-  const [userState, setUserState] = useLocalStorage('user', {});
-  const [businessName, setBusinessName] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [targetAmount, setTargetAmount] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [deadline, setDeadline] = useState(''); // Agregamos el estado para la fecha límite
-  const [description, setDescription] = useState(''); // Agregamos el estado para la descripción
-  const [minAmount, setMinAmount] = useState('');
-  const [maxAmount, setMaxAmount] = useState(''); // Agregamos el estado para el monto máximo
+  const [formData, setFormData] = useLocalStorage("user", {});
+  const [userState, setUserState] = useLocalStorage("user", {});
+  const [businessName, setBusinessName] = useState("");
+  const [city , setCity] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [targetAmount, setTargetAmount] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [deadline, setDeadline] = useState(""); // Agregamos el estado para la fecha límite
+  const [descriptionInput, setDescriptionInput] = useState(""); // Agregamos el estado para la descripción
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState(""); // Agregamos el estado para el monto máximo
   const [photos, setPhotos] = useState([]);
   const [imageDescriptions, setImageDescriptions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
+  const [isDescriptionError, setDescriptionError] = useState(false);
 
   const categories = [
-    'Art',
-    'Comics',
-    'Crafts',
-    'Dance',
-    'Design',
-    'Fashion',
-    'Film & Video',
-    'Food',
-    'Games',
-    'Journalism',
-    'Music',
-    'Photography',
-    'Publishing',
-    'Technology',
-    'Theater',
+    "Art",
+    "Comics",
+    "Crafts",
+    "Dance",
+    "Design",
+    "Fashion",
+    "Film & Video",
+    "Food",
+    "Games",
+    "Journalism",
+    "Music",
+    "Photography",
+    "Publishing",
+    "Technology",
+    "Theater",
     // Agrega más categorías aquí según tus necesidades.
   ];
 
@@ -43,15 +45,13 @@ const ProjectRegister = () => {
 
     reader.onloadend = () => {
       setPhotos((prevPhotos) => [...prevPhotos, reader.result]);
-      setImageDescriptions((prevDescriptions) => [...prevDescriptions, '']);
+      setImageDescriptions((prevDescriptions) => [...prevDescriptions, ""]);
     };
 
     if (file) {
       reader.readAsDataURL(file);
     }
   };
-
-
 
   const handleRemovePhoto = (index) => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
@@ -60,11 +60,14 @@ const ProjectRegister = () => {
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     const isCategorySelected = selectedCategories.includes(selectedCategory);
-  
-    if (!isCategorySelected && selectedCategory.trim() !== '') {
-      setSelectedCategories((prevCategories) => [...prevCategories, selectedCategory]);
-    } 
-    setSelectedCategory('');
+
+    if (!isCategorySelected && selectedCategory.trim() !== "") {
+      setSelectedCategories((prevCategories) => [
+        ...prevCategories,
+        selectedCategory,
+      ]);
+    }
+    setSelectedCategory("");
   };
 
   function formatDateToBackendFormat(date) {
@@ -76,11 +79,23 @@ const ProjectRegister = () => {
 
   const startDateFormt = formatDateToBackendFormat(startDate);
   const deadlineFormt = formatDateToBackendFormat(deadline);
-  
-  
-  
+
+  const handleDescriptionChange = (e) => {
+    const value = e.target.value;
+    setDescriptionInput(value);
+    setDescriptionError(false); // Establecemos el estado de error en falso para ocultar el mensaje de error
+    try {
+      const validatedDescription = description(value);
+      setDescriptionInput(validatedDescription);
+    } catch (error) {
+      console.error(error.message);
+      setDescriptionError(true); // Aquí indicamos que ha ocurrido un error
+    }
+  };
+
   const id = "df423186-ef36-4910-a42b-31df6c941b8f";
-  const foto ="https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
+  const foto =
+    "https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
 
   console.log("Nombre: ", businessName);
   const isStartDateValid = (startDate) => {
@@ -99,7 +114,7 @@ const ProjectRegister = () => {
   const handlePostProject = () => {
     const projectData = {
       name: businessName,
-      description: description,
+      description: description(descriptionInput),
       min_amount: minAmount,
       max_amount: maxAmount,
       goal_amount: targetAmount,
@@ -107,32 +122,36 @@ const ProjectRegister = () => {
       deadline: deadlineFormt,
       gallery: [],
       category: selectedCategories,
-      status:"Pending",
-      userId: id
+      status: "Pending",
+      city: city,
+      userId: id, 
 
-       // Validamos la fecha de inicio utilizando la función startDate
-      }
-      if (!isStartDateValid(startDateFormt)) { 
-        console.log('La fecha de inicio no es válida o es posterior a la fecha actual.');
-        return; 
-      }
+      // Validamos la fecha de inicio utilizando la función startDate
+    };
+   
+   
+    if (!isStartDateValid(startDateFormt)) {
+      console.log(
+        "La fecha de inicio no es válida o es posterior a la fecha actual."
+      );
+      return;
+    }
 
-    console.log("ID USUARIO: ", id );
+    console.log("ID USUARIO: ", id);
     console.log("Lista de categorias: ", selectedCategories);
 
     axios
-      .post('http://localhost:3001/projects', projectData)
+      .post("http://localhost:3001/projects", projectData)
       .then((response) => {
         // Aquí puedes manejar la respuesta del backend si es necesario
-        console.log('Proyecto creado exitosamente:', response.data);
+        console.log("Proyecto creado exitosamente:", response.data);
       })
       .catch((error) => {
         // Aquí puedes manejar errores, si ocurre algún problema en la solicitud
-        console.error('Error al crear el proyecto:', error);
+        console.error("Error al crear el proyecto:", error);
       });
   };
-  
- 
+
   return (
     <div className="container mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4">Project Register</h2>
@@ -149,6 +168,18 @@ const ProjectRegister = () => {
         />
       </div>
       <div className="mb-4">
+        <label className="block mb-2 font-bold" htmlFor="businessName">
+          City
+        </label>
+        <input
+          className="w-full px-4 py-2 border rounded-lg"
+          type="text"
+          id="city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="startDate">
           Start Date
         </label>
@@ -162,7 +193,7 @@ const ProjectRegister = () => {
       </div>
       {isStartDateValid(startDate) ? null : (
         <p className="text-red-500">
-          La fecha de inicio no es válida o es posterior a la fecha actual.
+          La fecha de inicio no es válida o es anterior a la fecha actual.
         </p>
       )}
       <div className="mb-4">
@@ -201,6 +232,7 @@ const ProjectRegister = () => {
           id="maxAmount"
           value={maxAmount}
           onChange={(e) => setMaxAmount(e.target.value)}
+          min={1}
         />
       </div>
       <div className="mb-4">
@@ -210,10 +242,15 @@ const ProjectRegister = () => {
         <textarea
           className="w-full px-4 py-2 border rounded-lg"
           id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder='Describe your project...'
+          value={descriptionInput}
+          onChange={handleDescriptionChange}
+          placeholder="Describe your project..."
         />
+        {isDescriptionError && (
+          <p className="text-red-500">
+            The description cannot exceed 200 characters.
+          </p> 
+        )}
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="deadline">
@@ -248,20 +285,24 @@ const ProjectRegister = () => {
           ))}
         </select>
       </div>
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-2">
-            {selectedCategories.map((category) => (
-              <div key={category} className="bg-gray-200 p-2 rounded-lg">
-                {category}
-                <button
-                  className="ml-2 text-red-500"
-                  onClick={() => setSelectedCategories((prevCategories) => prevCategories.filter((c) => c !== category))}
-                >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
+      <div className="mb-4">
+        <div className="flex flex-wrap gap-2">
+          {selectedCategories.map((category) => (
+            <div key={category} className="bg-gray-200 p-2 rounded-lg">
+              {category}
+              <button
+                className="ml-2 text-red-500"
+                onClick={() =>
+                  setSelectedCategories((prevCategories) =>
+                    prevCategories.filter((c) => c !== category)
+                  )
+                }
+              >
+                X
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-bold">Photos</label>
