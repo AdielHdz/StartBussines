@@ -10,7 +10,7 @@ import { signOut } from "next-auth/react";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
-  { name: "Projects", href: "#", current: false },
+  // { name: "Projects", href: "#", current: false },
 ];
 
 function classNames(...classes) {
