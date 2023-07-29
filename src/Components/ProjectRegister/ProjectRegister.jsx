@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { startData, description } from "./validations/validationProject";
+import { startDate, description } from "./validations/validationProject";
+import { differenceInDays } from 'date-fns';
 
+ 
 const ProjectRegister = () => {
   const [formData, setFormData] = useLocalStorage("user", {});
   const [userState, setUserState] = useLocalStorage("user", {});
@@ -19,6 +21,7 @@ const ProjectRegister = () => {
   const [imageDescriptions, setImageDescriptions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
   const [isDescriptionError, setDescriptionError] = useState(false);
+  const [deadlineError, setDeadlineError] = useState("")
 
   const categories = [
     "Art",
@@ -93,7 +96,7 @@ const ProjectRegister = () => {
     }
   };
 
-  const id = "df423186-ef36-4910-a42b-31df6c941b8f";
+  const id = "e2d2c8d4-c08e-46ba-8958-cc8a75826ab6";
   const foto =
     "https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
 
@@ -120,15 +123,16 @@ const ProjectRegister = () => {
       goal_amount: targetAmount,
       initial_date: startDateFormt,
       deadline: deadlineFormt,
-      gallery: [],
+      image_cover: foto,
       category: selectedCategories,
       status: "Pending",
       city: city,
-      userId: id, 
+      UserId: id, 
 
-      // Validamos la fecha de inicio utilizando la función startDate
+    
     };
    
+    console.log("Datos del proyecto:", projectData);
    
     if (!isStartDateValid(startDateFormt)) {
       console.log(
@@ -137,14 +141,29 @@ const ProjectRegister = () => {
       return;
     }
 
+    const daysDifference = differenceInDays(
+      new Date(deadlineFormt),
+      new Date(startDateFormt)
+    );
+
+    if (daysDifference < 30) {
+      setDeadlineError(
+        "La fecha de deadline debe ser al menos 30 días después de la fecha de inicio."
+      );
+      return;
+    } else {
+      setDeadlineError(""); 
+    }
+
     console.log("ID USUARIO: ", id);
+    console.log(projectData);
     console.log("Lista de categorias: ", selectedCategories);
 
     axios
       .post("http://localhost:3001/projects", projectData)
       .then((response) => {
         // Aquí puedes manejar la respuesta del backend si es necesario
-        console.log("Proyecto creado exitosamente:", response.data);
+        console.log("Respuesta del servidor:", response.data);
       })
       .catch((error) => {
         // Aquí puedes manejar errores, si ocurre algún problema en la solicitud
@@ -263,6 +282,7 @@ const ProjectRegister = () => {
           value={deadline}
           onChange={(e) => setDeadline(e.target.value)}
         />
+        {deadlineError && <p className="text-red-500">{deadlineError}</p>}
       </div>
       <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="category">
