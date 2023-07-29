@@ -1,5 +1,5 @@
 'use client';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector } from 'react-redux';
 import NewProjects from '../../Components/HomeSlides/NewProjects';
 import { SearchProjects } from '../../Components/SearchBar/SearchProjects';
 import { SearchProjectsList } from '../../Components/SearchBar/SearchProjectsList';
