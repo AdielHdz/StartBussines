@@ -47,8 +47,9 @@ export const getUserById = createAsyncThunk("getUserById", async (id) => {
 export const getProjectsByName = createAsyncThunk(
   "getProjectsByName",
   async (nameProjects) => {
-    console.log(`getProjectsByName se está ejecutando con el nombre: ${nameProjects}`);
-    
+    console.log(
+      `getProjectsByName se está ejecutando con el nombre: ${nameProjects}`
+    );
 
     try {
       const response = await axios.get(
@@ -69,28 +70,20 @@ export const getProjectsByName = createAsyncThunk(
   }
 );
 
-export const getProjects = createAsyncThunk(
-  "getProjects",
-  async () => {
+export const getProjects = createAsyncThunk("getProjects", async () => {
+  try {
+    const response = await axios.get(`http://localhost:3001/projects`);
 
-    try {
-      const response = await axios.get(
-        `http://localhost:3001/projects`
-      );
+    console.log("Datos recibidos de la API:", response.data);
 
-      console.log("Datos recibidos de la API:", response.data);
-
-      if (response.data.error) {
-        throw new Error(response.data.error);
-      }
-
-      return response.data;
-    } catch (error) {
-      console.log(`Failed to get projects: ${error.message}`);
-      return [];
+    if (response.data.error) {
+      throw new Error(response.data.error);
     }
+  } catch (error) {
+    console.log(`Failed to get projects: ${error.message}`);
+    return [];
   }
-);
+});
 
 const User = createSlice({
   name: "user",
@@ -100,7 +93,7 @@ const User = createSlice({
     users: users,
     usersFilter: users,
     searchResults: [],
-    searchProjects: []
+    searchProjects: [],
   },
   reducers: {
     filterByAge: (state, action) => {
@@ -132,7 +125,7 @@ const User = createSlice({
       })
       .addCase(getProjects.fulfilled, (state, action) => {
         state.searchProjects = action.payload;
-      });;
+      });
   },
 });
 
