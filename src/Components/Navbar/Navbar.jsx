@@ -5,7 +5,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-
+import DefaultImage from "public/asset/avatar2.jpg";
+import Image from "next/image";
 // import { SearchBar } from "./SearchBar";
 
 const navigation = [
@@ -107,10 +108,10 @@ export default function Navbar() {
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
-                      <img
+                      <Image
                         className="h-8 w-8 rounded-full"
-                        src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp"
-                        alt=""
+                        src={DefaultImage}
+                        alt="avatar"
                       />
                     </Menu.Button>
                   </div>

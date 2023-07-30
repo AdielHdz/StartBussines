@@ -35,9 +35,7 @@ export const startDate = (date) => {
   };
   
 
-  export const deadline = (deadline) =>{
-
-  }
+ 
 
   export const addPhoto = (photos) => {
       

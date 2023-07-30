@@ -47,8 +47,9 @@ export const getUserById = createAsyncThunk("getUserById", async (id) => {
 export const getProjectsByName = createAsyncThunk(
   "getProjectsByName",
   async (nameProjects) => {
-    console.log(`getProjectsByName se está ejecutando con el nombre: ${nameProjects}`);
-    
+    console.log(
+      `getProjectsByName se está ejecutando con el nombre: ${nameProjects}`
+    );
 
     try {
       const response = await axios.get(
@@ -77,7 +78,7 @@ const User = createSlice({
     users: users,
     usersFilter: users,
     searchResults: [],
-    searchProjects: []
+    searchProjects: [],
   },
   reducers: {
     filterByAge: (state, action) => {
