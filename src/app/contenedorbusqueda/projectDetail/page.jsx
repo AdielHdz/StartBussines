@@ -27,7 +27,8 @@ const ProjectDetail = () => {
     }
     console.log(project);
     console.log(id);
-  }, [project?.name]);
+    console.log("score ", score);
+  }, [project?.name, project?.Ratings?.length]);
 
   return (
     <>
@@ -37,8 +38,8 @@ const ProjectDetail = () => {
             <figure className="flex items-center justify-center py-2 ">
               <img
                 src={
-                  project?.image_cover.length
-                    ? project?.image_cover[0]
+                  project?.image_cover
+                    ? project?.image_cover
                     : "https://img.freepik.com/vector-premium/vector-icono-logotipo-mecanico-llave-engranaje_304830-274.jpg"
                 }
                 alt={project?.name}
@@ -72,7 +73,7 @@ const ProjectDetail = () => {
                 text1={"Categories:"}
                 text2={`${project?.category.toString().replace(",", ", ")}.`}
               />
-              <TextPair text1={"Score:"} text2={score} />
+              <TextPair text1={"Score:"} text2={score ? score : "0.0"} />
 
               <TextPair text1={"Status:"} text2={project?.status} />
 
@@ -96,25 +97,18 @@ const ProjectDetail = () => {
                   }
                   description={"Asi es la idea de como se veria el local"}
                 />
-                <button className="bg-yellow-600 flex items-center justify-center gap-2 text-whites h-12">
+                <button className="bg-yellow-500 flex items-center justify-center gap-2 text-whites h-12">
                   I want to invest
                   <IoWalletOutline />
                 </button>
 
                 <CommentsSection
                   name={"Adiel Luciano Hernandez Ortegon"}
-                  myOpinion={[
-                    {
-                      id: "5646464864",
-                      body: "Este es de los mejores negocios que he leido hoy!",
-                      myScore: 4,
-                    },
-                    {
-                      id: "564685464864",
-                      body: "Me gustaria invertir contigo lo mas pronto posible ya que tu negocio me recuerda cuando inicie en el mundo del emprendimiento!",
-                      myScore: 2,
-                    },
-                  ]}
+                  myOpinion={{
+                    id: "5646464864",
+                    body: "Este es de los mejores negocios que he leido hoy!",
+                    myScore: 4,
+                  }}
                   otherOpinions={project.Raitings}
                 />
               </div>

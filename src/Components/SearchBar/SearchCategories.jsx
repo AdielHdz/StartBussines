@@ -9,8 +9,8 @@ export const SearchCategories = ({ selectedTags, onSelectTag }) => {
 
   return (
     <div className="mt-3">
-      <h2>Categories </h2> <hr />
-      <div>
+      <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">Categories </h2> <hr />
+      <div className="mt-3">
         <button
           className="rounded-lg border border-pink-200 text-pink-200 hover:bg-pink-200 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
           onClick={() => handleTagClick("Art")}

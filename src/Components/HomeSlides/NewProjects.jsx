@@ -1,9 +1,12 @@
 "use client";
 import { useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const NewProjects = () => {
   //traer estado para acceder a las imagenes de los nuevos proyectos
+  const projects = useSelector((state) => state.user.searchProjects);
+
 
   const [slides, setSlides] = useState([
     {
