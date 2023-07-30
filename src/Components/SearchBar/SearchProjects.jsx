@@ -1,13 +1,14 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { getProjects } from "../../Redux/Fetching/UsersSlice/UserSlice";
+import { getProjects } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { SearchCategories } from "./SearchCategories";
 import Link from "next/link";
 import { RangeSlider } from "./RangeSlider";
 
 export const SearchProjects = ({ setSuggestions, projects }) => {
   //el estado de los proyectos lo recibo como parametro (projects)
+  console.log(projects)
 
   const [name, setName] = useState("");
   const [showCategories, setShowCategories] = useState(false);
