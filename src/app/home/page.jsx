@@ -16,10 +16,7 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
-  const searchResults = useSelector((state) => state.projects);  //selector al array de resultados de proyectos
-  const projects = searchResults || [];
-  console.log(searchResults)
-  console.log(projects)
+  const searchResults = useSelector((state) => state.project.allProjects);  //selector al array de resultados de proyectos
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [rolSession, setRolSession] = useState("");
@@ -85,10 +82,6 @@ const Home = () => {
         <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
-        {/* esto seria dejar listo el div, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
-        {/* <div className="absolute top-[32rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
-          Entrepreneur
-        </div> */}
       </div>
       <div>
         <h1 className="text-blue-500 fw-semibold text-xl text-center">
@@ -96,10 +89,6 @@ const Home = () => {
             ? "¡Get the help you need to start!"
             : "Help to start and win in the way"}
         </h1>
-        {/* esto seria dejar listo el h1, para que si el usuario es investor o entrepreneur, se renderize uno u otro*/}
-        {/* <h1 className="text-blue-500 fw-semibold text-xl text-center">
-          ¡Get the help you need to start!
-        </h1> */}
         {rolSession === "entrepreneur" && (
           <div className="flex items-center justify-center mt-3">
             <button
@@ -121,7 +110,6 @@ const Home = () => {
           </div>
         )}
 
-        {/* Deje listo la condición para mostrar el botón solo cuando el user_role es "entrepreneur" */}
         <div className="flex items-center justify-center">
           {/* <button
             className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
@@ -138,9 +126,8 @@ const Home = () => {
         <div className="flex items-center justify-center mt-3">
           <SearchProjects
             setSuggestions={handleSetSuggestions}
-            projects={projects} 
+            projects={searchResults} 
           />{" "}
-          {/*le paso projects q seria el useSelector a la search*/}
         </div>
         <div>
           <SearchProjectsList

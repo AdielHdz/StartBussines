@@ -98,7 +98,7 @@ export const RangeSlider = ({
             min={min}
             step={step}
             max={max}
-            className="range-max absolute w-full -top-1 h-1 bg-transparent appearance-none pointer-events-none left-[px]"
+            className="range-max absolute w-full -top-1 h-1 bg-transparent appearance-none pointer-events-none left-[-1px]"
           />
         </div>
       </div>
