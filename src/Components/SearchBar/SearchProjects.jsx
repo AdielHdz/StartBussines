@@ -24,7 +24,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
     setName(searchValue);
 
     const filteredSuggestions = projects.filter((project) =>
-      project.projectName.toLowerCase().includes(searchValue)
+      project.name.toLowerCase().includes(searchValue)
     );
 
     setSuggestions(searchValue ? filteredSuggestions : []);
