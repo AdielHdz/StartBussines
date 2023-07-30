@@ -126,9 +126,9 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
           </div> */}
           <h2 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3">Min-Max Range</h2>
           <RangeSlider 
-            initialMin={0}
+            initialMin={1}
             initialMax={10000}
-            min={0}
+            min={1}
             max={10000}
             step={100}
             priceCap={1000}
