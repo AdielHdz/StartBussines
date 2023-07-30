@@ -1,25 +1,27 @@
-'use client';
-import { useSelector } from 'react-redux';
-import NewProjects from '../../Components/HomeSlides/NewProjects';
-import { SearchProjects } from '../../Components/SearchBar/SearchProjects';
-import { SearchProjectsList } from '../../Components/SearchBar/SearchProjectsList';
-import TopTenProjects from '../../Components/HomeSlides/TopTenProjects';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useEffect, useRef, useState } from 'react';
-import Modal from '../../Components/Modal/Modal';
-import ProjectRegister from '../../Components/ProjectRegister/ProjectRegister';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+"use client";
+import { useSelector } from "react-redux";
+import NewProjects from "../../Components/HomeSlides/NewProjects";
+import { SearchProjects } from "../../Components/SearchBar/SearchProjects";
+import { SearchProjectsList } from "../../Components/SearchBar/SearchProjectsList";
+import TopTenProjects from "../../Components/HomeSlides/TopTenProjects";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { useEffect, useRef, useState } from "react";
+import Modal from "../../Components/Modal/Modal";
+import ProjectRegister from "../../Components/ProjectRegister/ProjectRegister";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
-  //  const [rolSession, setRolSession] = useLocalStorage('rol', ''); 
+  const router = useRouter();
+  //  const [rolSession, setRolSession] = useLocalStorage('rol', '');
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
-  const searchResults = useSelector((state) => state.user.value);  //selector al array de resultados de proyectos
+  const searchResults = useSelector((state) => state.user.value); //selector al array de resultados de proyectos
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [rolSession, setRolSession] = useState("");
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const rol = localStorage.getItem("rol");
@@ -61,7 +63,9 @@ const Home = () => {
   const handleSetSuggestions = (filteredSuggestions) => {
     setSuggestions(filteredSuggestions);
   };
-
+  const handleClick = () => {
+    router.push("investments/");
+  };
   return (
     <div>
       <div className="relative">
@@ -104,6 +108,17 @@ const Home = () => {
             </button>
           </div>
         )}
+        {rolSession === "investor" && (
+          <div className="flex items-center justify-center mt-3">
+            <button
+              className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+              onClick={handleClick}>
+              Your investments
+              <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
+            </button>
+          </div>
+        )}
+
         {/* Deje listo la condición para mostrar el botón solo cuando el user_role es "entrepreneur" */}
         <div className="flex items-center justify-center">
           {/* <button
@@ -121,7 +136,7 @@ const Home = () => {
         <div className="flex items-center justify-center mt-3">
           <SearchProjects
             setSuggestions={handleSetSuggestions}
-            projects={searchResults} 
+            projects={searchResults}
           />{" "}
           {/*le paso projects q seria el useSelector a la search*/}
         </div>
