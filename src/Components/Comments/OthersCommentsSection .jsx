@@ -7,12 +7,12 @@ const OthersCommentsSection = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <TextPair text1={"Comments"} />
+      <TextPair text1={"What does investors say?"} />
       <div className="flex flex-col gap-2 py-2">
         {ratingsProject.map((opinion) => (
           <OpinionSection
             key={opinion.id}
-            userName={opinion.UserId}
+            userName={opinion.User.fullName}
             body={opinion.comments}
             score={opinion.points}
           />
