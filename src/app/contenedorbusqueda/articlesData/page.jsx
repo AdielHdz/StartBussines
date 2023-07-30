@@ -11,7 +11,7 @@ const ArticleCard = ({ data }) => {
     category,
     status,
   } = data;
-
+ 
   return (
     <article className="group relative flex h-[16rem] sm:h-auto md:h-[24rem] lg:h-[32rem] w-full md:w-[50rem] lg:w-[60rem] rounded-2xl bg-[#3a4448]">
       <div className="p-4 sm:p-8 lg:p-12 text-white">
