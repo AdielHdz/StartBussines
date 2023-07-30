@@ -49,24 +49,28 @@ export const RangeSlider = ({
   console.log(minValue);
 
   return (
-    <div >
-        <div className="flex justify-between items-center my-6">
-            <div className="rounded-md">
-                <span className="p-2 font-semibold">Min</span>
-                <input type="number"
-                value={minValue}
-                onChange={(e) => setMinValue(e.target.value)}
-                className="w-24 rounded-md border border-gray-400" />
-            </div>
-            <div className="ml-2 font-semibold text-lg"> - </div>
-            <div className="rounded-md"> 
-                <span className="p-2 font-semibold">Max</span>
-                <input type="number"
-                value={maxValue}
-                onChange={(e) => setMaxValue(e.target.value)}
-                className="w-24 rounded-md border border-gray-400" />
-            </div>
+    <div>
+      <div className="flex justify-between items-center my-6">
+        <div className="rounded-md">
+          <span className="p-2 font-semibold">Min</span>
+          <input
+            type="number"
+            value={minValue}
+            onChange={(e) => setMinValue(e.target.value)}
+            className="w-24 rounded-md border border-gray-400"
+          />
         </div>
+        <div className="ml-2 font-semibold text-lg"> - </div>
+        <div className="rounded-md">
+          <span className="p-2 font-semibold">Max</span>
+          <input
+            type="number"
+            value={maxValue}
+            onChange={(e) => setMaxValue(e.target.value)}
+            className="w-24 rounded-md border border-gray-400"
+          />
+        </div>
+      </div>
 
       <div className="mt-3 mb-4">
         <div className="slider relative h-1 rounded-md bg-gray-300">
@@ -95,7 +99,7 @@ export const RangeSlider = ({
             step={step}
             max={max}
             className="range-max absolute w-full -top-1 h-1 bg-transparent appearance-none pointer-events-none left-[px]"
-            />
+          />
         </div>
       </div>
     </div>

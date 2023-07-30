@@ -15,8 +15,10 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
-  const searchResults = useSelector((state) => state.user.value);  //selector al array de resultados de proyectos
-
+  const searchResults = useSelector((state) => state.projects);  //selector al array de resultados de proyectos
+  const projects = searchResults || [];
+  console.log(searchResults)
+  console.log(projects)
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [rolSession, setRolSession] = useState("");
@@ -121,7 +123,7 @@ const Home = () => {
         <div className="flex items-center justify-center mt-3">
           <SearchProjects
             setSuggestions={handleSetSuggestions}
-            projects={searchResults} 
+            projects={projects} 
           />{" "}
           {/*le paso projects q seria el useSelector a la search*/}
         </div>
