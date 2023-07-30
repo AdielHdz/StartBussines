@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect } from "react";
+
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
-
-import CustomButton from "../../Components/customButton/CustomButton";
-import Authentication from "../../Components/Authentication/Authentication";
-import NavigationButtons from "../NavigationButtons/NavigationButtons";
-import SelectWay from "../SelectWay/SelectWay";
-import ButtonAuth from "../customButton/ButtonAuth";
-
 import {
   validateEmail,
   validateDate,
@@ -16,13 +9,16 @@ import {
   validatePassword,
   validateName,
 } from "./formValidations";
-
+import CustomButton from "../../Components/customButton/CustomButton";
+import Authentication from "../../Components/Authentication/Authentication";
+import NavigationButtons from "../NavigationButtons/NavigationButtons";
+import { useDispatch } from "react-redux";
 import { registerUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
-
+import SelectWay from "../SelectWay/SelectWay";
+import ButtonAuth from "../customButton/ButtonAuth";
+import { useRouter } from "next/navigation";
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
@@ -35,53 +31,35 @@ const RegisterForm = () => {
   const [dobError, setDobError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [isEntrepreneur, setIsEntrepreneur] = useState(true);
   const [emailExist, setEmailExist] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const currentPage = "/register";
-
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
-    setIsFormValid(
-      name !== "" &&
-        email !== "" &&
-        dob !== "" &&
-        password !== "" &&
-        confirmPassword !== "" &&
-        nameError === null &&
-        emailError === null &&
-        dobError === null &&
-        passwordError === null &&
-        confirmPasswordError === null
-    );
-  }, [
-    name,
-    email,
-    dob,
-    password,
-    confirmPassword,
-    nameError,
-    emailError,
-    dobError,
-    passwordError,
-    confirmPasswordError,
-  ]);
+  //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
+  const router = useRouter();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    
+    const isFormValid =
+      name !== "" &&
+      email !== "" &&
+      dob !== "" &&
+      password !== "" &&
+      confirmPassword !== "";
     if (!isFormValid) {
       alert("There are fields that are not completed");
+      return;
+    }
+
+    if (
+      nameError ||
+      emailError ||
+      dobError ||
+      passwordError ||
+      confirmPasswordError
+    ) {
+      console.log("There are errors in the form");
       return;
     }
 
@@ -102,6 +80,7 @@ const RegisterForm = () => {
       setSuccessMessage("Registration successful!");
       router.push("/home");
 
+      /* e.target.reset(); */
       setName("");
       setEmail("");
       setDob("");
@@ -153,23 +132,33 @@ const RegisterForm = () => {
 
   const onPasswordBlur = (e) => {
     const newPassword = e.target.value;
-    const errorMessage = validatePassword(newPassword);
 
-    setPasswordError(errorMessage || "");
+    const errorMessage = validatePassword(newPassword);
+    if (errorMessage) {
+      setPasswordError(errorMessage);
+    } else {
+      setPasswordError("");
+    }
   };
 
   const onConfirmPasswordBlur = (e) => {
     const newConfirmPassword = e.target.value;
 
-    setConfirmPasswordError(
-      newConfirmPassword !== password ? "Passwords do not match" : ""
-    );
+    if (newConfirmPassword !== password) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
   };
 
   const onPasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    setConfirmPasswordError(newPassword !== confirmPassword ? "Passwords do not match" : "");
+    if (newPassword !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
   };
 
   const onNameChange = (e) => {
@@ -190,16 +179,58 @@ const RegisterForm = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    if (
+      name !== "" &&
+      email !== "" &&
+      dob !== "" &&
+      password !== "" &&
+      confirmPassword !== "" &&
+      (nameError === null || nameError === "") &&
+      (emailError === null || emailError === "") &&
+      (dobError === null || dobError === "") &&
+      (passwordError === null || passwordError === "") &&
+      (confirmPasswordError === null || confirmPasswordError === "")
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [
+    name,
+    email,
+    dob,
+    password,
+    confirmPassword,
+    nameError,
+    emailError,
+    dobError,
+    passwordError,
+    confirmPasswordError,
+  ]);
+
+  const currentPage = "/register";
+
   return (
     <div className="py-20 flex justify-center items-center ">
-      <div className="p-4 md:shadow-cards max-w-md rounded-xl">
+      <div className="p-4  md:shadow-cards max-w-md rounded-xl">
         <NavigationButtons currentPage={currentPage} />
         <div className="flex justify-center items-center gap-3 rounded-xl py-2">
           <SelectWay />
         </div>
-        <form onSubmit={onSubmit} className="max-w-md flex flex-col gap-2">
+        <form onSubmit={onSubmit} className="max-w-md   flex flex-col gap-2">
           <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="name" className="text-orangeMedium">
+            <label htmlFor="name" className="text-orangeMedium  ">
               Full Name
             </label>
             <input
@@ -208,14 +239,16 @@ const RegisterForm = () => {
               value={name}
               onChange={onNameChange}
               onBlur={onNameBlur}
-              className={`pl-1 h-12 border-2 rounded-md outline-none ${
-                nameError ? "border-redError" : "border-grayLightMedium"
-              } text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                nameError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {nameError && <p className="text-redError text-xs py-1 m-0">{nameError}</p>}
+            {nameError && (
+              <p className=" text-redError text-xs py-1 m-0">{nameError}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="email" className="text-orangeMedium">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="email" className="text-orangeMedium  ">
               Email
             </label>
             <input
@@ -224,15 +257,19 @@ const RegisterForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={onEmailBlur}
-              className={`pl-1 h-12 border-2 rounded-md outline-none ${
-                emailError ? "border-redError" : "border-grayLightMedium"
-              } text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                emailError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {emailExist && <p className="text-redError text-xs py-1 m-0">{emailExist}</p>}
-            {emailError && <p className="text-redError text-xs py-1 m-0">{emailError}</p>}
+            {emailExist && (
+              <p className=" text-redError text-xs py-1 m-0">{emailExist}</p>
+            )}
+            {emailError && (
+              <p className=" text-redError text-xs py-1 m-0">{emailError}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="dob" className="text-orangeMedium">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="dob" className="text-orangeMedium  ">
               Date of Birth
             </label>
             <input
@@ -241,14 +278,16 @@ const RegisterForm = () => {
               value={dob}
               onChange={(e) => setDob(e.target.value)}
               onBlur={onDobBlur}
-              className={`pl-1 h-12 border-2 rounded-md outline-none ${
-                dobError ? "border-redError" : "border-grayLightMedium"
-              } text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
+              className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                dobError ? "border-redError" : " border-grayLightMedium "
+              }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {dobError && <p className="text-redError text-xs py-1 m-0">{dobError}</p>}
+            {dobError && (
+              <p className=" text-redError text-xs py-1 m-0">{dobError}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="password" className="text-orangeMedium">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="password" className="text-orangeMedium  ">
               Password
             </label>
             <div className="relative">
@@ -258,22 +297,28 @@ const RegisterForm = () => {
                 value={password}
                 onChange={onPasswordChange}
                 onBlur={onPasswordBlur}
-                className={`pl-1 h-12 border-2 rounded-md outline-none ${
-                  passwordError ? "border-redError" : "border-grayLightMedium"
-                } text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                  passwordError ? "border-redError" : " border-grayLightMedium "
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute transform top-2.5 right-2 text-orangeMedium"
+                className="absolute  transform top-2.5 right-2 text-orangeMedium "
               >
-                {showPassword ? <AiFillEyeInvisible className="text-3xl" /> : <AiFillEye className="text-3xl" />}
+                {showPassword ? (
+                  <AiFillEyeInvisible className="text-3xl " />
+                ) : (
+                  <AiFillEye className="text-3xl " />
+                )}
               </button>
             </div>
-            {passwordError && <p className="text-redError text-xs py-1 m-0">{passwordError}</p>}
+            {passwordError && (
+              <p className=" text-redError text-xs py-1 m-0">{passwordError}</p>
+            )}
           </div>
-          <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="confirmPassword" className="text-orangeMedium">
+          <div className="flex flex-col gap-1  mt-3">
+            <label htmlFor="confirmPassword" className="text-orangeMedium  ">
               Confirm Password
             </label>
             <div className="relative">
@@ -283,33 +328,43 @@ const RegisterForm = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 onBlur={onConfirmPasswordBlur}
-                className={`pl-1 h-12 border-2 rounded-md outline-none ${
-                  confirmPasswordError ? "border-redError" : "border-grayLightMedium"
-                } text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
+                className={`pl-1 h-12 border-2 rounded-md outline-none  ${
+                  confirmPasswordError
+                    ? "border-redError"
+                    : " border-grayLightMedium "
+                }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
               <button
                 type="button"
                 onClick={toggleConfirmPasswordVisibility}
-                className="absolute transform top-2.5 right-2 text-orangeMedium"
+                className="absolute   transform top-2.5 right-2   text-orangeMedium "
               >
                 {showConfirmPassword ? (
-                  <AiFillEyeInvisible className="text-3xl" />
+                  <AiFillEyeInvisible className="text-3xl " />
                 ) : (
-                  <AiFillEye className="text-3xl" />
+                  <AiFillEye className="text-3xl " />
                 )}
               </button>
             </div>
             {confirmPasswordError && (
-              <p className="text-redError text-xs py-1 m-0">{confirmPasswordError}</p>
+              <p className=" text-redError text-xs py-1 m-0">
+                {confirmPasswordError}
+              </p>
             )}
           </div>
           <div className="h-12">
-            <ButtonAuth text={"Register"} doThis={onSubmit} disabled={!isFormValid} />
+            <ButtonAuth
+              text={"Register"}
+              doThis={onSubmit}
+              disabled={!isFormValid}
+            />
           </div>
         </form>
 
         {successMessage && (
-          <p className="text-green-500 text-center uppercase text-xl">{successMessage}</p>
+          <p className="text-green-500 text-center uppercase text-xl">
+            {successMessage}
+          </p>
         )}
 
         <Authentication />
