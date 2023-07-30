@@ -2,14 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { startDate, description } from "./validations/validationProject";
-import { differenceInDays } from 'date-fns';
+import { differenceInDays } from "date-fns";
 
- 
 const ProjectRegister = () => {
   const [formData, setFormData] = useLocalStorage("user", {});
   const [userState, setUserState] = useLocalStorage("user", {});
   const [businessName, setBusinessName] = useState("");
-  const [city , setCity] = useState("");
+  const [city, setCity] = useState("");
   const [startDate, setStartDate] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -21,7 +20,7 @@ const ProjectRegister = () => {
   const [imageDescriptions, setImageDescriptions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
   const [isDescriptionError, setDescriptionError] = useState(false);
-  const [deadlineError, setDeadlineError] = useState("")
+  const [deadlineError, setDeadlineError] = useState("");
 
   const categories = [
     "Art",
@@ -80,8 +79,7 @@ const ProjectRegister = () => {
     return `${day}/${month}/${year}`;
   }
 
-  const startDateFormt = formatDateToBackendFormat(startDate);
-  const deadlineFormt = formatDateToBackendFormat(deadline);
+
 
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
@@ -102,16 +100,20 @@ const ProjectRegister = () => {
 
   console.log("Nombre: ", businessName);
   const isStartDateValid = (startDate) => {
-    // Obtiene la fecha actual
     const today = new Date();
 
     // Compara la fecha de inicio con la fecha actual
     const selectedStartDate = new Date(startDate);
-    if (selectedStartDate < today) {
-      return false; // La fecha de inicio es anterior a la fecha actual, no es válida
-    }
-
-    return true; // La fecha de inicio es válida
+    return selectedStartDate >= today;
+  };
+  const isDeadlineValid = (startDate, deadline) => {
+    const selectedStartDate = new Date(startDate);
+    const selectedDeadline = new Date(deadline);
+    const daysDifference = differenceInDays(
+      selectedDeadline,
+      selectedStartDate
+    );
+    return daysDifference >= 30;
   };
 
   const handlePostProject = () => {
@@ -121,39 +123,33 @@ const ProjectRegister = () => {
       min_amount: minAmount,
       max_amount: maxAmount,
       goal_amount: targetAmount,
-      initial_date: startDateFormt,
-      deadline: deadlineFormt,
+      initial_date: formatDateToBackendFormat(startDate),
+      deadline: formatDateToBackendFormat(deadline),
       image_cover: foto,
       category: selectedCategories,
       status: "Pending",
       city: city,
-      UserId: id, 
-
-    
+      UserId: id,
     };
-   
+
     console.log("Datos del proyecto:", projectData);
-   
-    if (!isStartDateValid(startDateFormt)) {
-      console.log(
-        "La fecha de inicio no es válida o es posterior a la fecha actual."
-      );
+
+    if (!isStartDateValid(startDate)) {
+      console.log("La fecha de inicio no es válida o es anterior a la fecha actual.");
       return;
+    }
+
+    if (!isDeadlineValid(startDate, deadline)) {
+      setDeadlineError("La fecha de deadline debe ser al menos 30 días después de la fecha de inicio.");
+      return;
+    } else {
+      setDeadlineError("");
     }
 
     const daysDifference = differenceInDays(
-      new Date(deadlineFormt),
+      new Date(deadlineFormat),
       new Date(startDateFormt)
     );
-
-    if (daysDifference < 30) {
-      setDeadlineError(
-        "La fecha de deadline debe ser al menos 30 días después de la fecha de inicio."
-      );
-      return;
-    } else {
-      setDeadlineError(""); 
-    }
 
     console.log("ID USUARIO: ", id);
     console.log(projectData);
@@ -268,7 +264,7 @@ const ProjectRegister = () => {
         {isDescriptionError && (
           <p className="text-red-500">
             The description cannot exceed 200 characters.
-          </p> 
+          </p>
         )}
       </div>
       <div className="mb-4">
