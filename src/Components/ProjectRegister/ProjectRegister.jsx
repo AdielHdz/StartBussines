@@ -87,13 +87,13 @@ const ProjectRegister = () => {
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
     setDescriptionInput(value);
-    setDescriptionError(false); // Establecemos el estado de error en falso para ocultar el mensaje de error
+    setDescriptionError(false); 
     try {
       const validatedDescription = description(value);
       setDescriptionInput(validatedDescription);
     } catch (error) {
       console.error(error.message);
-      setDescriptionError(true); // Aquí indicamos que ha ocurrido un error
+      setDescriptionError(true); 
     }
   };
 
@@ -290,7 +290,7 @@ const ProjectRegister = () => {
         />
         {isDescriptionError && (
           <p className="text-red-500">
-            The description cannot exceed 200 characters.
+            The description cannot exceed 800 characters.
           </p>
         )}
       </div>
