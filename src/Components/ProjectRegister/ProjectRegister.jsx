@@ -1,7 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { startDate, description } from "./validations/validationProject";
+import {
+  startDate,
+  description,
+  validateBusinessName,
+} from "./validations/validationProject";
 import { differenceInDays } from "date-fns";
 
 const ProjectRegister = () => {
@@ -21,6 +25,7 @@ const ProjectRegister = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
   const [isDescriptionError, setDescriptionError] = useState(false);
   const [deadlineError, setDeadlineError] = useState("");
+  const [businessNameError, setBusinessNameError] = useState("");
 
   const categories = [
     "Art",
@@ -79,8 +84,6 @@ const ProjectRegister = () => {
     return `${day}/${month}/${year}`;
   }
 
-
-
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
     setDescriptionInput(value);
@@ -132,15 +135,27 @@ const ProjectRegister = () => {
       UserId: id,
     };
 
+    try {
+      const validatedName = validateBusinessName(businessName);
+      setBusinessName(validatedName);
+    } catch (error) {
+      setBusinessNameError(error.message);
+      return;
+    }
+
     console.log("Datos del proyecto:", projectData);
 
     if (!isStartDateValid(startDate)) {
-      console.log("La fecha de inicio no es válida o es anterior a la fecha actual.");
+      console.log(
+        "La fecha de inicio no es válida o es anterior a la fecha actual."
+      );
       return;
     }
 
     if (!isDeadlineValid(startDate, deadline)) {
-      setDeadlineError("La fecha de deadline debe ser al menos 30 días después de la fecha de inicio.");
+      setDeadlineError(
+        "La fecha de deadline debe ser al menos 30 días después de la fecha de inicio."
+      );
       return;
     } else {
       setDeadlineError("");
@@ -180,8 +195,20 @@ const ProjectRegister = () => {
           id="businessName"
           value={businessName}
           onChange={(e) => setBusinessName(e.target.value)}
+          onBlur={() => {
+            try {
+              validateBusinessName(businessName);
+              setBusinessNameError("");
+            } catch (error) {
+              setBusinessNameError(error.message);
+            }
+          }}
         />
+        {businessNameError && (
+          <p className="text-red-500">{businessNameError}</p>
+        )}
       </div>
+
       <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="businessName">
           City
