@@ -2,249 +2,134 @@
 import { useState, useEffect } from "react";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import {
-  validateEmail,
-  validateDate,
-  validateAge,
-  validatePassword,
-  validateName,
-} from "./formValidations";
-import CustomButton from "../../Components/customButton/CustomButton";
+
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../Redux/Fetching/UsersSlice/UserSlice";
 import SelectWay from "../SelectWay/SelectWay";
 import ButtonAuth from "../customButton/ButtonAuth";
+import validations from "./formValidations";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-const RegisterForm = () => {
-  const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [nameError, setNameError] = useState(null);
-  const [emailError, setEmailError] = useState(null);
-  const [dobError, setDobError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const [isEntrepreneur, setIsEntrepreneur] = useState(true);
-  const [emailExist, setEmailExist] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
 
-  //! FALTA EL MENSAJE FAILED MENSSAGE DESPUES DE ENVIAR EL FORM
+const RegisterForm = () => {
   const router = useRouter();
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const isFormValid =
-      name !== "" &&
-      email !== "" &&
-      dob !== "" &&
-      password !== "" &&
-      confirmPassword !== "";
-    if (!isFormValid) {
-      alert("There are fields that are not completed");
-      return;
-    }
+  const [form, setForm] = useState({
+    rol: "",
+    fullName: "",
+    email: "",
+    birthdate: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    if (
-      nameError ||
-      emailError ||
-      dobError ||
-      passwordError ||
-      confirmPasswordError
-    ) {
-      console.log("There are errors in the form");
-      return;
-    }
+  const [error, setError] = useState({
+    rol: "",
+    fullName: "",
+    email: "",
+    birthdate: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    const rol = "entrepreneur";
-    const fullName = name;
-    const birthdate = new Date(dob).toLocaleDateString("es-ES");
+  const [showPassword, setShowPassword] = useState(false);
+  const [formCompleted, setFormCompleted] = useState(false);
 
-    try {
-      dispatch(
-        registerUser({
-          fullName,
-          email,
-          rol,
-          birthdate,
-          password,
-        })
-      );
-      setSuccessMessage("Registration successful!");
-      router.push("/home");
-
-      /* e.target.reset(); */
-      setName("");
-      setEmail("");
-      setDob("");
-      setPassword("");
-      setConfirmPassword("");
-      setEmailExist("");
-    } catch (error) {
-      console.error("An error occurred during registration: ", error);
-      if (error.response && error.response.data.error) {
-        setEmailExist(error.response.data.error);
-      } else {
-        setEmailError("Error registering user");
-      }
-    }
+  const handleChange = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+    setForm({ ...form, [property]: value });
+    setError(validations({ ...form, [property]: value }));
   };
-
-  const onNameBlur = (e) => {
-    const newName = e.target.value;
-    setName(newName);
-
-    if (!validateName(newName)) {
-      setNameError("Name is invalid");
-    } else {
-      setNameError("");
-    }
-  };
-
-  const onEmailBlur = (e) => {
-    const newEmail = e.target.value;
-
-    if (!validateEmail(newEmail)) {
-      setEmailError("Email is invalid");
-    } else {
-      setEmailError("");
-    }
-  };
-
-  const onDobBlur = (e) => {
-    const newDob = e.target.value;
-
-    if (!validateDate(newDob)) {
-      setDobError("Date of Birth is invalid");
-    } else if (!validateAge(newDob)) {
-      setDobError("You must be at least 18 years old");
-    } else {
-      setDobError("");
-    }
-  };
-
-  const onPasswordBlur = (e) => {
-    const newPassword = e.target.value;
-
-    const errorMessage = validatePassword(newPassword);
-    if (errorMessage) {
-      setPasswordError(errorMessage);
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const onConfirmPasswordBlur = (e) => {
-    const newConfirmPassword = e.target.value;
-
-    if (newConfirmPassword !== password) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
-    }
-  };
-
-  const onPasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    if (newPassword !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
-    }
-  };
-
-  const onNameChange = (e) => {
-    const value = e.target.value;
-    const words = value.split(" ");
-    const formattedWords = words.map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    });
-    const formattedValue = formattedWords.join(" ");
-    setName(formattedValue);
-  };
-
-  const togglePasswordVisibility = () => {
+  const handlePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const rol = localStorage.getItem("rol");
+    const formWithRol = { ...form, rol: rol };
+
+    axios
+      .post("http://localhost:3001/user", formWithRol)
+      .then((registrationResponse) => {
+        alert("Welcome");
+        axios
+          .post("http://localhost:3001/user/login", formWithRol)
+          .then((loginResponse) => {
+            const loginData = loginResponse.data;
+            localStorage.setItem(
+              "token_DealUp",
+              loginData.userRegistered.accessToken
+            );
+            localStorage.setItem("idSession", loginData.userRegistered.data.id);
+            localStorage.setItem(
+              "fullName",
+              loginData.userRegistered.data.fullName
+            );
+            localStorage.setItem(
+              "avatar",
+              loginData.userRegistered.data.avatar
+            );
+
+            localStorage.setItem(
+              "savedEmail",
+              loginData.userRegistered.data.email
+            );
+
+            localStorage.setItem(
+              "userData",
+              JSON.stringify({
+                fullName: loginData.userRegistered.data.fullName,
+                email: loginData.userRegistered.data.email,
+                rol: loginData.userRegistered.data.rol,
+                address: loginData.userRegistered.data.address,
+                password: loginData.userRegistered.data.password,
+                gender: loginData.userRegistered.data.gender,
+                birthdate: loginData.userRegistered.data.birthdate,
+                phone: loginData.userRegistered.data.phone,
+                country: loginData.userRegistered.data.country,
+                avatar: loginData.userRegistered.data.avatar,
+                status: loginData.userRegistered.data.status,
+                thirdPartyCreated:
+                  loginData.userRegistered.data.thirdPartyCreated,
+              })
+            );
+            router.push("/home");
+          })
+          .catch((loginError) => {
+            console.log("Login Error:", loginError);
+          });
+      })
+      .catch((registrationError) => {
+        console.log("Registration Error:", registrationError);
+      });
   };
-
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
-    if (
-      name !== "" &&
-      email !== "" &&
-      dob !== "" &&
-      password !== "" &&
-      confirmPassword !== "" &&
-      (nameError === null || nameError === "") &&
-      (emailError === null || emailError === "") &&
-      (dobError === null || dobError === "") &&
-      (passwordError === null || passwordError === "") &&
-      (confirmPasswordError === null || confirmPasswordError === "")
-    ) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
-  }, [
-    name,
-    email,
-    dob,
-    password,
-    confirmPassword,
-    nameError,
-    emailError,
-    dobError,
-    passwordError,
-    confirmPasswordError,
-  ]);
-
-  const currentPage = "/register";
 
   return (
     <div className="py-20 flex justify-center items-center ">
       <div className="p-4  md:shadow-cards max-w-md rounded-xl">
-        <NavigationButtons currentPage={currentPage} />
+        <NavigationButtons currentPage={"/register"} />
         <div className="flex justify-center items-center gap-3 rounded-xl py-2">
           <SelectWay />
         </div>
-        <form onSubmit={onSubmit} className="max-w-md   flex flex-col gap-2">
+        <form className="max-w-md   flex flex-col gap-2">
           <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="name" className="text-orangeMedium  ">
+            <label htmlFor="fullName" className="text-orangeMedium  ">
               Full Name
             </label>
             <input
-              id="name"
+              name="fullName"
               type="text"
-              value={name}
-              onChange={onNameChange}
-              onBlur={onNameBlur}
+              onChange={handleChange}
               className={`pl-1 h-12 border-2 rounded-md outline-none  ${
-                nameError ? "border-redError" : " border-grayLightMedium "
+                error.fullName ? "border-redError" : " border-grayLightMedium "
               }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {nameError && (
-              <p className=" text-redError text-xs py-1 m-0">{nameError}</p>
+            {error.fullName && (
+              <p className=" text-redError text-xs py-1 m-0">
+                {error.fullName}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
@@ -252,38 +137,33 @@ const RegisterForm = () => {
               Email
             </label>
             <input
-              id="email"
+              name="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={onEmailBlur}
+              onChange={handleChange}
               className={`pl-1 h-12 border-2 rounded-md outline-none  ${
-                emailError ? "border-redError" : " border-grayLightMedium "
+                error.email ? "border-redError" : " border-grayLightMedium "
               }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {emailExist && (
-              <p className=" text-redError text-xs py-1 m-0">{emailExist}</p>
-            )}
-            {emailError && (
-              <p className=" text-redError text-xs py-1 m-0">{emailError}</p>
+            {error.email && (
+              <p className=" text-redError text-xs py-1 m-0">{error.email}</p>
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
-            <label htmlFor="dob" className="text-orangeMedium  ">
-              Date of Birth
+            <label htmlFor="birthdate" className="text-orangeMedium  ">
+              Birthday
             </label>
             <input
-              id="dob"
+              name="birthdate"
               type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              onBlur={onDobBlur}
+              onChange={handleChange}
               className={`pl-1 h-12 border-2 rounded-md outline-none  ${
-                dobError ? "border-redError" : " border-grayLightMedium "
+                error.birthdate ? "border-redError" : " border-grayLightMedium "
               }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
             />
-            {dobError && (
-              <p className=" text-redError text-xs py-1 m-0">{dobError}</p>
+            {error.birthdate && (
+              <p className=" text-redError text-xs py-1 m-0">
+                {error.birthdate}
+              </p>
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
@@ -292,20 +172,24 @@ const RegisterForm = () => {
             </label>
             <div className="relative">
               <input
-                id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={onPasswordChange}
-                onBlur={onPasswordBlur}
+                onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none  ${
-                  passwordError ? "border-redError" : " border-grayLightMedium "
+                  error.password
+                    ? "border-redError"
+                    : " border-grayLightMedium "
                 }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
+              {error.password && (
+                <p className=" text-redError text-xs py-1 m-0">
+                  {error.password}
+                </p>
+              )}
               <button
                 type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium "
-              >
+                onClick={handlePassword}
+                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -313,9 +197,6 @@ const RegisterForm = () => {
                 )}
               </button>
             </div>
-            {passwordError && (
-              <p className=" text-redError text-xs py-1 m-0">{passwordError}</p>
-            )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
             <label htmlFor="confirmPassword" className="text-orangeMedium  ">
@@ -323,50 +204,40 @@ const RegisterForm = () => {
             </label>
             <div className="relative">
               <input
-                id="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onBlur={onConfirmPasswordBlur}
+                name="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                onChange={handleChange}
                 className={`pl-1 h-12 border-2 rounded-md outline-none  ${
-                  confirmPasswordError
+                  error.confirmPassword
                     ? "border-redError"
                     : " border-grayLightMedium "
                 }  text-darkViolet font-medium text-sm placeholder:text-sm placeholder:font-light w-full`}
               />
+              {error.confirmPassword && (
+                <p className=" text-redError text-xs py-1 m-0">
+                  {error.confirmPassword}
+                </p>
+              )}
               <button
                 type="button"
-                onClick={toggleConfirmPasswordVisibility}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium "
-              >
-                {showConfirmPassword ? (
+                onClick={handlePassword}
+                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
+                {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
                   <AiFillEye className="text-3xl " />
                 )}
               </button>
             </div>
-            {confirmPasswordError && (
-              <p className=" text-redError text-xs py-1 m-0">
-                {confirmPasswordError}
-              </p>
-            )}
           </div>
           <div className="h-12">
-            <ButtonAuth
-              text={"Register"}
-              doThis={onSubmit}
-              disabled={!isFormValid}
-            />
+            <button
+              className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
+              onClick={handleSubmit}>
+              Register
+            </button>
           </div>
         </form>
-
-        {successMessage && (
-          <p className="text-green-500 text-center uppercase text-xl">
-            {successMessage}
-          </p>
-        )}
-
         <Authentication />
       </div>
     </div>
