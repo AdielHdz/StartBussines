@@ -5,10 +5,11 @@ import { getProjects } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { SearchCategories } from "./SearchCategories";
 import Link from "next/link";
 import { RangeSlider } from "./RangeSlider";
+import { addTags, deleteTags } from "../../Redux/Fetching/Filters/FiltersSlice";
 
 export const SearchProjects = ({ setSuggestions, projects }) => {
   //el estado de los proyectos lo recibo como parametro (projects)
-  console.log(projects)
+  console.log(projects);
 
   const [name, setName] = useState("");
   const [showCategories, setShowCategories] = useState(false);
@@ -36,6 +37,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
 
   const handleSelectTag = (tags) => {
     setSelectedTags(tags);
+    dispatch(addTags(tags));
   };
 
   console.log(selectedTags);
@@ -44,10 +46,11 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
     setSelectedTags((prevTags) =>
       prevTags.filter((tag) => tag !== tagToRemove)
     );
+    dispatch(deleteTags(tagToRemove));
   };
 
   return (
-    <div className="flex flex-col w-50">
+    <div className="flex flex-col w-50 ">
       <input
         className="form-control me-2 rounded-pill border border-blue-500"
         type="search"

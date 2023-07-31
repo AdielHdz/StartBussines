@@ -1,14 +1,15 @@
 "use client"
-
 import React, { useEffect, useRef, useState } from "react";
 import DefaultRating from "../../Components/Rating/Rating";
 import ArticleCard from "../../app/contenedorbusqueda/articlesData/pages";
 import { SearchProjects } from "@/Components/SearchBar/SearchProjects";
 import { SearchProjectsList } from "@/Components/SearchBar/SearchProjectsList";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ContenedorBusquedaCard = () => {
   const [articlesData, setArticlesData] = useState([]);
+  const filters = useSelector((state) => state.filters);
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
@@ -16,9 +17,19 @@ const ContenedorBusquedaCard = () => {
 
   // Función para hacer la solicitud a la API y obtener los datos
   const fetchArticlesData = async () => {
+    console.log(filters);
     try {
-      const response = await fetch("http://localhost:3001/projects");
+      const response = await fetch("http://localhost:3001/projects/filter", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filters),
+      });
+
       const data = await response.json();
+      console.log(data);
+
       setArticlesData(data);
     } catch (error) {
       console.error("Error fetching data from API:", error);
@@ -28,6 +39,7 @@ const ContenedorBusquedaCard = () => {
   // Utilizamos useEffect para hacer la solicitud a la API cuando el componente se monta
   useEffect(() => {
     fetchArticlesData();
+    console.log(filters);
   }, []);
 
   const closeSuggestions = () => {
