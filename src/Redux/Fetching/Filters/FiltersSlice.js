@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const order = createAsyncThunk("order", async (filters) => {
+  return await axios
+    .put("/projects/filter", filters)
+    .then((response) => response.data);
+});
+
 const FilterSlice = createSlice({
   name: "Filters",
   initialState: {
@@ -9,6 +15,9 @@ const FilterSlice = createSlice({
     maxAmountMin: 0,
     minAmountMax: 0,
     maxAmountMax: 0,
+    order: "",
+    attribute: "rating",
+    typeAmount: "min",
   },
   reducers: {
     addTags: (state, action) => {
@@ -20,24 +29,21 @@ const FilterSlice = createSlice({
       console.log(state.category);
     },
     addMinMaxAmount: (state, action) => {
-      if (action.payload.minOrMax === "min") {
+      console.log(action.payload);
+      if (action.payload.minOrMax === "Min") {
         state.minAmountMin = action.payload.rangeMin;
         state.maxAmountMin = action.payload.rangeMax;
-        console.log({
-          minAmountMin: state.minAmountMin,
-          maxAmountMin: state.maxAmountMin,
-        });
-      } else if (action.payload.minOrMax === "max") {
+      } else if (action.payload.minOrMax === "Max") {
         state.minAmountMax = action.payload.rangeMin;
         state.maxAmountMax = action.payload.rangeMax;
-        console.log({
-          minAmountMax: state.minAmountMax,
-          maxAmountMax: state.maxAmountMax,
-        });
       }
+    },
+    ordered: (state, action) => {
+      state.order = action.payload;
     },
   },
 });
 
-export const { addTags, deleteTags, addMinMaxAmount } = FilterSlice.actions;
+export const { addTags, deleteTags, addMinMaxAmount, ordered } =
+  FilterSlice.actions;
 export default FilterSlice;

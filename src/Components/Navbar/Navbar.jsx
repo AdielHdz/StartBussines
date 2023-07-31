@@ -10,7 +10,7 @@ import Image from "next/image";
 // import { SearchBar } from "./SearchBar";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
+  { name: "Dashboard", href: "/dashboard", current: true },
   // { name: "Projects", href: "#", current: false },
 ];
 

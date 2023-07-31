@@ -162,8 +162,8 @@ const ProjectRegister = () => {
     }
 
     const daysDifference = differenceInDays(
-      new Date(deadlineFormat),
-      new Date(startDateFormt)
+      new Date(deadline),
+      new Date(startDate)
     );
 
     console.log("ID USUARIO: ", id);
