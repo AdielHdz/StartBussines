@@ -4,7 +4,6 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 import { postComment } from "../../Redux/Fetching/Rating/Rating";
 import { getProjectById } from "../../Redux/Fetching/Projects/ProjectSlice";
-
 const LeaveAComment = () => {
   const dispatch = useDispatch();
 
@@ -17,7 +16,7 @@ const LeaveAComment = () => {
     points: 0,
     comments: "",
     ProjectId: id,
-    UserId: "cbdc17b9-f178-4a0d-a7d5-135651205b4e",
+    UserId: "a480ad90-1af9-4828-8164-301397b30cf3",
   });
 
   console.log(rating);

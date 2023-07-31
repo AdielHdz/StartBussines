@@ -9,6 +9,7 @@ export const RangeSlider = ({
   max,
   step,
   priceCap,
+  minOrMax,
 }) => {
   //estados de min y max value
   const [minValue, setMinValue] = useState(initialMin);
@@ -22,7 +23,7 @@ export const RangeSlider = ({
         setMinValue(parseInt(e.target.value));
         dispatch(
           addMinMaxAmount({
-            minOrMax: "min",
+            minOrMax: minOrMax,
             rangeMin: e.target.value,
             rangeMax: maxValue,
           })
@@ -33,7 +34,7 @@ export const RangeSlider = ({
         setMinValue(parseInt(e.target.value));
         dispatch(
           addMinMaxAmount({
-            minOrMax: "min",
+            minOrMax: minOrMax,
             rangeMin: e.target.value,
             rangeMax: maxValue,
           })
@@ -49,7 +50,7 @@ export const RangeSlider = ({
         setMaxValue(parseInt(e.target.value));
         dispatch(
           addMinMaxAmount({
-            minOrMax: "min",
+            minOrMax: minOrMax,
             rangeMax: e.target.value,
             rangeMin: minValue,
           })
@@ -60,7 +61,7 @@ export const RangeSlider = ({
         setMaxValue(parseInt(e.target.value));
         dispatch(
           addMinMaxAmount({
-            minOrMax: "min",
+            minOrMax: minOrMax,
             rangeMax: e.target.value,
             rangeMin: minValue,
           })
@@ -74,12 +75,12 @@ export const RangeSlider = ({
     progressRef.current.style.right = step - (minValue / max) * step + "%";
     dispatch(
       addMinMaxAmount({
-        minOrMax: "min",
+        minOrMax: minOrMax,
         rangeMin: minValue,
         rangeMax: maxValue,
       })
     );
-  }, [minValue, maxValue]);
+  }, [minValue, maxValue, minOrMax]);
 
   console.log(maxValue);
   console.log(minValue);
