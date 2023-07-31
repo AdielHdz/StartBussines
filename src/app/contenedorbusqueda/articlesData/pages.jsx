@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 const ArticleCard = ({ data }) => {
   const {
     name,
@@ -10,26 +10,29 @@ const ArticleCard = ({ data }) => {
     city,
     category,
     status,
+    id,
   } = data;
 
   return (
     <article className="group relative flex  sm:h-auto md:h-[24rem] lg:h-[32rem] w-full md:w-[50rem] lg:w-[60rem] rounded-2xl bg-[#3a4448]">
-      <div className="p-4 sm:p-8 lg:p-12 text-white border w-full">
-        <header className="space-0 z-10 text-center border">
-          <div className="text-center">
-            <div className="text-xl font-medium ">{name}</div>
-            <div className="text-xs flex flex-col items-center">
-              <p>{description}</p>
-              <p>Min Investment: ${minAmount}</p>
-              <p>Max investment: ${maxAmount}</p>
-              <p>Goal amount: ${goalAmount}</p>
-              <p>City: {city}</p>
-              <p>Category: {category.join(", ")}</p>
-              <p>Status: {status}</p>
+      <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
+        <div className="p-4 sm:p-8 lg:p-12 text-white border w-full">
+          <header className="space-0 z-10 text-center border">
+            <div className="text-center">
+              <div className="text-xl font-medium ">{name}</div>
+              <div className="text-xs flex flex-col items-center">
+                <p>{description}</p>
+                <p>Min Investment: ${minAmount}</p>
+                <p>Max investment: ${maxAmount}</p>
+                <p>Goal amount: ${goalAmount}</p>
+                <p>City: {city}</p>
+                <p>Category: {category.join(", ")}</p>
+                <p>Status: {status}</p>
+              </div>
             </div>
-          </div>
-        </header>
-      </div>
+          </header>
+        </div>
+      </Link>
     </article>
   );
 };

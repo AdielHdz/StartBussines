@@ -16,7 +16,7 @@ const Home = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
-  const searchResults = useSelector((state) => state.project.allProjects);  //selector al array de resultados de proyectos
+  const searchResults = useSelector((state) => state.project.allProjects); //selector al array de resultados de proyectos
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [rolSession, setRolSession] = useState("");
@@ -68,7 +68,7 @@ const Home = () => {
   return (
     <div>
       <div className="relative">
-        <img
+        {/*       <img
           src="https://uwm.edu/set/wp-content/uploads/sites/631/2023/04/HandshakeBanner.png"
           alt=""
           className="w-full h-[27rem] opacity-75"
@@ -78,7 +78,7 @@ const Home = () => {
         </h1>
         <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
-        </p>
+        </p> */}
         <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
@@ -93,7 +93,8 @@ const Home = () => {
           <div className="flex items-center justify-center mt-3">
             <button
               className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
-              onClick={handleOpenModal}>
+              onClick={handleOpenModal}
+            >
               Start Project
               <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
             </button>
@@ -103,8 +104,9 @@ const Home = () => {
           <div className="flex items-center justify-center mt-3">
             <button
               className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
-              onClick={handleClick}>
-              Your investments
+              onClick={handleClick}
+            >
+              My investments
               <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
             </button>
           </div>
@@ -126,7 +128,7 @@ const Home = () => {
         <div className="flex items-center justify-center mt-3">
           <SearchProjects
             setSuggestions={handleSetSuggestions}
-            projects={searchResults} 
+            projects={searchResults}
           />{" "}
         </div>
         <div>
