@@ -5,10 +5,11 @@ import { getProjects } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { SearchCategories } from "./SearchCategories";
 import Link from "next/link";
 import { RangeSlider } from "./RangeSlider";
+import { addTags, deleteTags } from "../../Redux/Fetching/Filters/FiltersSlice";
 
 export const SearchProjects = ({ setSuggestions, projects }) => {
   //el estado de los proyectos lo recibo como parametro (projects)
-  console.log(projects)
+  console.log(projects);
 
   const [name, setName] = useState("");
   const [showCategories, setShowCategories] = useState(false);
@@ -36,6 +37,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
 
   const handleSelectTag = (tags) => {
     setSelectedTags(tags);
+    dispatch(addTags(tags));
   };
 
   console.log(selectedTags);
@@ -44,10 +46,11 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
     setSelectedTags((prevTags) =>
       prevTags.filter((tag) => tag !== tagToRemove)
     );
+    dispatch(deleteTags(tagToRemove));
   };
 
   return (
-    <div className="flex flex-col w-50">
+    <div className="flex flex-col w-50 ">
       <input
         className="form-control me-2 rounded-pill border border-blue-500"
         type="search"
@@ -125,8 +128,10 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             />
           </div> */}
-          <h2 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3">Min-Max Range</h2>
-          <RangeSlider 
+          <h2 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3">
+            Min-Max Range
+          </h2>
+          <RangeSlider
             initialMin={1}
             initialMax={10000}
             min={1}

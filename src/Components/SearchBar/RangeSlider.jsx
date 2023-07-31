@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addMinMaxAmount } from "../../Redux/Fetching/Filters/FiltersSlice";
 export const RangeSlider = ({
   initialMin,
   initialMax,
@@ -13,16 +14,30 @@ export const RangeSlider = ({
   const [minValue, setMinValue] = useState(initialMin);
   const [maxValue, setMaxValue] = useState(initialMax);
   const progressRef = useRef(null);
-
+  const dispatch = useDispatch();
   const handleMin = (e) => {
     if (maxValue - minValue >= priceCap && maxValue <= max) {
       if (parseInt(e.target.value) > parseInt(maxValue)) {
       } else {
         setMinValue(parseInt(e.target.value));
+        dispatch(
+          addMinMaxAmount({
+            minOrMax: "min",
+            rangeMin: e.target.value,
+            rangeMax: maxValue,
+          })
+        );
       }
     } else {
       if (parseInt(e.target.value) < minValue) {
         setMinValue(parseInt(e.target.value));
+        dispatch(
+          addMinMaxAmount({
+            minOrMax: "min",
+            rangeMin: e.target.value,
+            rangeMax: maxValue,
+          })
+        );
       }
     }
   };
@@ -32,10 +47,24 @@ export const RangeSlider = ({
       if (parseInt(e.target.value) < parseInt(minValue)) {
       } else {
         setMaxValue(parseInt(e.target.value));
+        dispatch(
+          addMinMaxAmount({
+            minOrMax: "min",
+            rangeMax: e.target.value,
+            rangeMin: minValue,
+          })
+        );
       }
     } else {
       if (parseInt(e.target.value) > maxValue) {
         setMaxValue(parseInt(e.target.value));
+        dispatch(
+          addMinMaxAmount({
+            minOrMax: "min",
+            rangeMax: e.target.value,
+            rangeMin: minValue,
+          })
+        );
       }
     }
   };
@@ -43,6 +72,13 @@ export const RangeSlider = ({
   useEffect(() => {
     progressRef.current.style.left = (minValue / max) * step + "%";
     progressRef.current.style.right = step - (minValue / max) * step + "%";
+    dispatch(
+      addMinMaxAmount({
+        minOrMax: "min",
+        rangeMin: minValue,
+        rangeMax: maxValue,
+      })
+    );
   }, [minValue, maxValue]);
 
   console.log(maxValue);
