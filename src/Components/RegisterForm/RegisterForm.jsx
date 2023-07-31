@@ -6,7 +6,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Authentication from "../../Components/Authentication/Authentication";
 import NavigationButtons from "../NavigationButtons/NavigationButtons";
 import SelectWay from "../SelectWay/SelectWay";
-import ButtonAuth from "../customButton/ButtonAuth";
 import validations from "./formValidations";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -33,7 +32,7 @@ const RegisterForm = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [formCompleted, setFormCompleted] = useState(false);
+  const [backendError, setBackendError] = useState("");
 
   const handleChange = (event) => {
     const property = event.target.name;
@@ -45,65 +44,63 @@ const RegisterForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const rol = localStorage.getItem("rol");
     const formWithRol = { ...form, rol: rol };
 
-    axios
-      .post("http://localhost:3001/user", formWithRol)
-      .then((registrationResponse) => {
-        alert("Welcome");
-        axios
-          .post("http://localhost:3001/user/login", formWithRol)
-          .then((loginResponse) => {
-            const loginData = loginResponse.data;
-            localStorage.setItem(
-              "token_DealUp",
-              loginData.userRegistered.accessToken
-            );
-            localStorage.setItem("idSession", loginData.userRegistered.data.id);
-            localStorage.setItem(
-              "fullName",
-              loginData.userRegistered.data.fullName
-            );
-            localStorage.setItem(
-              "avatar",
-              loginData.userRegistered.data.avatar
-            );
+    if (
+      error.fullName ||
+      error.email ||
+      error.birthdate ||
+      error.password ||
+      error.confirmPassword
+    ) {
+      return;
+    }
 
-            localStorage.setItem(
-              "savedEmail",
-              loginData.userRegistered.data.email
-            );
+    try {
+      await axios.post("http://localhost:3001/user", formWithRol);
 
-            localStorage.setItem(
-              "userData",
-              JSON.stringify({
-                fullName: loginData.userRegistered.data.fullName,
-                email: loginData.userRegistered.data.email,
-                rol: loginData.userRegistered.data.rol,
-                address: loginData.userRegistered.data.address,
-                password: loginData.userRegistered.data.password,
-                gender: loginData.userRegistered.data.gender,
-                birthdate: loginData.userRegistered.data.birthdate,
-                phone: loginData.userRegistered.data.phone,
-                country: loginData.userRegistered.data.country,
-                avatar: loginData.userRegistered.data.avatar,
-                status: loginData.userRegistered.data.status,
-                thirdPartyCreated:
-                  loginData.userRegistered.data.thirdPartyCreated,
-              })
-            );
-            router.push("/home");
-          })
-          .catch((loginError) => {
-            console.log("Login Error:", loginError);
-          });
-      })
-      .catch((registrationError) => {
-        console.log("Registration Error:", registrationError);
-      });
+      const loginResponse = await axios.post(
+        "http://localhost:3001/user/login",
+        formWithRol
+      );
+
+      const loginData = loginResponse.data;
+      localStorage.setItem(
+        "token_DealUp",
+        loginData.userRegistered.accessToken
+      );
+      localStorage.setItem("idSession", loginData.userRegistered.data.id);
+      localStorage.setItem("fullName", loginData.userRegistered.data.fullName);
+      localStorage.setItem("avatar", loginData.userRegistered.data.avatar);
+      localStorage.setItem("savedEmail", loginData.userRegistered.data.email);
+
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          fullName: loginData.userRegistered.data.fullName,
+          email: loginData.userRegistered.data.email,
+          rol: loginData.userRegistered.data.rol,
+          address: loginData.userRegistered.data.address,
+          password: loginData.userRegistered.data.password,
+          gender: loginData.userRegistered.data.gender,
+          birthdate: loginData.userRegistered.data.birthdate,
+          phone: loginData.userRegistered.data.phone,
+          country: loginData.userRegistered.data.country,
+          avatar: loginData.userRegistered.data.avatar,
+          status: loginData.userRegistered.data.status,
+          thirdPartyCreated: loginData.userRegistered.data.thirdPartyCreated,
+        })
+      );
+
+      alert("Welcome");
+      router.push("/home");
+    } catch (error) {
+      console.log("Error during form submission:", error);
+      setBackendError(error.response.data.error || "Something went wrong");
+    }
   };
 
   return (
@@ -231,8 +228,11 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="h-12">
+            {backendError && (
+              <p className="text-redError text-xs py-1 m-0">{backendError}</p>
+            )}
             <button
-              className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
+              className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-5"
               onClick={handleSubmit}>
               Register
             </button>
