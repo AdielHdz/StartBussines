@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const NewProjects = () => {
   //traer estado para acceder a las imagenes de los nuevos proyectos
-  const projects = useSelector((state) => state.user.searchProjects);
+  const projects = useSelector((state) => state.project.allProjects);
 
 
   const [slides, setSlides] = useState([
@@ -53,20 +53,11 @@ const NewProjects = () => {
             <FaArrowLeft className="inline-block align-text-bottom mr-1" />
           </button>
         <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4">
-          <blockquote>
-            <p className="text-base font-medium text-white">
-              {currentSlide.content}
-            </p>
-          </blockquote>
           <figcaption className="font-medium">
-            <div className="flex items-center justify-center mb-2">
-              <FaUser className="mr-2" />
+            <div className="flex items-center justify-center ">
               <div className="text-sky-500 dark:text-sky-400">
                 {currentSlide.name}
               </div>
-            </div>
-            <div className="text-slate-700 dark:text-slate-500">
-              {currentSlide.job}
             </div>
           </figcaption>
         </div>
