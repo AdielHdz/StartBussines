@@ -7,12 +7,14 @@ const SelectWay = () => {
   const [inIsActive, setInvestor] = useState(false);
 
   const handleEntrepreneur = () => {
-    setEntrepreneur(!enIsActive);
+    setEntrepreneur(true);
     setInvestor(false);
+    localStorage.setItem("rol", "entrepreneur");
   };
   const handleInvestor = () => {
-    setInvestor(!inIsActive);
+    setInvestor(true);
     setEntrepreneur(false);
+    localStorage.setItem("rol", "investor");
   };
   return (
     <>
