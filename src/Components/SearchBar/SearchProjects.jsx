@@ -98,33 +98,17 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
           </div>
           <div>
             <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
-              Order
+              Investment Range
             </h2>
             <select className="mt-3 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm">
-              <option className="text-gray-900 dark:text-gray-300" value="Asc">
-                Asc
+              <option className="text-gray-900 dark:text-gray-300" value="Max">
+                Max
               </option>
-              <option className="text-gray-900 dark:text-gray-300" value="Desc">
-                Desc
+              <option className="text-gray-900 dark:text-gray-300" value="Min">
+                Min
               </option>
             </select>
           </div>
-          {/* <div>
-            <label
-              for="minmax-range"
-              class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3"
-            >
-              Min-max range
-            </label>
-            <input
-              id="minmax-range"
-              type="range"
-              min="0"
-              max="10"
-              value="5"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            />
-          </div> */}
           <h2 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3">Min-Max Range</h2>
           <RangeSlider 
             initialMin={1}
