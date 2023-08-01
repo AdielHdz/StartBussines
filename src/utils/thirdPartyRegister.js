@@ -4,7 +4,7 @@ const thirdPartyRegister = () => {
     console.log(form);
 
     axios
-      .post('http://localhost:3001/user/login', form)
+      .post("/user/login", form)
       .then((response) => {
         // console.log(response.data.userRegistered.data); // Muestra la respuesta en la consola
         // console.log(response.data.userRegistered.accessToken);
@@ -31,10 +31,10 @@ const thirdPartyRegister = () => {
             response.data.userRegistered.data.thirdPartyCreated,
         });
 
-        router.push('/home');
+        router.push("/home");
       })
       .catch((error) => {
-        console.log('Error:', error.response.data);
+        console.log("Error:", error.response.data);
         setErrorLogin(error.response.data.error);
       });
   };

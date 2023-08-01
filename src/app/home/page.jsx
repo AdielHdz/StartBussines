@@ -79,7 +79,7 @@ const Home = () => {
         <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
           The website where your idea can reach the maximum
         </p> */}
-        <div className="absolute top-[23rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold">
+        <div className="relative top-[1.5rem] mb-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-900 dark:text-white text-4xl font-bold text-center">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
       </div>
@@ -141,7 +141,7 @@ const Home = () => {
       <div className="mt-20 mb-16">
         <h2 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           The top 10 best ranked projects.{" "}
-          <a href="/projects" className="text-pink-200">
+          <a href="/contenedorbusqueda" className="text-pink-200">
             {" "}
             see all
           </a>
@@ -153,7 +153,7 @@ const Home = () => {
       <div className="mt-3 mb-16">
         <h2 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           New Projects.{" "}
-          <a href="/projects" className="text-pink-200">
+          <a href="/contenedorbusqueda" className="text-pink-200">
             {" "}
             see all
           </a>

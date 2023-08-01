@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { fetchArticlesData } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { ordered } from "../../Redux/Fetching/Filters/FiltersSlice";
+// import { Pagination } from "../../Components/Paginator/Paginator";
+
 const ContenedorBusquedaCard = () => {
   const filters = useSelector((state) => state.filters);
   const articlesData = useSelector((state) => state.project.projectsFiltered);
@@ -75,12 +77,13 @@ const ContenedorBusquedaCard = () => {
       </select>
       <div className="flex flex-col space-y-4 min-h-screen w-full items-center justify-center p-4 sm:m-2 lg:m-4">
         <div className="flex items-start m-4 text-xl text-black lg:text-2xl">
-          {articlesData.length} results
+          {articlesData?.length} results
         </div>
         {articlesData.map((article, index) => (
           <ArticleCard key={index} data={article} />
         ))}
       </div>
+     {/*<Pagination /> */}      
     </div>
   );
 };

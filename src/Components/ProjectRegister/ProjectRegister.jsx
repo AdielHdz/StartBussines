@@ -46,7 +46,7 @@ const ProjectRegister = () => {
     // Agrega más categorías aquí según tus necesidades.
   ];
 
-  const handlePhotoUpload = (event) => {
+  const handlePhotoUpload = async (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
 
@@ -87,13 +87,13 @@ const ProjectRegister = () => {
   const handleDescriptionChange = (e) => {
     const value = e.target.value;
     setDescriptionInput(value);
-    setDescriptionError(false); // Establecemos el estado de error en falso para ocultar el mensaje de error
+    setDescriptionError(false); 
     try {
       const validatedDescription = description(value);
       setDescriptionInput(validatedDescription);
     } catch (error) {
       console.error(error.message);
-      setDescriptionError(true); // Aquí indicamos que ha ocurrido un error
+      setDescriptionError(true); 
     }
   };
 
@@ -119,7 +119,7 @@ const ProjectRegister = () => {
     return daysDifference >= 30;
   };
 
-  const handlePostProject = () => {
+  const handlePostProject = async () => {
     const projectData = {
       name: businessName,
       description: description(descriptionInput),
@@ -170,8 +170,8 @@ const ProjectRegister = () => {
     console.log(projectData);
     console.log("Lista de categorias: ", selectedCategories);
 
-    axios
-      .post("http://localhost:3001/projects", projectData)
+    await axios
+      .post("/projects", projectData)
       .then((response) => {
         // Aquí puedes manejar la respuesta del backend si es necesario
         console.log("Respuesta del servidor:", response.data);
@@ -290,7 +290,7 @@ const ProjectRegister = () => {
         />
         {isDescriptionError && (
           <p className="text-red-500">
-            The description cannot exceed 200 characters.
+            The description cannot exceed 800 characters.
           </p>
         )}
       </div>
