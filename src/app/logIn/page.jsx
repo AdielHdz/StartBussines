@@ -162,7 +162,7 @@ export default function LogIn() {
 
           <Authentication />
           <div className="h-12 w-full flex items-center justify-center">
-            <Link href="/forgotpass">Forgot your password?</Link>
+            <Link href="/recoverpass">Forgot your password?</Link>
           </div>
         </form>
       </div>
