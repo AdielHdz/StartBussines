@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(
     console.log("Datos enviados a la API:", newUser);
 
     try {
-      const response = await axios.post(`http://localhost:3001/user`, newUser);
+      const response = await axios.post(`/user`, newUser);
 
       if (
         response.data.error &&
@@ -52,9 +52,7 @@ export const getProjectsByName = createAsyncThunk(
     );
 
     try {
-      const response = await axios.get(
-        `http://localhost:3001/projects?name=${nameProjects}`
-      );
+      const response = await axios.get(`/projects?name=${nameProjects}`);
 
       console.log("Datos recibidos de la API:", response.data);
 
@@ -107,7 +105,7 @@ const User = createSlice({
       })
       .addCase(getProjectsByName.fulfilled, (state, action) => {
         state.searchResults = action.payload;
-      })
+      });
   },
 });
 

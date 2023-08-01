@@ -10,13 +10,16 @@ export const fetchArticlesData = createAsyncThunk(
   async (filters) => {
     console.log(filters);
     try {
-      const response = await fetch("http://localhost:3001/projects/filter", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filters),
-      });
+      const response = await fetch(
+        "https://deal-up-api.onrender.com/projects/filter",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(filters),
+        }
+      );
 
       const data = await response.json();
       return data;
@@ -28,7 +31,7 @@ export const fetchArticlesData = createAsyncThunk(
 
 export const getProjects = createAsyncThunk("getProjects", async () => {
   try {
-    const response = await axios.get(`http://localhost:3001/projects`);
+    const response = await axios.get(`/projects`);
 
     console.log("Datos recibidos de la API:", response.data);
 

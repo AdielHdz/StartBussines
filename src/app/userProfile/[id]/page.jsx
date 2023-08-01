@@ -62,7 +62,7 @@ export default function UserProfile() {
     event.preventDefault();
 
     axios
-      .put(`http://localhost:3001/user/${idSession}`, userSession)
+      .put(`/user/${idSession}`, userSession)
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
@@ -83,7 +83,8 @@ export default function UserProfile() {
         <div>
           <button
             className="Sw-10 h-10 text-black  m-2 flex items-center"
-            onClick={toggleInputs}>
+            onClick={toggleInputs}
+          >
             {inputsDisabled ? (
               <AiOutlineEdit className="w-19 h-19 " />
             ) : (
@@ -173,7 +174,8 @@ export default function UserProfile() {
 
               <button
                 className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
-                onClick={handleSaveChanges}>
+                onClick={handleSaveChanges}
+              >
                 Save changes
               </button>
             </form>

@@ -60,12 +60,9 @@ const RegisterForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:3001/user", formWithRol);
+      await axios.post("/user", formWithRol);
 
-      const loginResponse = await axios.post(
-        "http://localhost:3001/user/login",
-        formWithRol
-      );
+      const loginResponse = await axios.post("/user/login", formWithRol);
 
       const loginData = loginResponse.data;
       localStorage.setItem(
@@ -186,7 +183,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
+                className="absolute  transform top-2.5 right-2 text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -218,7 +216,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
+                className="absolute   transform top-2.5 right-2   text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -233,7 +232,8 @@ const RegisterForm = () => {
             )}
             <button
               className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-5"
-              onClick={handleSubmit}>
+              onClick={handleSubmit}
+            >
               Register
             </button>
           </div>
