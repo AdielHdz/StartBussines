@@ -42,10 +42,10 @@ export default function Navbar() {
   const [avatar, setAvatar] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const rol = localStorage.getItem("rol");
+      const role = localStorage.getItem("role");
       const id = localStorage.getItem("idSession");
       const picture = localStorage.getItem("avatar");
-      setRolSession(rol);
+      setRolSession(role);
       setIdSession(id);
       setAvatar(picture);
     }
@@ -59,7 +59,7 @@ export default function Navbar() {
   };
 
   const signOutHandler = () => {
-    localStorage.setItem("rol", "");
+    localStorage.setItem("role", "");
     localStorage.setItem("token_DealUp", "");
     localStorage.setItem("idSession", "");
     localStorage.setItem("fullName", "");
