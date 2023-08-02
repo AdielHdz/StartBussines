@@ -31,7 +31,7 @@ export const fetchArticlesData = createAsyncThunk(
 
 export const getProjects = createAsyncThunk("getProjects", async () => {
   try {
-    const response = await axios.get(`http://localhost:3001/projects`);
+    const response = await axios.get(`/projects`);
 
     console.log("Datos recibidos de la API:", response.data);
 
