@@ -7,37 +7,53 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import DefaultImage from "public/asset/avatar2.jpg";
 import Image from "next/image";
-import Logo from '../../../public/asset/DealUp.png'
-
+import Logo from "../../../public/asset/DealUp.png";
 
 const navigation = [
-  { name: "Home", href: "/home", current: true, allowedRoles: ['entrepreneur', 'investor', 'moderator', 'admin' ]},
-  { name: "Dashboard", href: "/dashboard", current: true, allowedRoles:["admin","moderator"] },
-  { name: "My investments", href: "/investments", current: true, allowedRoles:["investor"] },
-
+  {
+    name: "Home",
+    href: "/home",
+    current: true,
+    allowedRoles: ["entrepreneur", "investor", "moderator", "admin"],
+  },
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    current: true,
+    allowedRoles: ["admin", "moderator"],
+  },
+  {
+    name: "My investments",
+    href: "/investments",
+    current: true,
+    allowedRoles: ["investor"],
+  },
 ];
 
 function classNames(...classes) {
-
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
   const router = useRouter();
-  
-  
+
   const [rolSession, setRolSession] = useState("");
   const [idSession, setIdSession] = useState("");
+  const [avatar, setAvatar] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const rol = localStorage.getItem("rol");
       const id = localStorage.getItem("idSession");
+      const picture = localStorage.getItem("avatar");
       setRolSession(rol);
       setIdSession(id);
+      setAvatar(picture);
     }
   }, []);
-  
-  const navigationWithRoles = navigation.filter(item=> item.allowedRoles.includes(rolSession))
+
+  const navigationWithRoles = navigation.filter((item) =>
+    item.allowedRoles.includes(rolSession)
+  );
   const profileHandler = () => {
     router.push(`/userProfile/${idSession}`);
   };
@@ -49,7 +65,7 @@ export default function Navbar() {
     localStorage.setItem("fullName", "");
     localStorage.setItem("avatar", "");
     localStorage.setItem("savedEmail", "");
-    
+
     router.push("/logIn");
   };
   return (
@@ -75,27 +91,33 @@ export default function Navbar() {
                     href="/home"
                     className="flex text-transparent bg-clip-text bg-gradient-to-r to-sky-50 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center">
                     <span className="pl-2">
-                    <Image src={Logo} alt="Deal Up!" className="w-32 md:w-35 " />
+                      <Image
+                        src={Logo}
+                        alt="Deal Up!"
+                        className="w-32 md:w-35 "
+                      />
                     </span>
                   </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigationWithRoles.map((item) => (
-                      item.allowedRoles.includes(rolSession) &&
-                      (<a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-primar text-white"
-                            : "text-gray-300 hover:bg-primar hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}>
-                        {item.name}
-                      </a>)
-                    ))}
+                    {navigationWithRoles.map(
+                      (item) =>
+                        item.allowedRoles.includes(rolSession) && (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className={classNames(
+                              item.current
+                                ? "bg-primar text-white"
+                                : "text-gray-300 hover:bg-primar hover:text-white",
+                              "rounded-md px-3 py-2 text-sm font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}>
+                            {item.name}
+                          </a>
+                        )
+                    )}
                   </div>
                 </div>
               </div>
@@ -106,8 +128,10 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <Image
                         className="h-8 w-8 rounded-full"
-                        src={DefaultImage}
+                        src={avatar || DefaultImage}
                         alt="avatar"
+                        width={100}
+                        height={100}
                       />
                     </Menu.Button>
                   </div>
@@ -150,8 +174,7 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          {
-            !navigation.length &&
+          {!navigation.length && (
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigationWithRoles.map((item) => (
@@ -171,7 +194,7 @@ export default function Navbar() {
                 ))}
               </div>
             </Disclosure.Panel>
-          }
+          )}
         </>
       )}
     </Disclosure>
