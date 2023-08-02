@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import DefautImage from "public/asset/avatar2.jpg";
+import DefaultImage from "public/asset/avatar2.jpg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 import UserInfo from "../../../Components/userProfilecomponents/userInfo";
@@ -73,7 +73,7 @@ export default function UserProfile() {
         <Image
           className="w-32 h-32 rounded-full shadow-lg m-2"
           alt="Avatar"
-          src={userSession.avatar}
+          src={/* userSession.avatar || */ DefaultImage}
           width={100}
           height={100}
         />

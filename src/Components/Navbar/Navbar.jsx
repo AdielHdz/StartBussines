@@ -107,12 +107,7 @@ export default function Navbar() {
                           <a
                             key={item.name}
                             href={item.href}
-                            className={classNames(
-                              item.current
-                                ? "bg-primar text-white"
-                                : "text-gray-300 hover:bg-primar hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
-                            )}
+                            className=" text-black rounded-md px-3 py-2 text-sm font-medium"
                             aria-current={item.current ? "page" : undefined}>
                             {item.name}
                           </a>
@@ -174,20 +169,15 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          {!navigation.length && (
-            <Disclosure.Panel className="sm:hidden">
+          {navigationWithRoles.length && (
+            <Disclosure.Panel className="sm:hidden bg-primar">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigationWithRoles.map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as="a"
                     href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-primar text-white"
-                        : "text-gray-300 hover:bg-primar hover:text-white",
-                      "block rounded-md px-3 py-2 text-base font-medium"
-                    )}
+                    className=" text-white flex justify-center px-3 py-2 text-base font-medium"
                     aria-current={item.current ? "page" : undefined}>
                     {item.name}
                   </Disclosure.Button>
