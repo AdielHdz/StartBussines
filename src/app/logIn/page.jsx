@@ -60,7 +60,7 @@ export default function LogIn() {
           "avatar",
           response.data.userRegistered.data.avatar
         );
-        localStorage.setItem("rol", response.data.userRegistered.data.rol);
+        localStorage.setItem("role", response.data.userRegistered.data.role);
         localStorage.setItem(
           "savedEmail",
           response.data.userRegistered.data.email
@@ -71,7 +71,7 @@ export default function LogIn() {
           JSON.stringify({
             fullName: response.data.userRegistered.data.fullName,
             email: response.data.userRegistered.data.email,
-            rol: response.data.userRegistered.data.rol,
+            role: response.data.userRegistered.data.role,
             address: response.data.userRegistered.data.address,
             password: response.data.userRegistered.data.password,
             gender: response.data.userRegistered.data.gender,
@@ -96,8 +96,7 @@ export default function LogIn() {
     <div className="h-screen flex items-center justify-center p-2 ">
       <div
         className="w-full md:max-w-registerMd max-w-registerXs md:shadow-cards bg-whites rounded-xl 
-            "
-      >
+            ">
         <NavigationButtons currentPage="/logIn" />
         <form className=" flex flex-col gap-3 p-2 rounded-xl ">
           <div className="flex flex-col gap-1 ">
@@ -137,8 +136,7 @@ export default function LogIn() {
               />
               <div
                 type="button"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white"
-              >
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white">
                 {showPassword ? (
                   <AiFillEye
                     className="text-xl text-blacks"

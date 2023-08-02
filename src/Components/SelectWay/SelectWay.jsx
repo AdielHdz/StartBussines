@@ -9,12 +9,12 @@ const SelectWay = () => {
   const handleEntrepreneur = () => {
     setEntrepreneur(true);
     setInvestor(false);
-    localStorage.setItem("rol", "entrepreneur");
+    localStorage.setItem("role", "entrepreneur");
   };
   const handleInvestor = () => {
     setInvestor(true);
     setEntrepreneur(false);
-    localStorage.setItem("rol", "investor");
+    localStorage.setItem("role", "investor");
   };
   return (
     <>

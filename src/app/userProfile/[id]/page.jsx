@@ -57,11 +57,11 @@ export default function UserProfile() {
     formData.append("country", userSession.country);
 
     axios
-      .put(`http://localhost:3001/user/${idSession}`, formData)
+      .patch(`http://localhost:3001/user/${idSession}`, formData)
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
-        localStorage.setItem("avatar", res.data.userRegistered.data.avatar);
+        /* localStorage.setItem("avatar", res.data.userRegistered.data.avatar); */
         localStorage.setItem("userData", JSON.stringify(userSession));
       })
       .catch((err) => console.log("Error:", err));
@@ -132,7 +132,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.birthdate}
+                  value={userSession.birthdate || ""}
                 />
                 {error.birthdate && (
                   <p className="text-red-500">{error.birthdate}</p>
@@ -152,7 +152,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.phone}
+                  value={userSession.phone || ""}
                 />
                 {error.phone && <p className="text-red-500">{error.phone}</p>}
               </div>
@@ -166,7 +166,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.country}
+                  value={userSession.country || ""}
                 />
               </div>
 
