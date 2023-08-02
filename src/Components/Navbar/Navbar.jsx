@@ -8,13 +8,13 @@ import { signOut } from "next-auth/react";
 import DefaultImage from "public/asset/avatar2.jpg";
 import Image from "next/image";
 import Logo from '../../../public/asset/DealUp.png'
-// import { SearchBar } from "./SearchBar";
+
 
 const navigation = [
   { name: "Home", href: "/home", current: true, allowedRoles: ['entrepreneur', 'investor', 'moderator', 'admin' ]},
   { name: "Dashboard", href: "/dashboard", current: true, allowedRoles:["admin","moderator"] },
   { name: "My investments", href: "/investments", current: true, allowedRoles:["investor"] },
-  // { name: "Projects", href: "#", current: false },
+
 ];
 
 function classNames(...classes) {
@@ -150,26 +150,28 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigationWithRoles.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-primar text-white"
-                      : "text-gray-300 hover:bg-primar hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}>
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
+          {
+            !navigation.length &&
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pb-3 pt-2">
+                {navigationWithRoles.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "bg-primar text-white"
+                        : "text-gray-300 hover:bg-primar hover:text-white",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}>
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+              </div>
+            </Disclosure.Panel>
+          }
         </>
       )}
     </Disclosure>
