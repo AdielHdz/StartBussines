@@ -54,7 +54,9 @@ module.exports = {
       minWidth: {
         cards: "20rem",
       },
-
+      animation: {
+        "spin-slow": "spin 1s linear infinite",
+      },
       // Puedes agregar más opciones de opacidad si es necesario
       opacity: {},
       // Puedes agregar más opciones de fondo de imagen si es necesario
