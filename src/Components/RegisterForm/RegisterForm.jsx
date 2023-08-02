@@ -14,7 +14,7 @@ const RegisterForm = () => {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    rol: "",
+    role: "",
     fullName: "",
     email: "",
     birthdate: "",
@@ -23,7 +23,7 @@ const RegisterForm = () => {
   });
 
   const [error, setError] = useState({
-    rol: "",
+    role: "",
     fullName: "",
     email: "",
     birthdate: "",
@@ -46,8 +46,8 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const rol = localStorage.getItem("rol");
-    const formWithRol = { ...form, rol: rol };
+    const role = localStorage.getItem("role");
+    const formWithRol = { ...form, role: role };
 
     if (
       error.fullName ||
@@ -60,9 +60,12 @@ const RegisterForm = () => {
     }
 
     try {
-      await axios.post("/user", formWithRol);
+      await axios.post("http://localhost:3001/user", formWithRol);
 
-      const loginResponse = await axios.post("/user/login", formWithRol);
+      const loginResponse = await axios.post(
+        "http://localhost:3001/user/login",
+        formWithRol
+      );
 
       const loginData = loginResponse.data;
       localStorage.setItem(
@@ -79,7 +82,7 @@ const RegisterForm = () => {
         JSON.stringify({
           fullName: loginData.userRegistered.data.fullName,
           email: loginData.userRegistered.data.email,
-          rol: loginData.userRegistered.data.rol,
+          role: loginData.userRegistered.data.role,
           address: loginData.userRegistered.data.address,
           password: loginData.userRegistered.data.password,
           gender: loginData.userRegistered.data.gender,
@@ -183,8 +186,7 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium "
-              >
+                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -216,8 +218,7 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium "
-              >
+                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -232,8 +233,7 @@ const RegisterForm = () => {
             )}
             <button
               className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-5"
-              onClick={handleSubmit}
-            >
+              onClick={handleSubmit}>
               Register
             </button>
           </div>

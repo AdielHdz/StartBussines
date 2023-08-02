@@ -7,11 +7,27 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import DefaultImage from "public/asset/avatar2.jpg";
 import Image from "next/image";
-// import { SearchBar } from "./SearchBar";
+import Logo from "../../../public/asset/DealUp.png";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", current: true },
-  // { name: "Projects", href: "#", current: false },
+  {
+    name: "Home",
+    href: "/home",
+    current: true,
+    allowedRoles: ["entrepreneur", "investor", "moderator", "admin"],
+  },
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    current: true,
+    allowedRoles: ["admin", "moderator"],
+  },
+  {
+    name: "My investments",
+    href: "/investments",
+    current: true,
+    allowedRoles: ["investor"],
+  },
 ];
 
 function classNames(...classes) {
@@ -20,47 +36,40 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const router = useRouter();
-  /*   const [tokenSession, setTokenSession] = useLocalStorage('token_DealUp', '');
-  const [idSession, setIdSession] = useLocalStorage('idSession', '');
-  const [userNameSession, setUserNameSession] = useLocalStorage('fullName', '');
-  const [avatarSession, setAvatarSession] = useLocalStorage('avatar', '');
-  const [rolSession, setRolSession] = useLocalStorage('rol', '');
-  const [savedEmail, setSavedEmail] = useLocalStorage('savedEmail', '');
 
-  const signOutHandler = () => {
-    setTokenSession('');
-    setIdSession('');
-    setUserNameSession('');
-    setAvatarSession(['']);
-    setRolSession('');
-    signOut();
-    localStorage.removeItem('userData');
-    router.push('/logIn');
-  }; */
-
+  const [rolSession, setRolSession] = useState("");
   const [idSession, setIdSession] = useState("");
+  const [avatar, setAvatar] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const role = localStorage.getItem("role");
       const id = localStorage.getItem("idSession");
+      const picture = localStorage.getItem("avatar");
+      setRolSession(role);
       setIdSession(id);
+      setAvatar(picture);
     }
   }, []);
 
+  const navigationWithRoles = navigation.filter((item) =>
+    item.allowedRoles.includes(rolSession)
+  );
   const profileHandler = () => {
     router.push(`/userProfile/${idSession}`);
   };
 
   const signOutHandler = () => {
+    localStorage.setItem("role", "");
     localStorage.setItem("token_DealUp", "");
     localStorage.setItem("idSession", "");
     localStorage.setItem("fullName", "");
     localStorage.setItem("avatar", "");
     localStorage.setItem("savedEmail", "");
-    localStorage.setItem("rol", "");
+
     router.push("/logIn");
   };
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="shadow-cards bg-whites rounded-xl">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -81,25 +90,34 @@ export default function Navbar() {
                   <a
                     href="/home"
                     className="flex text-transparent bg-clip-text bg-gradient-to-r to-sky-50 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center">
-                    <span className="pl-2">Deal Up!</span>
+                    <span className="pl-2">
+                      <Image
+                        src={Logo}
+                        alt="Deal Up!"
+                        className="w-32 md:w-35 "
+                      />
+                    </span>
                   </a>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}>
-                        {item.name}
-                      </a>
-                    ))}
+                    {navigationWithRoles.map(
+                      (item) =>
+                        item.allowedRoles.includes(rolSession) && (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            className={classNames(
+                              item.current
+                                ? "bg-primar text-white"
+                                : "text-gray-300 hover:bg-primar hover:text-white",
+                              "rounded-md px-3 py-2 text-sm font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}>
+                            {item.name}
+                          </a>
+                        )
+                    )}
                   </div>
                 </div>
               </div>
@@ -110,8 +128,10 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <Image
                         className="h-8 w-8 rounded-full"
-                        src={DefaultImage}
+                        src={/* avatar */ DefaultImage}
                         alt="avatar"
+                        width={100}
+                        height={100}
                       />
                     </Menu.Button>
                   </div>
@@ -129,8 +149,8 @@ export default function Navbar() {
                           <button
                             onClick={profileHandler}
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "w-full bg-gray-100" : "",
+                              "w-full block px-4 py-2 text-sm text-gray-700"
                             )}>
                             Profile
                           </button>
@@ -141,8 +161,8 @@ export default function Navbar() {
                           <button
                             onClick={signOutHandler}
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "w-full bg-gray-100" : "",
+                              "w-full block px-4 py-2 text-sm text-gray-700"
                             )}>
                             Sign out
                           </button>
@@ -154,26 +174,27 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}>
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
+          {!navigation.length && (
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pb-3 pt-2">
+                {navigationWithRoles.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "bg-primar text-white"
+                        : "text-gray-300 hover:bg-primar hover:text-white",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}>
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+              </div>
+            </Disclosure.Panel>
+          )}
         </>
       )}
     </Disclosure>

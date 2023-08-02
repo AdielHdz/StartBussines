@@ -25,6 +25,7 @@ export const fetchArticlesData = createAsyncThunk(
       return data;
     } catch (error) {
       console.error("Error fetching data from API:", error);
+      return [{ error: error.message }];
     }
   }
 );

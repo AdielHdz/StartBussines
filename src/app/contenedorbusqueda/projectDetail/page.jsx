@@ -9,6 +9,8 @@ import CommentsSection from "../../../Components/Comments/CommentsSection";
 import Link from "next/link";
 import { averageScore } from "../../../utils/averageScore";
 import { IoWalletOutline } from "react-icons/io5";
+
+import Loading from "../../../Components/Loading/Loading";
 const ProjectDetail = () => {
   const searchParams = useSearchParams();
 
@@ -116,7 +118,9 @@ const ProjectDetail = () => {
           </section>
         </div>
       ) : (
-        <h5>Loading</h5>
+        <div className="flex items-center justify-center h-screen absolute top-0 w-full -z-10">
+          <Loading width={20} height={20} borderWeight={5} loadingText={true} />
+        </div>
       )}
     </>
   );

@@ -14,6 +14,7 @@ export default function UserProfile() {
   const [inputsDisabled, setInputsDisabled] = useState(true);
   const [changesSaved, setChangesSaved] = useState(true);
   const [idSession, setIdSession] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -39,36 +40,31 @@ export default function UserProfile() {
       setInputsDisabled(!inputsDisabled);
     }
   };
-
-  /* const handleImageUpload = async (event) => {
-    try {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("avatar", file);
-      const response = await axios.post(
-        "http://localhost:3001/gallery/file",
-        formData
-      );
-      const avatarUrl = response.data.url;
-      setForm({ ...form, avatar: avatarUrl });
-      setUserSession({ ...userSession, avatar: avatarUrl });
-      setUser;
-    } catch (error) {
-      console.error("Error uploading avatar:", error);
-    }
-  }; */
-
+  const handleAvatarChange = (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    setSelectedAvatar(file);
+  };
   const handleSaveChanges = (event) => {
     event.preventDefault();
 
+    const formData = new FormData();
+    formData.append("avatar", selectedAvatar);
+    formData.append("fullName", userSession.fullName);
+    formData.append("email", userSession.email);
+    formData.append("birthdate", userSession.birthdate);
+    formData.append("phone", userSession.phone);
+    formData.append("country", userSession.country);
+
     axios
-      .put(`/user/${idSession}`, userSession)
+      .patch(`http://localhost:3001/user/${idSession}`, formData)
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
+        /* localStorage.setItem("avatar", res.data.userRegistered.data.avatar); */
         localStorage.setItem("userData", JSON.stringify(userSession));
       })
-      .catch((err) => console.log("Error"));
+      .catch((err) => console.log("Error:", err));
   };
 
   return (
@@ -77,14 +73,15 @@ export default function UserProfile() {
         <Image
           className="w-32 h-32 rounded-full shadow-lg m-2"
           alt="Avatar"
-          src={DefautImage}
+          src={userSession.avatar}
+          width={100}
+          height={100}
         />
 
         <div>
           <button
             className="Sw-10 h-10 text-black  m-2 flex items-center"
-            onClick={toggleInputs}
-          >
+            onClick={toggleInputs}>
             {inputsDisabled ? (
               <AiOutlineEdit className="w-19 h-19 " />
             ) : (
@@ -101,17 +98,18 @@ export default function UserProfile() {
           ) : (
             <form action="">
               <div>
-                {/* <div>
+                <div className="flex flex-col mt-3 ">
                   <label htmlFor="avatar" className="text-labelRed">
                     Avatar
                   </label>
                   <input
+                    name="avatar"
                     type="file"
                     accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={inputsDisabled}
+                    className="rounded bg-grayLight h-10 w-full pt-2 justify-center"
+                    onChange={handleAvatarChange}
                   />
-                </div> */}
+                </div>
                 <p className="text-labelRed m-0">Fullname</p>
                 <p className="rounded bg-grayLight h-10 w-full pt-2">
                   {userSession.fullName}
@@ -134,7 +132,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.birthdate}
+                  value={userSession.birthdate || ""}
                 />
                 {error.birthdate && (
                   <p className="text-red-500">{error.birthdate}</p>
@@ -154,7 +152,7 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.phone}
+                  value={userSession.phone || ""}
                 />
                 {error.phone && <p className="text-red-500">{error.phone}</p>}
               </div>
@@ -168,14 +166,13 @@ export default function UserProfile() {
                   className="rounded bg-grayLight h-10"
                   onChange={handleChange}
                   disabled={inputsDisabled}
-                  value={userSession.country}
+                  value={userSession.country || ""}
                 />
               </div>
 
               <button
                 className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
-                onClick={handleSaveChanges}
-              >
+                onClick={handleSaveChanges}>
                 Save changes
               </button>
             </form>

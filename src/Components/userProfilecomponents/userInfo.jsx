@@ -5,7 +5,7 @@ export default function UserInfo({ form }) {
   return (
     <div>
       <div>
-        <p className="text-labelRed m-0">Name</p>
+        <p className="text-labelRed m-0">Fullname</p>
         <p className="rounded bg-grayLight h-10 w-full pt-2">{form.fullName}</p>
       </div>
       <div>
