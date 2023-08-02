@@ -45,7 +45,7 @@ export default function LogIn() {
     console.log(form);
 
     axios
-      .post("http://localhost:3001/user/login", form)
+      .post("/user/login", form)
       .then((response) => {
         localStorage.setItem(
           "token_DealUp",
