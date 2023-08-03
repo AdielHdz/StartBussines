@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { fetchArticlesData } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { ordered } from "../../Redux/Fetching/Filters/FiltersSlice";
+import { FaArrowLeft } from "react-icons/fa";
+import Link from "next/link";
 // import { Pagination } from "../../Components/Paginator/Paginator";
 
 const ContenedorBusquedaCard = () => {
@@ -60,6 +62,11 @@ const ContenedorBusquedaCard = () => {
 
   return (
     <div>
+      <Link href="/home">
+        <button className="absolute flex items-center right-0 md:right-60 md:ml-2 bg-teal-700 text-white py-2 px-4 rounded-3xl shadow">
+          <FaArrowLeft /><span className="ml-2">Home</span>
+        </button>
+      </Link>
       <div className="flex flex-col left-0 items-center justify-center mt-3">
         <SearchProjects
           setSuggestions={handleSetSuggestions}

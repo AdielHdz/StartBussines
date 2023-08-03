@@ -51,9 +51,9 @@ const NewProjects = () => {
 
   return (
     <>
-      <figure className="flex flex-col md:flex-row bg-indigo-200 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 w-96 h-60 bg-contain" style={{ backgroundImage: `url(${currentSlide.image_cover})` }}>
+      <figure className="flex flex-col md:flex-row bg-indigo-200 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 w-96 h-60 bg-contain bg-center" style={{ backgroundImage: `url(${currentSlide.image_cover})` }}>
           <button
-            className="text-2xl text-gray-900 font-bold focus:outline-none"
+            className="text-2xl text-gray-50 font-bold focus:outline-none"
             onClick={handlePreviousSlide}
           >
             <FaArrowLeft className="inline-block align-text-bottom mr-1" />
@@ -61,7 +61,7 @@ const NewProjects = () => {
         <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4 w-96 ">
           <figcaption className="font-medium">
             <div className="flex items-center justify-center mt-12">
-              <div className="text-gray-900 font-semibold dark:text-sky-400">
+              <div className="text-gray-50 font-semibold dark:text-sky-400">
                 <Link href={`/contenedorbusqueda/projectDetail?id=${currentSlide.id}`}>
                   {currentSlide.name}
                 </Link>
@@ -72,7 +72,7 @@ const NewProjects = () => {
 
         
           <button
-            className="text-2xl text-gray-900 font-bold focus:outline-none "
+            className="text-2xl text-gray-50 font-bold focus:outline-none "
             onClick={handleNextSlide}
           >
             <FaArrowRight className="inline-block align-text-bottom " />
