@@ -130,7 +130,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
             initialMax={100000}
             minOrMax={minOrMax}
             min={1}
-            max={10000}
+            max={100000}
             step={100}
             priceCap={1000}
           />
