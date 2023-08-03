@@ -3,7 +3,7 @@ import TextPair from "../TextPair/TextPair";
 import OpinionSection from "./OpinionSection";
 const OthersCommentsSection = () => {
   const ratingsProject = useSelector((state) => state.project.project.Ratings);
-  console.log(ratingsProject);
+  /* console.log(ratingsProject); */
 
   return (
     <div className="flex flex-col gap-3">
@@ -11,7 +11,7 @@ const OthersCommentsSection = () => {
       <div className="flex flex-col gap-4 py-2">
         {ratingsProject.map((opinion) => (
           <OpinionSection
-            key={opinion.id}
+            key={opinion.User.fullName}
             userName={opinion.User.fullName}
             body={opinion.comments}
             score={opinion.points}
