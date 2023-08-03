@@ -7,7 +7,10 @@ export function NavbarRenderer() {
   const pathname = usePathname();
 
   const renderNavBar =
-    pathname !== "/" && pathname !== "/logIn" && pathname !== "/register";
+    pathname !== "/" &&
+    pathname !== "/logIn" &&
+    pathname !== "/register" &&
+    pathname !== "/checkemail";
 
   return renderNavBar ? <Navbar /> : null;
 }

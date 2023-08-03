@@ -60,43 +60,8 @@ const RegisterForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:3001/user", formWithRol);
-
-      const loginResponse = await axios.post(
-        "http://localhost:3001/user/login",
-        formWithRol
-      );
-
-      const loginData = loginResponse.data;
-      localStorage.setItem(
-        "token_DealUp",
-        loginData.userRegistered.accessToken
-      );
-      localStorage.setItem("idSession", loginData.userRegistered.data.id);
-      localStorage.setItem("fullName", loginData.userRegistered.data.fullName);
-      localStorage.setItem("avatar", loginData.userRegistered.data.avatar);
-      localStorage.setItem("savedEmail", loginData.userRegistered.data.email);
-
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          fullName: loginData.userRegistered.data.fullName,
-          email: loginData.userRegistered.data.email,
-          role: loginData.userRegistered.data.role,
-          address: loginData.userRegistered.data.address,
-          password: loginData.userRegistered.data.password,
-          gender: loginData.userRegistered.data.gender,
-          birthdate: loginData.userRegistered.data.birthdate,
-          phone: loginData.userRegistered.data.phone,
-          country: loginData.userRegistered.data.country,
-          avatar: loginData.userRegistered.data.avatar,
-          status: loginData.userRegistered.data.status,
-          thirdPartyCreated: loginData.userRegistered.data.thirdPartyCreated,
-        })
-      );
-
-      alert("Welcome");
-      router.push("/home");
+      await axios.post("http://localhost:3001/user/register", formWithRol);
+      router.push("/checkemail");
     } catch (error) {
       console.log("Error during form submission:", error);
       setBackendError(error.response.data.error || "Something went wrong");
