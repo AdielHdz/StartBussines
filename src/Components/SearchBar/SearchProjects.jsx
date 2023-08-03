@@ -6,6 +6,7 @@ import { SearchCategories } from "./SearchCategories";
 import Link from "next/link";
 import { RangeSlider } from "./RangeSlider";
 import { addTags, deleteTags } from "../../Redux/Fetching/Filters/FiltersSlice";
+import { usePathname } from "next/navigation";
 
 export const SearchProjects = ({ setSuggestions, projects }) => {
   //el estado de los proyectos lo recibo como parametro (projects)
@@ -16,6 +17,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
   const [selectedTags, setSelectedTags] = useState([]); //los valores de este array le voy a pasar por query para que la ruta tome los valores y filtre los proyectos
   const dispatch = useDispatch();
   const [minOrMax, setMinOrMax] = useState("Max");
+  const path = usePathname();
 
   useEffect(() => {
     dispatch(getProjects());
@@ -64,7 +66,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
         onChange={handleChange}
         onFocus={handleInputFocus}
       />
-      {name === "" && showCategories && (
+      {name === "" && path !== "/contenedorbusqueda" && showCategories && (
         <div className="relative top-full left-1/2 transform -translate-x-1/2 ">
           <SearchCategories
             selectedTags={selectedTags}
@@ -128,7 +130,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
             initialMax={100000}
             minOrMax={minOrMax}
             min={1}
-            max={10000}
+            max={100000}
             step={100}
             priceCap={1000}
           />

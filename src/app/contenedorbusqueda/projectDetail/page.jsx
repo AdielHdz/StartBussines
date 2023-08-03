@@ -9,28 +9,45 @@ import CommentsSection from "../../../Components/Comments/CommentsSection";
 import Link from "next/link";
 import { averageScore } from "../../../utils/averageScore";
 import { IoWalletOutline } from "react-icons/io5";
-
+import { userIsRelated } from "../../../utils/userISRelated";
 import Loading from "../../../Components/Loading/Loading";
+import { saveRatingUser } from "../../../Redux/Fetching/Rating/Rating";
 const ProjectDetail = () => {
   const searchParams = useSearchParams();
 
   const id = searchParams.get("id");
 
   const project = useSelector((state) => state.project.project);
+  const [userID, setUserID] = useState("");
   const [score, setScore] = useState(0);
+  const usersRelated = useSelector((state) => state.rating.ratingUser);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setUserID(localStorage.getItem("idSession"));
+  }, []);
+
   useEffect(() => {
     if (id) {
       dispatch(getProjectById(id));
     }
     if (project.id) {
       setScore(averageScore(project?.Ratings));
+      dispatch(saveRatingUser(userIsRelated(project.Ratings, userID)));
     }
-    console.log(project);
-    console.log(id);
-    console.log("score ", score);
-  }, [project?.name, project?.Ratings?.length]);
+
+    /*  console.log(project); */
+    /*  console.log(id);*/
+    /*   console.log("score ", score);
+    console.log(usersRelated); */
+    console.log(usersRelated?.comments?.length);
+  }, [
+    project?.name,
+    project?.Ratings?.length,
+    usersRelated.id,
+    usersRelated?.comments?.length,
+  ]);
 
   return (
     <>
@@ -106,11 +123,7 @@ const ProjectDetail = () => {
 
                 <CommentsSection
                   name={"Adiel Luciano Hernandez Ortegon"}
-                  myOpinion={{
-                    id: "5646464864",
-                    body: "Este es de los mejores negocios que he leido hoy!",
-                    myScore: 4,
-                  }}
+                  myOpinion={usersRelated}
                   otherOpinions={project.Raitings}
                 />
               </div>

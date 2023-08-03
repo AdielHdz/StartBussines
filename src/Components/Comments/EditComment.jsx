@@ -1,25 +1,24 @@
 import { AiFillStar } from "react-icons/ai";
 import { useState } from "react";
-import { TfiCommentAlt } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
-import { postComment } from "../../Redux/Fetching/Rating/Rating";
-import { getProjectById } from "../../Redux/Fetching/Projects/ProjectSlice";
 
-const LeaveAComment = () => {
+import { getProjectById } from "../../Redux/Fetching/Projects/ProjectSlice";
+import { putComment } from "../../Redux/Fetching/Rating/Rating";
+const LeaveAComment = ({ setEditComment, ratingId }) => {
   const dispatch = useDispatch();
 
-  /*  const [rating, setRating] = useState(0); */
   const [hover, setHover] = useState(0);
-
   const { id } = useSelector((state) => state.project.project);
-  const UserId = localStorage.getItem("idSession");
+
+  const ratingUser = useSelector((state) => state.rating.ratingUser);
 
   const [rating, setRating] = useState({
     points: 0,
     comments: "",
-    ProjectId: id,
-    UserId,
+    id: ratingUser.id,
   });
+
+  console.log(ratingUser);
 
   /*   {
     "points": 3,
@@ -67,17 +66,24 @@ const LeaveAComment = () => {
         onChange={(e) => setRating({ ...rating, comments: e.target.value })}
         className="w-full min-h-textArea h-textArea  border-2 rounded-lg outline-none border-darkViolet placeholder:text-grayLightMedium placeholder:font-light p-1.5 font-medium text-sm text-darkGray"
       />
-      <div className=" flex justify-end">
+      <div className=" flex items-center justify-end gap-2">
         <button
           onClick={() => {
-            dispatch(postComment(rating));
+            dispatch(putComment(rating));
             dispatch(getProjectById(id));
             setRating({});
           }}
-          className="bg-darkViolet relative flex items-center justify-center gap-1 w-28 text-whites py-1.5 font-light text-xs rounded-sm"
+          className="bg-darkViolet relative flex items-center justify-center gap-1 py-1.5 text-whites w-24 font-light text-xs rounded-sm"
         >
-          Comment
-          <TfiCommentAlt className="w-3 h-3 absolute top-1.5 right-2.5" />
+          Save
+        </button>
+        <button
+          onClick={() => {
+            setEditComment(false);
+          }}
+          className="bg-darkGray relative flex items-center justify-center gap-1 py-1.5 text-whites w-24 font-light text-xs rounded-sm"
+        >
+          Cancel
         </button>
       </div>
     </div>

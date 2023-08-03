@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 const OpinionSection = ({ body, score, userName }) => {
-  console.log(userName);
   return (
     <div className="flex flex-col ">
       <div className="flex justify-between w-full">

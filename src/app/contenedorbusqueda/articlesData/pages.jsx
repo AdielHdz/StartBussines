@@ -15,21 +15,26 @@ const ArticleCard = ({ data }) => {
   } = data;
 
   return (
-    <article className=" border w-full shadow-cards rounded-lg ">
-      <img src={image_cover} alt={name ? name : ""} />
-      <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
-        <div className="text-center border border-green-500">
-          <h5 className="text-lg font-medium ">{name}</h5>
-          <div className="text-xs flex flex-col items-center">
-            <p>Min Investment: ${minAmount}</p>
-            <p>Max investment: ${maxAmount}</p>
-            <p>Goal amount: ${goalAmount}</p>
-
-            <p>Category: {category.join(", ")}</p>
-          </div>
+    <article className=" border w-3/4 shadow-cards rounded-lg ">
+      {image_cover ? (
+        <div
+          className="h-96 bg-cover bg-center"
+          style={{ backgroundImage: `url(${image_cover})` }}
+        />
+      ) : null}
+      {/* <img src={image_cover} alt={name ? name : ""} className="h-96"/> */}
+      <div className="text-center border border-green-500">
+        <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
+          <h5 className="text-2xl font-semibold mt-2 mb-4 text-sky-800">{name}</h5>
+        </Link>
+        <div className="text-s flex flex-col items-center">
+          <p className="mb-2">Min Investment: <span className="text-lg font-semibold text-emerald-500">${minAmount}</span></p>
+          <p className="mb-2">Max investment: <span className="text-lg font-semibold text-emerald-500">${maxAmount}</span></p>
+          <p className="mb-2">Goal amount: <span className="text-lg font-semibold text-emerald-500">${goalAmount}</span></p>
+          <p className="mb-2">Category: <span className="text-lg font-semibold text-pink-200">{category.join(", ")}</span></p>
         </div>
-      </Link>
-    </article>
+      </div>
+    </article> 
   );
 };
 
