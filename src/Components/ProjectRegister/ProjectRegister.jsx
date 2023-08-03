@@ -1,65 +1,93 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import {
-  startDate,
   description,
   validateBusinessName,
 } from "./validations/validationProject";
 import { differenceInDays } from "date-fns";
+import categories from './categories/categories'
+import Saludo from '../Saludo/Saludo';
+import { capitalizeFirstLetter, formatAllLetter } from '../StringUtils/StringUtils';
+import Loading from '../Loading/Loading';
+
 
 const ProjectRegister = () => {
-  const [formData, setFormData] = useLocalStorage("user", {});
-  const [userState, setUserState] = useLocalStorage("user", {});
   const [businessName, setBusinessName] = useState("");
   const [city, setCity] = useState("");
   const [startDate, setStartDate] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [deadline, setDeadline] = useState(""); // Agregamos el estado para la fecha límite
-  const [descriptionInput, setDescriptionInput] = useState(""); // Agregamos el estado para la descripción
+  const [deadline, setDeadline] = useState(""); 
+  const [descriptionInput, setDescriptionInput] = useState("");
   const [minAmount, setMinAmount] = useState("");
-  const [maxAmount, setMaxAmount] = useState(""); // Agregamos el estado para el monto máximo
-  const [photos, setPhotos] = useState([]);
-  const [imageDescriptions, setImageDescriptions] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]); // Agregamos el estado para las categorías seleccionadas
+  const [maxAmount, setMaxAmount] = useState(""); 
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [isDescriptionError, setDescriptionError] = useState(false);
   const [deadlineError, setDeadlineError] = useState("");
   const [businessNameError, setBusinessNameError] = useState("");
+  const [idSessionhome, setidSessionhome] = useState("");
+  const [fullName, setfullName] = useState("");
+  const [photos, setPhotos] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  
+  const nombreUsuario = fullName;
+  const textoPersonalizado = "What project are you going to create today?";
 
-  const categories = [
-    "Art",
-    "Comics",
-    "Crafts",
-    "Dance",
-    "Design",
-    "Fashion",
-    "Film & Video",
-    "Food",
-    "Games",
-    "Journalism",
-    "Music",
-    "Photography",
-    "Publishing",
-    "Technology",
-    "Theater",
-    // Agrega más categorías aquí según tus necesidades.
-  ];
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const idSessionhome = localStorage.getItem("idSession");
+      setidSessionhome(idSessionhome);
+    }
+  }, []);
 
-  const handlePhotoUpload = async (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const fullName = localStorage.getItem("fullName");
+      setfullName(fullName);
+    }
+  }, []);
 
-    reader.onloadend = () => {
-      setPhotos((prevPhotos) => [...prevPhotos, reader.result]);
-      setImageDescriptions((prevDescriptions) => [...prevDescriptions, ""]);
-    };
+  console.log("Id inicio: ", idSessionhome);
+  console.log("Nombre Usuario: ", fullName);
 
-    if (file) {
-      reader.readAsDataURL(file);
+  //Mejoras en la tabulación
+  const handleChangeBusinessName = (e) => {
+    const value = formatAllLetter(e.target.value); 
+    setBusinessName(value);
+    setBusinessNameError(''); 
+  };
+
+  const handleBusinessNameBlur = () => {
+    try {
+      validateBusinessName(businessName);
+      setBusinessNameError('');
+    } catch (error) {
+      setBusinessNameError(error.message);
     }
   };
 
+  const handleChangeCity = (event) => {
+    const formattedCity = capitalizeFirstLetter(event.target.value);
+    setCity(formattedCity);
+  };
+
+  const handleDescriptionChange = (e) => {
+    const value = capitalizeFirstLetter(e.target.value);
+    setDescriptionInput(value);
+    setDescriptionError(false); 
+    try {
+      const validatedDescription = description(value); 
+      setDescriptionInput(validatedDescription);
+    } catch (error) {
+      console.error(error.message);
+      setDescriptionError(true); 
+    }
+  };
+  
+  const handlePhotoUpload = async (event) => {
+    const file = event.target.files[0];
+    setPhotos([file]);
+  };
   const handleRemovePhoto = (index) => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
@@ -84,28 +112,10 @@ const ProjectRegister = () => {
     return `${day}/${month}/${year}`;
   }
 
-  const handleDescriptionChange = (e) => {
-    const value = e.target.value;
-    setDescriptionInput(value);
-    setDescriptionError(false); 
-    try {
-      const validatedDescription = description(value);
-      setDescriptionInput(validatedDescription);
-    } catch (error) {
-      console.error(error.message);
-      setDescriptionError(true); 
-    }
-  };
-
-  const id = "e2d2c8d4-c08e-46ba-8958-cc8a75826ab6";
-  const foto =
-    "https://img.freepik.com/fotos-premium/ilustracion-joystick-gamepad-controlador-juegos-cyberpunk_691560-5812.jpg";
-
   console.log("Nombre: ", businessName);
   const isStartDateValid = (startDate) => {
     const today = new Date();
 
-    // Compara la fecha de inicio con la fecha actual
     const selectedStartDate = new Date(startDate);
     return selectedStartDate >= today;
   };
@@ -120,6 +130,7 @@ const ProjectRegister = () => {
   };
 
   const handlePostProject = async () => {
+    setLoading(true);
     const projectData = {
       name: businessName,
       description: description(descriptionInput),
@@ -128,62 +139,86 @@ const ProjectRegister = () => {
       goal_amount: targetAmount,
       initial_date: formatDateToBackendFormat(startDate),
       deadline: formatDateToBackendFormat(deadline),
-      image_cover: foto,
       category: selectedCategories,
       status: "Pending",
       city: city,
-      UserId: id,
+      UserId: idSessionhome,
     };
-
+  
     try {
       const validatedName = validateBusinessName(businessName);
       setBusinessName(validatedName);
     } catch (error) {
+      setLoading(false);
       setBusinessNameError(error.message);
       return;
     }
-
-    console.log("Datos del proyecto:", projectData);
-
+  
     if (!isStartDateValid(startDate)) {
-      console.log(
-        "La fecha de inicio no es válida o es anterior a la fecha actual."
-      );
+      setLoading(false);
+      console.log("The start date is not valid or is before the current date.");
       return;
     }
-
+  
     if (!isDeadlineValid(startDate, deadline)) {
-      setDeadlineError(
-        "La fecha de deadline debe ser al menos 30 días después de la fecha de inicio."
-      );
+      setLoading(false);
+      setDeadlineError("The deadline date must be at least 30 days after the start date.");
       return;
     } else {
       setDeadlineError("");
     }
+  
+    const formData = new FormData();
+    formData.append("name", projectData.name);
+    formData.append("description", projectData.description);
+    formData.append("min_amount", projectData.min_amount);
+    formData.append("max_amount", projectData.max_amount);
+    formData.append("goal_amount", projectData.goal_amount);
+    formData.append("initial_date", projectData.initial_date);
+    formData.append("deadline", projectData.deadline);
+    projectData.category.forEach((category) => {
+      formData.append("category[]", category);
+    });
+    formData.append("status", projectData.status);
+    formData.append("city", projectData.city);
+    formData.append("UserId", projectData.UserId);
 
-    const daysDifference = differenceInDays(
-      new Date(deadline),
-      new Date(startDate)
-    );
-
-    console.log("ID USUARIO: ", id);
-    console.log(projectData);
-    console.log("Lista de categorias: ", selectedCategories);
-
-    await axios
-      .post("/projects", projectData)
-      .then((response) => {
-        // Aquí puedes manejar la respuesta del backend si es necesario
-        console.log("Respuesta del servidor:", response.data);
-      })
-      .catch((error) => {
-        // Aquí puedes manejar errores, si ocurre algún problema en la solicitud
+    if (photos.length > 0) {
+      formData.append("image_cover", photos[0]);
+    }
+  
+    try {
+      const response = await axios.post("/projects/file", formData);
+      console.log("Respuesta del servidor:", response.data);
+        const { name, status } = response.data.newProject;
+        setLoading(false);
+        alert(`Your new project ${name} has been created successfully. Currently, its status is ${status}. A moderator will review and approve it if it complies with our policies.`);
+        setBusinessName("");
+        setCity("");
+        setStartDate("");
+        setTargetAmount("");
+        setSelectedCategory("");
+        setDeadline("");
+        setDescriptionInput("");
+        setMinAmount("");
+        setMaxAmount("");
+        setSelectedCategories([]);
+        setPhotos([]);
+        setDescriptionError(false);
+        setDeadlineError("");
+        setBusinessNameError("");
+      } catch (error) {
+        setLoading(false);
         console.error("Error al crear el proyecto:", error);
-      });
+      }
   };
-
+  
   return (
+    <>
     <div className="container mx-auto mt-8">
+      <div className="flex justify-center mb-3 ">
+      <Saludo nombre={nombreUsuario} textoAdicional={textoPersonalizado} />
+    </div>
       <h2 className="text-2xl font-bold mb-4">Project Register</h2>
       <div className="mb-4">
         <label className="block mb-2 font-bold" htmlFor="businessName">
@@ -194,15 +229,8 @@ const ProjectRegister = () => {
           type="text"
           id="businessName"
           value={businessName}
-          onChange={(e) => setBusinessName(e.target.value)}
-          onBlur={() => {
-            try {
-              validateBusinessName(businessName);
-              setBusinessNameError("");
-            } catch (error) {
-              setBusinessNameError(error.message);
-            }
-          }}
+          onChange={handleChangeBusinessName}
+          onBlur={handleBusinessNameBlur}
         />
         {businessNameError && (
           <p className="text-red-500">{businessNameError}</p>
@@ -218,7 +246,7 @@ const ProjectRegister = () => {
           type="text"
           id="city"
           value={city}
-          onChange={(e) => setCity(e.target.value)}
+          onChange={handleChangeCity}
         />
       </div>
       <div className="mb-4">
@@ -316,7 +344,7 @@ const ProjectRegister = () => {
           id="category"
           value={selectedCategory}
           onChange={(e) => {
-            handleCategoryChange(e); // Agregamos esta línea para llamar a la función handleCategoryChange al cambiar la selección
+            handleCategoryChange(e);
             setSelectedCategory(e.target.value);
           }}
         >
@@ -348,7 +376,7 @@ const ProjectRegister = () => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-bold">Photos</label>
+        <label className="block mb-2 font-bold">Cover Photo</label>
         <div className="mb-5">
           <input
             className="hidden"
@@ -358,28 +386,15 @@ const ProjectRegister = () => {
             id="photo-upload"
           />
         </div>
-        {/* Flexbox container to display images */}
         <div className="flex flex-wrap gap-4">
-          {photos.map((photo, index) => (
-            <div key={index} className="w-full">
-              <div className="relative w-full max-w-full h-64">
-                <img
-                  src={photo}
-                  alt={`Photo ${index + 1}`}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-                <input
-                  type="text"
-                  value={imageDescriptions[index]}
-                  onChange={(e) => {
-                    const newDescriptions = [...imageDescriptions];
-                    newDescriptions[index] = e.target.value;
-                    setImageDescriptions(newDescriptions);
-                  }}
-                  placeholder="Image Description"
-                  className="w-full px-4 py-2 border rounded-lg mt-2 mb-4"
-                />
-
+        {photos.map((photo, index) => (
+          <div key={index} className="w-full">
+            <div className="relative w-full max-w-full h-64">
+              <img
+                src={URL.createObjectURL(photo)}
+                alt={`Photo ${index + 1}`}
+                className="w-full h-64 object-cover rounded-lg"
+              />
                 <button
                   className="absolute top-2 right-2 text-red-500"
                   onClick={() => handleRemovePhoto(index)}
@@ -408,6 +423,12 @@ const ProjectRegister = () => {
         </div>
       </div>
     </div>
+      {isLoading && (
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center">
+          <Loading width={20} height={20} borderWeight={5} loadingText={true} />
+        </div>
+      )}
+      </>
   );
 };
 
