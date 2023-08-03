@@ -99,11 +99,12 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col items-center p-8">
-      <div className="mb-4">
+      <h1 className="font-semibold text-2xl text-gray-900">Admin Dashboard</h1>
+      <div className="mb-4 mt-3">
         <SearchBar onSearch={handleSearch} placeholder={searchPlaceholder} />
       </div>
-      <div className="flex mt-4">
-        <div className="w-1/4">
+      <div className="flex mt-4 border-1 border-gray-400 p-8 w-3/4">
+        <div className="w-1/5">
           <div className="mb-4">
             <button
               className={`w-full py-2 px-4 font-semibold ${
@@ -125,7 +126,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-        <div className="w-3/4 ml-8">
+        <div className="w-3/4 ml-8 ">
           {showAllUsers && (
             <AllUsers users={users} onUserClick={handleUserClick} />
           )}
@@ -138,37 +139,119 @@ const Dashboard = () => {
           {selectedUser && (
             <Modal isVisible={true} onClose={() => setSelectedUser(null)}>
               {/* Aquí se muestra la información detallada del usuario */}
-              <h2>Details of User: {selectedUser.fullName}</h2>
-              <p>Email: {selectedUser.email}</p>
-              <p>Rol: {selectedUser.rol}</p>
-              <p>Gender: {selectedUser.gender}</p>
-              <p>Birthdate: {selectedUser.birthdate}</p>
-              <p>Phone: {selectedUser.phone}</p>
-              <p>Country: {selectedUser.country}</p>
+              <h2 className="mb-4 font-semibold text-xl">
+                Details of User:{" "}
+                <span className="ml-2 text-teal-700">
+                  {selectedUser.fullName}
+                </span>
+              </h2>
+              <p className="mb-2">
+                <span className="text-sky-700">Email: </span>
+                {selectedUser.email}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Rol: </span>
+                {selectedUser.rol}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Gender: </span>
+                {selectedUser.gender}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Birthdate: </span>
+                {selectedUser.birthdate}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Phone: </span>
+                {selectedUser.phone}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Country: </span>
+                {selectedUser.country}
+              </p>
               {/* No se muestra el avatar */}
-              <p>Status: {selectedUser.status ? "Active" : "Inactive"}</p>
-              <p>
-                Third Party Created:{" "}
+              <p className="mb-2">
+                <span className="text-sky-700">Status: </span>
+                {selectedUser.status ? "Active" : "Inactive"}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Third Party Created: </span>
                 {selectedUser.thirdPartyCreated ? "Yes" : "No"}
               </p>
-              <p>Created At: {selectedUser.createdAt}</p>
-              <p>Updated At: {selectedUser.updatedAt}</p>
+              <p className="mb-2">
+                <span className="text-sky-700">Created At: </span>
+                {selectedUser.createdAt}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Updated At: </span>
+                {selectedUser.updatedAt}
+              </p>
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Edit
+              </button>
+              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Ban
+              </button>
+              <button className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">
+                Delete
+              </button>
             </Modal>
           )}
           {selectedProject && (
             <Modal isVisible={true} onClose={() => setSelectedProject(null)}>
               {/* Aquí se muestra la información detallada del proyecto */}
-              <h2>Details of Project: {selectedProject.name}</h2>
-              <p>Description: {selectedProject.description}</p>
-              <p>Minimum Amount: {selectedProject.min_amount}</p>
-              <p>Maximum Amount: {selectedProject.max_amount}</p>
-              <p>Goal Amount: {selectedProject.goal_amount}</p>
-              <p>Collected Amount: {selectedProject.collected_amount}</p>
-              <p>Initial Date: {selectedProject.initial_date}</p>
-              <p>Deadline: {selectedProject.deadline}</p>
-              <p>City: {selectedProject.city}</p>
-              <p>Status: {selectedProject.status}</p>
+              <h2 className="mb-4 font-semibold text-xl">
+                Details of Project:{" "}
+                <span className="ml-2 text-teal-700">
+                  {selectedProject.name}
+                </span>
+              </h2>
+              <p className="mb-2">
+                <span className="text-sky-700">Description: </span>{" "}
+                {selectedProject.description}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Minimum Amount: </span>{" "}
+                {selectedProject.min_amount}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Maximum Amount: </span>{" "}
+                {selectedProject.max_amount}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Goal Amount: </span>{" "}
+                {selectedProject.goal_amount}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Collected Amount: </span>{" "}
+                {selectedProject.collected_amount}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Initial Date: </span>{" "}
+                {selectedProject.initial_date}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Deadline: </span>{" "}
+                {selectedProject.deadline}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">City: </span>
+                {selectedProject.city}
+              </p>
+              <p className="mb-2">
+                <span className="text-sky-700">Status: </span>
+                {selectedProject.status}
+              </p>
               {/* No se muestra image_cover, Galleries ni Posts */}
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Edit
+              </button>
+              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Ban
+              </button>
+              <button className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">
+                Delete
+              </button>
             </Modal>
           )}
         </div>
