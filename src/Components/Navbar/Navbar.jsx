@@ -69,7 +69,9 @@ export default function Navbar() {
     router.push("/logIn");
   };
   return (
-    <Disclosure as="nav" className="shadow-cards bg-whites rounded-xl">
+    <Disclosure
+      as="nav"
+      className="shadow-cards bg-whites rounded-xl text-white">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
