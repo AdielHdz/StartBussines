@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import DefaultImage from "public/asset/avatar2.jpg";
@@ -61,7 +62,13 @@ export default function UserProfile() {
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
-        /* localStorage.setItem("avatar", res.data.userRegistered.data.avatar); */
+        const updatedUserSession = {
+          ...userSession,
+          avatar: res.data.result.avatar,
+        };
+
+        setUserSession(updatedUserSession);
+        localStorage.setItem("avatar", res.data.result.avatar);
         localStorage.setItem("userData", JSON.stringify(userSession));
       })
       .catch((err) => console.log("Error:", err));
@@ -72,7 +79,7 @@ export default function UserProfile() {
       <div className="flex flex-col items-center ">
         <Image
           className="w-32 h-32 rounded-full shadow-lg m-2"
-          alt="Avatar"
+          alt="avatar"
           src={/* userSession.avatar || */ DefaultImage}
           width={100}
           height={100}
