@@ -11,7 +11,7 @@ import { ordered } from "../../Redux/Fetching/Filters/FiltersSlice";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import PaginationLogic from "../../Components/paginator/PaginatorLogic";
-import Pagination from "../../Components/Paginator/Paginator";
+
 
 const ContenedorBusquedaCard = () => {
   const filters = useSelector((state) => state.filters);
