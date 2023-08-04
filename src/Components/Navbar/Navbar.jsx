@@ -172,8 +172,8 @@ export default function Navbar() {
                 ) : (
                   <a
                     href="/logIn"
-                    className=" text-black rounded-md px-3 py-2 text-sm font-medium">
-                    Login
+                    className="text-black rounded-md px-3 py-2 text-sm font-medium w-full bg-gray-100 border-1 border-teal-700 hover:bg-teal-700">
+                    Log in
                   </a>
                 )}
               </div>
