@@ -65,7 +65,23 @@ export default function Navbar() {
     localStorage.setItem("fullName", "");
     localStorage.setItem("avatar", "");
     localStorage.setItem("savedEmail", "");
-
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        fullName: "",
+        email: "",
+        role: "",
+        address: "",
+        password: "",
+        gender: "",
+        birthdate: "",
+        phone: "",
+        country: "",
+        avatar: "",
+        status: "",
+        thirdPartyCreated: "",
+      })
+    );
     router.push("/logIn");
   };
   return (
