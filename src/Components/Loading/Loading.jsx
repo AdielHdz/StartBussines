@@ -1,5 +1,12 @@
-const Loading = ({ width, height, borderWeight, loadingText }) => {
+const Loading = ({
+  width,
+  height,
+  borderWeight,
+  loadingText,
+  border_t_color,
+}) => {
   // Podemos personalizar nuestro loading dependiendo del lugar donde lo necesitemos
+
   return (
     <div className="flex items-center justify-center">
       {loadingText ? (
@@ -9,7 +16,7 @@ const Loading = ({ width, height, borderWeight, loadingText }) => {
       )}
 
       <div
-        className={` border-${borderWeight}  border-t-primar border-grayMedium rounded-full w-${width} h-${height} animate-spin-slow`}
+        className={` border-${borderWeight} ${border_t_color} border-grayMedium  rounded-full w-${width} h-${height} animate-spin-slow`}
       ></div>
     </div>
   );

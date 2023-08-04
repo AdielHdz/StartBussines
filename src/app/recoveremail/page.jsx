@@ -1,49 +1,44 @@
 "use client";
 
-import { validatePassword } from "./validation";
+import { validateEmail } from "./validation";
 import { useState } from "react";
 
 export default function RecoverMail() {
   const [formValid, setFormValid] = useState(false);
-  const [errorText, setErrorText] = useState();
+  const [emailError, setEmailError] = useState("");
+  const [errorText, setErrorText] = useState("");
+  const [successMessage, setSuccessMessage] = useState("")
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const isEmailField = name === "email";
 
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
+    if (isEmailField) {
+      const isValidEmail = validateEmail(value);
+      const errorMessage = isValidEmail ? "" : "Please insert a valid email address";
+      setEmailError(errorMessage);
+      setFormValid(isValidEmail && value !== "");
+    }
+  };
 
-  const emailError =
-    name === " email" && !validateEmail(value)
-      ? "Please insert a email address valid"
-      : "";
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formValid) {
+      console.log("The form has errors");
+      return;
+    }
+    const form = e.target;
+    const email = form.email.value;
 
-  setErrorText(emailError);
-  setFormValid(emailError === "" && value !== "");
+    form.reset();
 
-
-};
-
-const handleInputBluer = (e) => {
-  const { name, value } = e.target;
-  const emailError =
-    name === " email" && !validateEmail(value)
-      ? "Please insert a email address valid"
-      : "";
-  handleInputChange(e);
-};
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  if (!formValid) {
-    console.log("The form has errors");
-    return;
+    console.log("The email has been sent to " + email);
+    setSuccessMessage("The email has been sent to " + email);
+  
+    setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
   }
-  const form = e.target;
-  const email = form.email.value;
-
-  form.reset();
-
-  console.log("The email has been send to " + email);
-}
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -71,7 +66,7 @@ const handleSubmit = (e) => {
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-             
+              
             </label>
             <input
               type="email"
@@ -79,8 +74,11 @@ const handleSubmit = (e) => {
               id="email"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               placeholder="Email address"
-              onChange={handleInputBluer}
+              onChange={handleInputChange}
             />
+            {emailError && (
+              <p className="text-red-600 text-sm text-center">{emailError}</p>
+            )}
           </div>
           {errorText && (
             <p className="text-red-600 text-sm text-center">{errorText}</p>
@@ -95,8 +93,11 @@ const handleSubmit = (e) => {
           >
             Send email
           </button>
+          {successMessage && (
+            <p className="text-green-600 text-sm text-center">{successMessage}</p>
+          )}
         </form>
       </div>
     </div>
   );
-};
+}

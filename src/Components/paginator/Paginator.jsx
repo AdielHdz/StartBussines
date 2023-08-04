@@ -1,7 +1,18 @@
 "use client";
 import React from 'react';
+import {useState} from 'react';
+
 
 const Pagination = () => {
+  /*const Pagination = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+  
+    const handlePageClick = (page) => {
+      // Aquí puedes realizar cualquier acción que necesites al cambiar de página,
+      // por ejemplo, cargar nuevos datos o actualizar la vista.
+      setCurrentPage(page);
+    };
+*/
   return (
     <>
       <ol className="flex justify-center gap-1 text-xs font-medium">
