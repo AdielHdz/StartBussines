@@ -28,7 +28,7 @@ const ProjectDetail = () => {
   useEffect(() => {
     setUserID(localStorage.getItem("idSession"));
     if (id) {
-      dispatch(getProjectById({ id, userID }));
+      dispatch(getProjectById(id));
     }
     if (project.id) {
       setScore(averageScore(project?.Ratings));

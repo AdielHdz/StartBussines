@@ -30,7 +30,7 @@ const OpinionSection = ({ body, score, userName }) => {
         </div>
       </div>
 
-      <div className="border-2 border-primar rounded-lg p-2 text-darkGray">
+      <div className="border-2 border-primar rounded-lg p-2 py-3 text-darkGray">
         <h5 className="font-light">{body}</h5>
       </div>
     </div>

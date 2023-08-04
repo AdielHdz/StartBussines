@@ -1,10 +1,13 @@
 import { AiFillStar } from "react-icons/ai";
 import { useState } from "react";
-import { TfiCommentAlt } from "react-icons/tfi";
+import { LiaCommentSolid } from "react-icons/lia";
 import { useDispatch, useSelector } from "react-redux";
-import { postComment } from "../../Redux/Fetching/Rating/Rating";
-import { getProjectById } from "../../Redux/Fetching/Projects/ProjectSlice";
-
+import {
+  postComment,
+  setPutSucces,
+  activateIsLoading,
+} from "../../Redux/Fetching/Rating/Rating";
+import Loading from "../Loading/Loading";
 const LeaveAComment = () => {
   const dispatch = useDispatch();
 
@@ -12,7 +15,11 @@ const LeaveAComment = () => {
   const [hover, setHover] = useState(0);
 
   const { id } = useSelector((state) => state.project.project);
+  const { ratingUser, putSucces, isLoading } = useSelector(
+    (state) => state.rating
+  );
   const UserId = localStorage.getItem("idSession");
+  console.log(id);
 
   const [rating, setRating] = useState({
     points: 0,
@@ -70,14 +77,22 @@ const LeaveAComment = () => {
       <div className=" flex justify-end">
         <button
           onClick={() => {
+            dispatch(activateIsLoading());
             dispatch(postComment(rating));
-            dispatch(getProjectById(id));
             setRating({});
           }}
-          className="bg-darkViolet relative flex items-center justify-center gap-1 w-28 text-whites py-1.5 font-light text-xs rounded-sm"
+          className="bg-darkViolet relative h-9 flex flex-wrap items-center justify-center gap-1 w-24 text-whites  font-light text-xs rounded-sm hover:border hover:border-darkViolet hover:text-darkViolet hover:bg-whites transition duration-300 "
         >
-          Comment
-          <TfiCommentAlt className="w-3 h-3 absolute top-1.5 right-2.5" />
+          {isLoading ? (
+            <Loading
+              height={4}
+              width={4}
+              borderWeight={2}
+              border_t_color={"border-t-darkGray"}
+            />
+          ) : (
+            <LiaCommentSolid className="text-xl" />
+          )}
         </button>
       </div>
     </div>
