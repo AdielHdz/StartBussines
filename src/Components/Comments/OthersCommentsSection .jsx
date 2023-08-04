@@ -2,7 +2,11 @@ import { useSelector } from "react-redux";
 import TextPair from "../TextPair/TextPair";
 import OpinionSection from "./OpinionSection";
 const OthersCommentsSection = () => {
-  const ratingsProject = useSelector((state) => state.project.project.Ratings);
+  const ratingsProject = useSelector((state) =>
+    state.project.project.Ratings.filter(
+      (rating) => rating.User.id !== localStorage.getItem("idSession")
+    )
+  );
   /* console.log(ratingsProject); */
 
   return (

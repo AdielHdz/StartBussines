@@ -1,24 +1,25 @@
 import { AiFillStar } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import Loading from "../Loading/Loading";
 import { getProjectById } from "../../Redux/Fetching/Projects/ProjectSlice";
-import { putComment } from "../../Redux/Fetching/Rating/Rating";
-const LeaveAComment = ({ setEditComment, ratingId }) => {
+import {
+  activateIsLoading,
+  putComment,
+} from "../../Redux/Fetching/Rating/Rating";
+const EditComment = ({ setEditComment, editComment }) => {
   const dispatch = useDispatch();
 
   const [hover, setHover] = useState(0);
   const { id } = useSelector((state) => state.project.project);
 
-  const ratingUser = useSelector((state) => state.rating.ratingUser);
+  const { ratingUser, isLoading } = useSelector((state) => state.rating);
 
   const [rating, setRating] = useState({
     points: 0,
     comments: "",
     id: ratingUser.id,
   });
-
-  console.log(ratingUser);
 
   /*   {
     "points": 3,
@@ -69,19 +70,34 @@ const LeaveAComment = ({ setEditComment, ratingId }) => {
       <div className=" flex items-center justify-end gap-2">
         <button
           onClick={() => {
+            dispatch(activateIsLoading());
             dispatch(putComment(rating));
             dispatch(getProjectById(id));
-            setRating({});
+
+            setRating({
+              points: 0,
+              comments: "",
+              id: ratingUser.id,
+            });
           }}
-          className="bg-darkViolet relative flex items-center justify-center gap-1 py-1.5 text-whites w-24 font-light text-xs rounded-sm"
+          className=" relative flex border-2 border-darkViolet  text-darkViolet items-center justify-center gap-1 py-1.5  w-24 font-light text-xs rounded-sm"
         >
-          Save
+          {isLoading ? (
+            <Loading
+              width={4}
+              height={4}
+              borderWeight={2}
+              border_t_color={"border-t-darkViolet"}
+            />
+          ) : (
+            <>Save</>
+          )}
         </button>
         <button
           onClick={() => {
             setEditComment(false);
           }}
-          className="bg-darkGray relative flex items-center justify-center gap-1 py-1.5 text-whites w-24 font-light text-xs rounded-sm"
+          className="bg-darkGray relative flex border-2 border-darkGray  items-center justify-center gap-1 py-1.5 text-whites w-24 font-light text-xs rounded-sm"
         >
           Cancel
         </button>
@@ -90,4 +106,4 @@ const LeaveAComment = ({ setEditComment, ratingId }) => {
   );
 };
 
-export default LeaveAComment;
+export default EditComment;

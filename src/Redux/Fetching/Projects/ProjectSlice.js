@@ -1,9 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../utils/axiosConfig";
 
-export const getProjectById = createAsyncThunk("getProjectById", async (id) => {
-  return await axios.get(`projects/${id}`).then((response) => response.data);
-});
+export const getProjectById = createAsyncThunk(
+  "getProjectById",
+  async (data) => {
+    return await axios
+      .get(`projects/${data.id}`)
+      .then((response) => response.data);
+  }
+);
 
 export const fetchArticlesData = createAsyncThunk(
   "fetchArticlesData",
@@ -47,7 +52,7 @@ const ProjectSlice = createSlice({
   name: "Project",
   initialState: {
     allProjects: [],
-    project: [],
+    project: {},
     projectsFiltered: [],
   },
   reducers: {},

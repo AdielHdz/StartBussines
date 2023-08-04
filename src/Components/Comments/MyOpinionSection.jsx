@@ -1,9 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { AiFillStar } from "react-icons/ai";
 import EditComment from "./EditComment";
+import { saveRatingUser, setPutSucces } from "@/Redux/Fetching/Rating/Rating";
+import { userIsRelated } from "@/utils/userISRelated";
 const MyOpinionSection = ({ body, myScore, userName }) => {
+  const dispatch = useDispatch();
   const [editComment, setEditComment] = useState(false);
+  const { putSucces, isLoading, ratingUser } = useSelector(
+    (state) => state.rating
+  );
+  const project = useSelector((state) => state.project.project);
 
+  useEffect(() => {
+    if (putSucces) {
+      dispatch(
+        saveRatingUser(
+          userIsRelated(project.Ratings, localStorage.getItem("idSession"))
+        )
+      );
+      setEditComment(false);
+    }
+
+    console.log(putSucces);
+
+    console.log(project.Ratings);
+  }, [putSucces, project]);
   return (
     <>
       {!editComment ? (
@@ -39,7 +61,10 @@ const MyOpinionSection = ({ body, myScore, userName }) => {
           </div>
           <div className="flex items-center justify-end mt-2">
             <button
-              onClick={() => setEditComment(true)}
+              onClick={() => {
+                dispatch(setPutSucces());
+                setEditComment(true);
+              }}
               className="text-xs  bg-second px-3 py-1.5 rounded-sm  text-whites"
             >
               Edit comment
@@ -47,7 +72,10 @@ const MyOpinionSection = ({ body, myScore, userName }) => {
           </div>
         </div>
       ) : (
-        <EditComment setEditComment={setEditComment} />
+        <EditComment
+          setEditComment={setEditComment}
+          editComment={editComment}
+        />
       )}
     </>
   );

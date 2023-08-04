@@ -166,7 +166,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
+                className="absolute  transform top-2.5 right-2 text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -198,7 +199,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
+                className="absolute   transform top-2.5 right-2   text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -212,11 +214,13 @@ const RegisterForm = () => {
               <p className="text-redError text-xs py-1 m-0">{backendError}</p>
             )}
             <button
+
               className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
                 hasErrorsOrEmptyFields() ? "bg-gray-700" : ""
               }`}
               onClick={handleSubmit}
               disabled={hasErrorsOrEmptyFields()}>
+
               Register
             </button>
           </div>
