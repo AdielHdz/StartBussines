@@ -16,7 +16,7 @@ const DeleteMyComment = () => {
         dispatch(activateIsLoading());
         dispatch(deleteRating(ratingUser.id));
       }}
-      className="w-9 flex justify-center items-center   rounded-sm hover:shadow-cards  text-redError transition duration-300"
+      className="w-9 flex justify-center items-center   rounded-sm   text-redError "
     >
       {isLoading ? (
         <Loading
@@ -26,7 +26,7 @@ const DeleteMyComment = () => {
           border_t_color={"border-t-redError"}
         />
       ) : (
-        <BsTrash className="text-redError text-xl " />
+        <BsTrash className="text-redError text-xl hover:scale-125 transition-all duration-200 transform " />
       )}
     </button>
   );

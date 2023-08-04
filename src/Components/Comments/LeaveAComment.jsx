@@ -79,7 +79,7 @@ const LeaveAComment = () => {
           onClick={() => {
             dispatch(activateIsLoading());
             dispatch(postComment(rating));
-            setRating({});
+            setRating({ points: 0, comments: "", ProjectId: id, UserId });
           }}
           className="bg-darkViolet relative h-9 flex flex-wrap items-center justify-center gap-1 w-24 text-whites  font-light text-xs rounded-sm hover:border hover:border-darkViolet hover:text-darkViolet hover:bg-whites transition duration-300 "
         >

@@ -34,7 +34,7 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
   try {
     const response = await axios.get(`/projects`);
 
-    console.log("Datos recibidos de la API:", response.data);
+    /* console.log("Datos recibidos de la API:", response.data); */
 
     return response.data;
   } catch (error) {
@@ -59,14 +59,14 @@ const ProjectSlice = createSlice({
     builder
       .addCase(getProjectById.fulfilled, (state, action) => {
         state.project = action.payload;
-        console.log(action.payload);
+        /* console.log(action.payload); */
       })
       .addCase(getProjects.fulfilled, (state, action) => {
         state.allProjects = action.payload;
       })
       .addCase(fetchArticlesData.fulfilled, (state, action) => {
         state.projectsFiltered = action.payload;
-        console.log(state.projectsFiltered);
+        /* console.log(state.projectsFiltered); */
       });
   },
 });
