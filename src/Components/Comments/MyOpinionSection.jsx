@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AiFillStar } from "react-icons/ai";
 import EditComment from "./EditComment";
-import { saveRatingUser, setPutSucces } from "@/Redux/Fetching/Rating/Rating";
-import { userIsRelated } from "@/utils/userISRelated";
+import {
+  saveRatingUser,
+  setPutSucces,
+} from "../../Redux/Fetching/Rating/Rating";
+import { userIsRelated } from "../../utils/userISRelated";
+import DeleteMyComment from "./DeleteMyComment";
 const MyOpinionSection = ({ body, myScore, userName }) => {
   const dispatch = useDispatch();
   const [editComment, setEditComment] = useState(false);
@@ -59,7 +63,8 @@ const MyOpinionSection = ({ body, myScore, userName }) => {
           <div className="border-2 border-primar rounded-lg p-2 py-3 text-darkGray">
             <h5 className="font-light">{body}</h5>
           </div>
-          <div className="flex items-center justify-end mt-2">
+          <div className="flex flex-wrap gap-2 h-9 justify-end mt-2">
+            <DeleteMyComment />
             <button
               onClick={() => {
                 dispatch(setPutSucces());
