@@ -49,7 +49,7 @@ const RegisterForm = () => {
     const role = localStorage.getItem("role");
     const formWithRol = { ...form, role: role };
     try {
-      await axios.post("http://localhost:3001/user/register", formWithRol);
+      await axios.post("/user/register", formWithRol);
       router.push("/checkemail");
     } catch (error) {
       console.log("Error during form submission:", error);

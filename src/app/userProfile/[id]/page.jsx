@@ -58,7 +58,7 @@ export default function UserProfile() {
     formData.append("country", userSession.country);
 
     axios
-      .patch(`http://localhost:3001/user/${idSession}`, formData)
+      .patch(`/user/${idSession}`, formData)
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
