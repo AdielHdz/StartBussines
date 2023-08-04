@@ -21,16 +21,14 @@ const ProjectDetail = () => {
   const [userID, setUserID] = useState("");
   const [score, setScore] = useState(0);
   const usersRelated = useSelector((state) => state.rating.ratingUser);
+  const Changefullfiled = useSelector((state) => state.rating.putSucces);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setUserID(localStorage.getItem("idSession"));
-  }, []);
-
-  useEffect(() => {
     if (id) {
-      dispatch(getProjectById(id));
+      dispatch(getProjectById({ id, userID }));
     }
     if (project.id) {
       setScore(averageScore(project?.Ratings));
@@ -41,12 +39,12 @@ const ProjectDetail = () => {
     /*  console.log(id);*/
     /*   console.log("score ", score);
     console.log(usersRelated); */
-    console.log(usersRelated?.comments?.length);
   }, [
     project?.name,
     project?.Ratings?.length,
-    usersRelated.id,
+    usersRelated?.id,
     usersRelated?.comments?.length,
+    Changefullfiled,
   ]);
 
   return (
@@ -121,18 +119,20 @@ const ProjectDetail = () => {
                   <IoWalletOutline />
                 </button>
 
-                <CommentsSection
-                  name={"Adiel Luciano Hernandez Ortegon"}
-                  myOpinion={usersRelated}
-                  otherOpinions={project.Raitings}
-                />
+                <CommentsSection />
               </div>
             </div>
           </section>
         </div>
       ) : (
         <div className="flex items-center justify-center h-screen absolute top-0 w-full -z-10">
-          <Loading width={20} height={20} borderWeight={5} loadingText={true} />
+          <Loading
+            width={20}
+            height={20}
+            borderWeight={5}
+            loadingText={true}
+            border_t_color={"border-t-primar"}
+          />
         </div>
       )}
     </>

@@ -1,19 +1,21 @@
 import MyOpinionSection from "./MyOpinionSection";
 import TextPair from "../TextPair/TextPair";
 import LeaveAComment from "./LeaveAComment";
-
-const MyCommentsSection = ({ name, myOpinion }) => {
+import { useSelector } from "react-redux";
+const MyCommentsSection = () => {
+  const usersRelated = useSelector((state) => state.rating.ratingUser);
+  console.log(usersRelated);
   return (
     <section className="flex flex-col gap-3">
       <TextPair text1={"My opinion"} />
 
-      {myOpinion?.User?.id ? (
+      {usersRelated?.User?.id ? (
         <div className="flex flex-col gap-2 py-2">
           <MyOpinionSection
-            key={myOpinion.User.id}
-            body={myOpinion.comments}
-            userName={myOpinion.User.fullName}
-            myScore={myOpinion.points}
+            key={usersRelated.User.id}
+            body={usersRelated.comments}
+            userName={usersRelated.User.fullName}
+            myScore={usersRelated.points}
           />
         </div>
       ) : (
