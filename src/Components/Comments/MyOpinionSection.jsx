@@ -35,7 +35,7 @@ const MyOpinionSection = ({ body, myScore, userName }) => {
       {!editComment ? (
         <div>
           <div className="flex justify-between w-full">
-            <h5 className="text-sm font-light text-second">{userName}</h5>
+            <h5 className="text-sm font-light text-primar">{userName}</h5>
 
             <div className="flex">
               {[...Array(5)].map((star, index) => {
@@ -60,8 +60,8 @@ const MyOpinionSection = ({ body, myScore, userName }) => {
             </div>
           </div>
 
-          <div className="border-2 border-primar rounded-lg p-2 py-3 text-darkGray">
-            <h5 className="font-light">{body}</h5>
+          <div className="border-1 border-darkGray rounded-lg p-2 py-3 text-darkGray">
+            <p className="font-light text-sm">{body}</p>
           </div>
           <div className="flex flex-wrap gap-2 h-9 justify-end mt-2">
             <DeleteMyComment />

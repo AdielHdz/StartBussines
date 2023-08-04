@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getProjectById } from "../../../Redux/Fetching/Projects/ProjectSlice";
+import {
+  getProjectById,
+  cleanDataProject,
+} from "../../../Redux/Fetching/Projects/ProjectSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import TextPair from "../../../Components/TextPair/TextPair";
@@ -36,14 +39,18 @@ const ProjectDetail = () => {
     }
 
     /*  console.log(project); */
-    /*  console.log(id);*/
+    /*    console.log(id); */
     /*   console.log("score ", score);
     console.log(usersRelated); */
+
+    /*   return () => {
+      dispatch(cleanDataProject());
+    }; */
   }, [
     project?.name,
     project?.Ratings?.length,
     usersRelated?.id,
-    usersRelated?.comments?.length,
+
     Changefullfiled,
   ]);
 
@@ -60,14 +67,14 @@ const ProjectDetail = () => {
                     : "https://img.freepik.com/vector-premium/vector-icono-logotipo-mecanico-llave-engranaje_304830-274.jpg"
                 }
                 alt={project?.name}
-                className=" w-44 h-44 object-cover rounded-full"
+                className=" w-36 h-36 object-cover rounded-full"
               />
             </figure>
 
             <h2 className="w-full text-center text-lg font-bold py-3">
               {project?.name}
             </h2>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <TextPair text1={"Post created:"} text2={project?.initial_date} />
               <TextPair
                 text1={"Start date project:"}
@@ -114,9 +121,9 @@ const ProjectDetail = () => {
                   }
                   description={"Asi es la idea de como se veria el local"}
                 />
-                <button className="bg-yellow-500 flex items-center justify-center gap-2 text-whites h-12">
+                <button className="bg-primar  font-light flex items-center justify-center  gap-2 text-whites h-10 rounded-sm">
                   I want to invest
-                  <IoWalletOutline />
+                  <IoWalletOutline className="text-xl" />
                 </button>
 
                 <CommentsSection />
