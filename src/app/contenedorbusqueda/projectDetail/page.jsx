@@ -42,15 +42,13 @@ const ProjectDetail = () => {
     /*    console.log(id); */
     /*   console.log("score ", score);
     console.log(usersRelated); */
-
-    /*   return () => {
+    /*  return () => {
       dispatch(cleanDataProject());
     }; */
   }, [
     project?.name,
     project?.Ratings?.length,
     usersRelated?.id,
-
     Changefullfiled,
   ]);
 
