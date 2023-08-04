@@ -1,10 +1,10 @@
-"use client";
-import { BsFacebook } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
-import { useSession, signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+'use client';
+import { BsFacebook } from 'react-icons/bs';
+import { FcGoogle } from 'react-icons/fc';
+import { useSession, signIn } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Authentication() {
   const router = useRouter();
@@ -13,27 +13,29 @@ export default function Authentication() {
 
   //? Inicio del Estado-Object que va a enviar la informacion a la bdd
   const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    rol: "",
-    password: "",
-    gender: "",
-    birthday: "",
-    phone: "",
-    country: "",
-    avatar: "",
-    dniPasaport: "",
+    fullName: '',
+    email: '',
+    role: '',
+    password: '',
+    dni: null,
+    gender: '',
+    birthdate: '',
+    phone: '',
+    country: '',
+    avatar: '',
+    avatar: session?.user?.image,
     status: true,
+    confirmEmail: true,
     thirdPartyCreated: true,
   });
 
   //? Control de la llegada de datos del Google Login
   useEffect(() => {
     if (session) {
-      // console.log(session?.user); //!Check User
-      // console.log(session?.user?.name);
-      // console.log(session?.user?.email);
-      // console.log(session?.user?.image);
+      console.log(session?.user); //!Check User
+      console.log(session?.user?.name);
+      console.log(session?.user?.email);
+      console.log(session?.user?.image);
     }
   }, []);
 
@@ -43,15 +45,11 @@ export default function Authentication() {
       ...form,
       fullName: session?.user?.name,
       email: session?.user?.email,
-      rol: "entrepreneur",
-      password: "ThirdPartyHenry12345!",
-      gender: "",
-      birthdate: "01/01/2000",
-      phone: "",
-      country: "",
+      role: 'entrepreneur',
+      password: 'ThirdPartyHenry12345!',
       avatar: session?.user?.image,
-      dniPasaport: "",
       status: true,
+      confirmEmail: true,
       thirdPartyCreated: true,
     });
   };
@@ -66,11 +64,11 @@ export default function Authentication() {
   }, [session]);
 
   useEffect(() => {
-    // console.log('Esto es el form', form);
+    console.log('Esto es el form', form);
   }, [form]);
 
   useEffect(() => {
-    // console.log('Esto es el DataLogin', dataLogin);
+    console.log('Esto es el DataLogin', dataLogin);
     registerGoogleUser(form, dataLogin);
   }, [form]);
 
@@ -78,13 +76,13 @@ export default function Authentication() {
     if (session?.user) {
       // console.log('form registerGoogle', form);
       try {
-        const responseRegister = await axios.post("/user", form);
+        const responseRegister = await axios.post('/user', form);
         const newUserData = responseRegister.data;
         // console.log('Esto es newUserData Register', newUserData);
 
-        const responseLogin = await axios.post("/user/login", dataLogin);
+        const responseLogin = await axios.post('/user/login', dataLogin);
         const loginUserData = responseLogin.data;
-        console.log("Esto es loginUserData Register", loginUserData);
+        console.log('Esto es loginUserData Register', loginUserData);
 
         console.log(responseRegister);
       } catch (error) {
@@ -92,9 +90,9 @@ export default function Authentication() {
 
         // console.log('DataLogin para logear', dataLogin);
         try {
-          const responseLogin = await axios.post("/user/login", dataLogin);
+          const responseLogin = await axios.post('/user/login', dataLogin);
           const loginUserData = responseLogin.data;
-          console.log("Esto es loginUserData Register", loginUserData);
+          console.log('Esto es loginUserData Register', loginUserData);
         } catch (error) {
           // console.error('Login User Error:', error);
         }
@@ -103,31 +101,31 @@ export default function Authentication() {
   };
 
   return (
-    <div className="flex flex-col gap-3 mt-3">
+    <div className='flex flex-col gap-3 mt-3'>
       <div>
-        <div className=" flex items-center gap-2  justify-between ">
-          <div className="w-full  h-0 border border-black "></div>
-          <p className="  text-center m-0 text-blacks text-xs font-medium h-full inline-block">
+        <div className=' flex items-center gap-2  justify-between '>
+          <div className='w-full  h-0 border border-black '></div>
+          <p className='  text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
             Or
           </p>
-          <div className="w-full  h-0 border border-black "></div>
+          <div className='w-full  h-0 border border-black '></div>
         </div>
-        <p className="w-full text-center m-0 text-blacks text-xs font-medium h-full inline-block">
+        <p className='w-full text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
           continue with
         </p>
       </div>
 
-      <div className="flex w-full gap-2 items-center justify-center">
-        <div className=" flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10  mt-8">
+      <div className='flex w-full gap-2 items-center justify-center'>
+        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10  mt-8'>
           <FcGoogle
-            className="inline-block text-3xl"
+            className='inline-block text-3xl'
             onClick={() => {
               signIn();
             }}
           />
         </div>
-        <div className=" flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8">
-          <BsFacebook className="inline-block text-blue-600 text-3xl" />
+        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8'>
+          <BsFacebook className='inline-block text-blue-600 text-3xl' />
         </div>
       </div>
     </div>
