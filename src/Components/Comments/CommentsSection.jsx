@@ -6,7 +6,7 @@ const CommentsSection = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      {userData.email !== "" ? (
+      {userData ? (
         <MyCommentsSection />
       ) : (
         <h5 className="text-center text-sm font-light py-3">

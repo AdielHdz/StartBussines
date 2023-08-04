@@ -4,6 +4,7 @@ import LeaveAComment from "./LeaveAComment";
 import { useSelector } from "react-redux";
 const MyCommentsSection = () => {
   const usersRelated = useSelector((state) => state.rating.ratingUser);
+  console.log(usersRelated);
 
   return (
     <section className="flex flex-col gap-3">
