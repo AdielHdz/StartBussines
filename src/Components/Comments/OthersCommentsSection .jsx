@@ -7,21 +7,26 @@ const OthersCommentsSection = () => {
       (rating) => rating.User.id !== localStorage.getItem("idSession")
     )
   );
-  /* console.log(ratingsProject); */
+  console.log(ratingsProject);
 
   return (
     <div className="flex flex-col gap-3">
       <TextPair text1={"What does investors say?"} />
-      <div className="flex flex-col gap-4 py-2">
-        {ratingsProject.map((opinion) => (
-          <OpinionSection
-            key={opinion.User.fullName}
-            userName={opinion.User.fullName}
-            body={opinion.comments}
-            score={opinion.points}
-          />
-        ))}
-      </div>
+
+      {ratingsProject.length ? (
+        <div className="flex flex-col gap-4 py-2">
+          {ratingsProject.map((opinion) => (
+            <OpinionSection
+              key={opinion.User.fullName}
+              userName={opinion.User.fullName}
+              body={opinion.comments}
+              score={opinion.points}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>No hay nada aun</p>
+      )}
     </div>
   );
 };

@@ -50,7 +50,11 @@ const ProjectSlice = createSlice({
     project: {},
     projectsFiltered: [],
   },
-  reducers: {},
+  reducers: {
+    cleanDataProject: (state) => {
+      state.project = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProjectById.fulfilled, (state, action) => {
@@ -66,5 +70,5 @@ const ProjectSlice = createSlice({
       });
   },
 });
-
+export const { cleanDataProject } = ProjectSlice.actions;
 export default ProjectSlice;
