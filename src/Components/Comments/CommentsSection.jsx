@@ -6,7 +6,7 @@ const CommentsSection = () => {
   console.log(userData);
   return (
     <div className="flex flex-col gap-3">
-      {userData ? (
+      {userData && userData.email ? (
         <MyCommentsSection />
       ) : (
         <h5 className="text-center text-sm font-light py-3">
