@@ -92,7 +92,7 @@ export default function RecoverPassword() {
     });
     form.reset(); // Limpia el formulario
     console.log("Formulario enviado correctamente");
-    // Aquí puedes agregar el código para redirigir al usuario a ResetPasswordConfirm
+    
     window.location.href = "/resetPass";
   };
 
