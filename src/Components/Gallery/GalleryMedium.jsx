@@ -7,7 +7,7 @@ const GalleryMedium = ({ url, description }) => {
         alt={url}
         className="w-full max-h-images object-cover rounded-lg "
       />
-      <p className="inline-block  text-darkGray font-regular text-base">
+      <p className="inline-block  text-darkGray font-light text-sm">
         {description}
       </p>
       <AiOutlineFullscreen className="w-8 h-8 text-whites bg-blacks bg-opacity-50 z-10 rounded-md absolute cursor-pointer right-2 top-2" />
