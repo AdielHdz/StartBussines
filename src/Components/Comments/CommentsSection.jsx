@@ -3,7 +3,7 @@ import OtherCommentsSection from "./OthersCommentsSection ";
 import Link from "next/link";
 const CommentsSection = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-
+  console.log(userData);
   return (
     <div className="flex flex-col gap-3">
       {userData ? (
