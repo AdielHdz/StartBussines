@@ -22,7 +22,6 @@ export default function Authentication() {
     birthdate: '',
     phone: '',
     country: '',
-    avatar: '',
     avatar: session?.user?.image,
     status: true,
     confirmEmail: true,
