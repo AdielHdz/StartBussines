@@ -46,10 +46,12 @@ module.exports = {
         cards: "20rem",
         registerMd: "30rem",
         registerXs: "30rem",
-        images: "25rem",
+        images: "22rem",
+        projectDetail: "60rem",
       },
       maxHeight: {
         cards: "15rem",
+        images: "15rem",
       },
       minWidth: {
         cards: "20rem",

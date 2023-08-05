@@ -9,7 +9,6 @@ import { useSearchParams } from "next/navigation";
 import TextPair from "../../../Components/TextPair/TextPair";
 import GalleryMedium from "../../../Components/Gallery/GalleryMedium";
 import CommentsSection from "../../../Components/Comments/CommentsSection";
-import Link from "next/link";
 import { averageScore } from "../../../utils/averageScore";
 import { IoWalletOutline } from "react-icons/io5";
 import { userIsRelated } from "../../../utils/userISRelated";
@@ -55,8 +54,8 @@ const ProjectDetail = () => {
   return (
     <>
       {project.name ? (
-        <div className=" p-2.5 flex items-center justify-center">
-          <section className=" border-2 border-whites w-full font-medium  text-darkGray">
+        <div className=" p-2.5 pb-10 flex items-center justify-center ">
+          <section className="  w-full md:max-w-projectDetail font-medium   text-darkGray">
             <figure className="flex items-center justify-center py-2 ">
               <img
                 src={
@@ -65,11 +64,11 @@ const ProjectDetail = () => {
                     : "https://img.freepik.com/vector-premium/vector-icono-logotipo-mecanico-llave-engranaje_304830-274.jpg"
                 }
                 alt={project?.name}
-                className=" w-36 h-36 object-cover rounded-full"
+                className=" w-3/4 object-contain md:max-w-registerMd   "
               />
             </figure>
 
-            <h2 className="w-full text-center text-lg font-bold py-3">
+            <h2 className="w-full text-center text-2xl font-bold py-3">
               {project?.name}
             </h2>
             <div className="flex flex-col gap-1.5">
@@ -104,23 +103,34 @@ const ProjectDetail = () => {
                 {project?.description}
               </p>
               <TextPair text1={"Gallery"} />
-              <div className="flex flex-col gap-3">
-                <GalleryMedium
-                  url={
-                    "https://d1ralsognjng37.cloudfront.net/4d8f57f2-1c42-44b2-8656-02b2a7d0e5b1.jpeg"
-                  }
-                  description={
-                    "Aqui puedo mostrarles algunos de mis productos estrellas"
-                  }
-                />
-                <GalleryMedium
-                  url={
-                    "https://lh5.googleusercontent.com/p/AF1QipPDzJz89oKreiB1npMrZH38_V3EMJRVYdjIzdtY=w650-h486-k-no"
-                  }
-                  description={"Asi es la idea de como se veria el local"}
-                />
-                <button className="bg-primar  font-light flex items-center justify-center  gap-2 text-whites h-10 rounded-sm">
-                  I want to invest
+              <div className="flex flex-col gap-3 ">
+                <div className="md:grid md:grid-cols-2 flex flex-col gap-3 md:p-3 ">
+                  <GalleryMedium
+                    url={
+                      "https://d1ralsognjng37.cloudfront.net/4d8f57f2-1c42-44b2-8656-02b2a7d0e5b1.jpeg"
+                    }
+                    description={
+                      "Aqui puedo mostrarles algunos de mis productos estrellas"
+                    }
+                  />
+                  <GalleryMedium
+                    url={
+                      "https://lh5.googleusercontent.com/p/AF1QipPDzJz89oKreiB1npMrZH38_V3EMJRVYdjIzdtY=w650-h486-k-no"
+                    }
+                    description={"Asi es la idea de como se veria el local"}
+                  />
+                  <GalleryMedium
+                    url={
+                      "https://lh5.googleusercontent.com/p/AF1QipPDzJz89oKreiB1npMrZH38_V3EMJRVYdjIzdtY=w650-h486-k-no"
+                    }
+                    description={
+                      "Al venir al mundo fueron delicadamente mecidas por las manos de la lustral Doniazada, su buena tía, que grabó sus nombres sobre hojas de oro coloreadas de húmedas pedrerías y las cuidó bajo el terciopelo de sus pupilas hasta la adolescencia dura, para esparcirlas después, voluptuosas y libres, sobre el mundo oriental, eternizado por su sonrisa. Yo os las entrego tales como son, en su frescor de carne y de rosa. Sólo existe un método honrado y lógico de traducción: la «literalidad», una literalidad impersonal, apenas atenuada por un leve parpadeo y una ligera sonrisa del traductor. Ella crea, sugestiva, la más grande potencia literaria. Ella produce el placer de la evocación. Ella es la garantía de la verdad. Ella es firme e inmutable, en su desnudez de piedra. Ella cautiva el aroma primitivo y lo cristaliza. Ella separa y desata... Ella fija."
+                    }
+                  />
+                </div>
+
+                <button className="bg-gray-900 font-normal text-lg flex items-center justify-center my-4 gap-2 text-yellow-200 h-12 rounded-sm">
+                  Invest
                   <IoWalletOutline className="text-xl" />
                 </button>
 
