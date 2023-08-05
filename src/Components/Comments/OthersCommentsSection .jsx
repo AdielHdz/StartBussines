@@ -25,7 +25,7 @@ const OthersCommentsSection = () => {
           ))}
         </div>
       ) : (
-        <p>No hay nada aun</p>
+        <p className="text-center text-sm font-light">There are no comments</p>
       )}
     </div>
   );
