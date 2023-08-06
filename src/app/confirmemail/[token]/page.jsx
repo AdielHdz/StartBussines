@@ -1,11 +1,12 @@
 "use client";
 
-import  { useEffect , useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 
 const ConfirmEmailSuccefull = () => {
-  const { token } = useParams();
+  const router = useRouter();
+  const { token } = router.query;
   console.log("Token:", token);
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -47,7 +48,12 @@ const ConfirmEmailSuccefull = () => {
               stroke="currentColor"
               aria-hidden="true"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
         </div>
@@ -62,13 +68,14 @@ const ConfirmEmailSuccefull = () => {
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-            Something went wrong with the email confirmation. Please try again later.
+            Something went wrong with the email confirmation. Please try again
+            later.
           </p>
 
           <div className="flex justify-center mt-6">
             <button
               className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
-              onClick={() => window.location.href = "/register"} // Redirect to the registration page
+              onClick={() => (window.location.href = "/register")}
             >
               Back to Registration
             </button>
