@@ -10,8 +10,8 @@ export default function ProjectCard(props) {
           className="rounded-t-lg w-full h-full"
           src={props.image}
           alt={props.name}
-          width={150}
-          height={150}
+          width={250}
+          height={250}
         />
       </div>
       <div className="p-6">
