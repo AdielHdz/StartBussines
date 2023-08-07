@@ -6,8 +6,7 @@ import { useState } from "react";
 export default function RecoverMail() {
   const [formValid, setFormValid] = useState(false);
   const [emailError, setEmailError] = useState("");
-  const [errorText, setErrorText] = useState("");
-  const [successMessage, setSuccessMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +23,6 @@ export default function RecoverMail() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formValid) {
-      console.log("The form has errors");
       return;
     }
     const form = e.target;
@@ -32,7 +30,6 @@ export default function RecoverMail() {
 
     form.reset();
 
-    console.log("The email has been sent to " + email);
     setSuccessMessage("The email has been sent to " + email);
   
     setTimeout(() => {
@@ -80,9 +77,6 @@ export default function RecoverMail() {
               <p className="text-red-600 text-sm text-center">{emailError}</p>
             )}
           </div>
-          {errorText && (
-            <p className="text-red-600 text-sm text-center">{errorText}</p>
-          )}
           <button
             type="submit"
             className={`block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white ${
