@@ -14,6 +14,7 @@ import { IoWalletOutline } from "react-icons/io5";
 import { userIsRelated } from "../../../utils/userISRelated";
 import Loading from "../../../Components/Loading/Loading";
 import { saveRatingUser } from "../../../Redux/Fetching/Rating/Rating";
+import InvestInProject from "../../../Components/InvestInProject/InvestInProject";
 const ProjectDetail = () => {
   const searchParams = useSearchParams();
 
@@ -21,14 +22,16 @@ const ProjectDetail = () => {
 
   const project = useSelector((state) => state.project.project);
   const [userID, setUserID] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [score, setScore] = useState(0);
   const usersRelated = useSelector((state) => state.rating.ratingUser);
   const Changefullfiled = useSelector((state) => state.rating.putSucces);
-
+  const [investView, setInvestView] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setUserID(localStorage.getItem("idSession"));
+    setUserRole(localStorage.getItem("role"));
     if (id) {
       dispatch(getProjectById(id));
     }
@@ -129,10 +132,21 @@ const ProjectDetail = () => {
                   />
                 </div>
 
-                <button className="bg-gray-900 font-normal text-lg flex items-center justify-center my-4 gap-2 text-yellow-200 h-12 rounded-sm">
-                  Invest
-                  <IoWalletOutline className="text-xl" />
-                </button>
+                {userRole === "investor" && (
+                  <button
+                    onClick={() => setInvestView(true)}
+                    className="bg-gray-900 font-normal text-lg flex items-center justify-center my-4 gap-2 text-yellow-200 h-12 rounded-sm"
+                  >
+                    Invest
+                    <IoWalletOutline className="text-xl" />
+                  </button>
+                )}
+
+                {investView ? (
+                  <InvestInProject setInvestmenView={setInvestView} />
+                ) : (
+                  <></>
+                )}
 
                 <CommentsSection />
               </div>
