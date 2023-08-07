@@ -15,26 +15,39 @@ const ArticleCard = ({ data }) => {
   } = data;
 
   return (
-    <article className=" border w-3/4 shadow-cards rounded-lg ">
+    <article className="  w-full shadow-cards rounded-lg max-w-registerMd p-2">
       {image_cover ? (
         <div
-          className="h-96 bg-cover bg-center"
+          className=" h-52 bg-contain bg-center bg-no-repeat  "
           style={{ backgroundImage: `url(${image_cover})` }}
         />
       ) : null}
       {/* <img src={image_cover} alt={name ? name : ""} className="h-96"/> */}
-      <div className="text-center border border-green-500">
+      <div className="text-center ">
         <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
-          <h5 className="text-2xl font-semibold mt-2 mb-4 text-sky-800">{name}</h5>
+          <h5 className="text-xl font-semibold mb-2 text-darkGray">{name}</h5>
         </Link>
-        <div className="text-s flex flex-col items-center">
-          <p className="mb-2">Min Investment: <span className="text-lg font-semibold text-emerald-500">${minAmount}</span></p>
-          <p className="mb-2">Max investment: <span className="text-lg font-semibold text-emerald-500">${maxAmount}</span></p>
-          <p className="mb-2">Goal amount: <span className="text-lg font-semibold text-emerald-500">${goalAmount}</span></p>
-          <p className="mb-2">Category: <span className="text-lg font-semibold text-pink-200">{category.join(", ")}</span></p>
+        <div className="text-sm flex flex-col items-center">
+          <p className="mb-2">
+            Goal amount:{" "}
+            <span className="text-sm  text-primar">${goalAmount}</span>
+          </p>
+          <p className="mb-2">
+            Min Investment:{" "}
+            <span className="text-sm  text-primar">${minAmount}</span>
+          </p>
+          <p className="mb-2">
+            Max investment:{" "}
+            <span className="text-sm  text-primar">${maxAmount}</span>
+          </p>
+
+          <p className="mb-2">
+            Categories:{" "}
+            <span className="  text-second">{category.join(", ")}</span>
+          </p>
         </div>
       </div>
-    </article> 
+    </article>
   );
 };
 

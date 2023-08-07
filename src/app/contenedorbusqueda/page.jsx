@@ -12,7 +12,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import PaginationLogic from "../../Components/paginator/PaginatorLogic";
 
-
 const ContenedorBusquedaCard = () => {
   const filters = useSelector((state) => state.filters);
   const articlesData = useSelector((state) => state.project.projectsFiltered);
@@ -77,7 +76,7 @@ const ContenedorBusquedaCard = () => {
   };
 
   return (
-    <div>
+    <div className="pb-5">
       <Link href="/home">
         <button className="absolute flex items-center right-0 md:right-60 md:ml-2 bg-teal-700 text-white py-2 px-4 rounded-3xl shadow">
           <FaArrowLeft />
@@ -109,13 +108,13 @@ const ContenedorBusquedaCard = () => {
           <option value="Asc">Worst ratings</option>
         </select>
       </div>
-      <div className="flex flex-col space-y-4 min-h-screen w-full items-center justify-center p-4 sm:m-2 lg:m-4">
-        <div className="flex items-start m-4 text-xl text-black lg:text-2xl">
-        {currentProjects?.length}{" "}
-          <span className="text-2xl text-teal-700 font-semibold ml-2">
-            Results
+      <div className="flex flex-col space-y-4 min-h-screen w-full items-center justify-center p-3 sm:m-2 lg:m-4">
+        <div className="flex items-start m-4    lg:text-2xl">
+          <span className=" ml-2 text-lg text-grayLightMedium font-medium ">
+            {currentProjects?.length} Results
           </span>
         </div>
+
         {currentProjects.map((article, index) => (
           <ArticleCard key={index} data={article} />
         ))}
