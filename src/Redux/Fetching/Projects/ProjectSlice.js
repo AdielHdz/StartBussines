@@ -1,14 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../utils/axiosConfig";
 
-export const getProjectById = createAsyncThunk(
-  "getProjectById",
-  async (data) => {
-    return await axios
-      .get(`projects/${data.id}`)
-      .then((response) => response.data);
-  }
-);
+export const getProjectById = createAsyncThunk("getProjectById", async (id) => {
+  return await axios.get(`projects/${id}`).then((response) => response.data);
+});
 
 export const fetchArticlesData = createAsyncThunk(
   "fetchArticlesData",
@@ -39,7 +34,7 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
   try {
     const response = await axios.get(`/projects`);
 
-    console.log("Datos recibidos de la API:", response.data);
+    /* console.log("Datos recibidos de la API:", response.data); */
 
     return response.data;
   } catch (error) {
@@ -55,21 +50,25 @@ const ProjectSlice = createSlice({
     project: {},
     projectsFiltered: [],
   },
-  reducers: {},
+  reducers: {
+    cleanDataProject: (state) => {
+      state.project = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProjectById.fulfilled, (state, action) => {
         state.project = action.payload;
-        console.log(action.payload);
+        /* console.log(action.payload); */
       })
       .addCase(getProjects.fulfilled, (state, action) => {
         state.allProjects = action.payload;
       })
       .addCase(fetchArticlesData.fulfilled, (state, action) => {
         state.projectsFiltered = action.payload;
-        console.log(state.projectsFiltered);
+        /* console.log(state.projectsFiltered); */
       });
   },
 });
-
+export const { cleanDataProject } = ProjectSlice.actions;
 export default ProjectSlice;

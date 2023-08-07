@@ -2,19 +2,21 @@ import OptionEntrepreneur from "./OptionEntrepreneur";
 import OptionInvestor from "./OptionInvestor";
 import { useState } from "react";
 
-const SelectWay = () => {
+const SelectWay = ({ onRoleSelect }) => {
   const [enIsActive, setEntrepreneur] = useState(false);
   const [inIsActive, setInvestor] = useState(false);
 
   const handleEntrepreneur = () => {
     setEntrepreneur(true);
     setInvestor(false);
-    localStorage.setItem("role", "entrepreneur");
+    onRoleSelect("entrepreneur");
+    localStorage.setItem("roleRegister", "entrepreneur");
   };
   const handleInvestor = () => {
     setInvestor(true);
     setEntrepreneur(false);
-    localStorage.setItem("role", "investor");
+    onRoleSelect("investor");
+    localStorage.setItem("roleRegister", "investor");
   };
   return (
     <>

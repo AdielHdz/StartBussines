@@ -17,6 +17,12 @@ export const putComment = createAsyncThunk("putComment", async (rating) => {
     .catch((error) => console.log(error.message));
 });
 
+export const deleteRating = createAsyncThunk("deleteRating", async (id) => {
+  return await axios
+    .delete(`/rating/${id}`)
+    .then((response) => response.data)
+    .catch((error) => console.log(error.message));
+});
 const RatingSlice = createSlice({
   name: "Rating",
   initialState: {
@@ -28,6 +34,7 @@ const RatingSlice = createSlice({
   reducers: {
     saveRatingUser: (state, action) => {
       state.ratingUser = action.payload;
+      console.log(state.ratingUser);
     },
     activateIsLoading: (state) => {
       state.isLoading = true;
@@ -37,14 +44,21 @@ const RatingSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(postComment.fulfilled, (state, action) => {
-      state.postRating = action.payload;
-    });
-    builder.addCase(putComment.fulfilled, (state, action) => {
-      state.putSucces = action.payload.updated.comments;
+    builder
+      .addCase(postComment.fulfilled, (state, action) => {
+        state.postRating = action.payload;
+        state.putSucces = "Commented done";
+        state.isLoading = false;
+      })
+      .addCase(putComment.fulfilled, (state, action) => {
+        state.putSucces = action.payload.updated.comments;
 
-      state.isLoading = false;
-    });
+        state.isLoading = false;
+      })
+      .addCase(deleteRating.fulfilled, (state, action) => {
+        state.putSucces = "Comment deleted";
+        state.isLoading = false;
+      });
   },
 });
 export const { saveRatingUser, activateIsLoading, setPutSucces } =

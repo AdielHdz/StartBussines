@@ -46,16 +46,25 @@ module.exports = {
         cards: "20rem",
         registerMd: "30rem",
         registerXs: "30rem",
-        images: "25rem",
+        images: "22rem",
+        projectDetail: "60rem",
       },
       maxHeight: {
         cards: "15rem",
+        images: "15rem",
       },
       minWidth: {
         cards: "20rem",
+        nameFirsCell: "9rem",
       },
       animation: {
         "spin-slow": "spin 1s linear infinite",
+      },
+      lineHeight: {
+        helpers: "1rem",
+      },
+      borderRadius: {
+        littleBox: ".3rem",
       },
       // Puedes agregar más opciones de opacidad si es necesario
       opacity: {},

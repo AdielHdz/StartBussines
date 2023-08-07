@@ -15,14 +15,16 @@ export default function UserProfile() {
   const [inputsDisabled, setInputsDisabled] = useState(true);
   const [changesSaved, setChangesSaved] = useState(true);
   const [idSession, setIdSession] = useState("");
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-
+  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const [avatarSession, setAvatarSession] = useState("");
   useEffect(() => {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("userData"));
       const id = localStorage.getItem("idSession");
+      const image = localStorage.getItem("");
       setIdSession(id);
       setUserSession(user);
+      setAvatarSession(image);
     }
   }, []);
 
@@ -50,7 +52,9 @@ export default function UserProfile() {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("avatar", selectedAvatar);
+    if (selectedAvatar) {
+      formData.append("avatar", selectedAvatar);
+    }
     formData.append("fullName", userSession.fullName);
     formData.append("email", userSession.email);
     formData.append("birthdate", userSession.birthdate);
@@ -58,7 +62,7 @@ export default function UserProfile() {
     formData.append("country", userSession.country);
 
     axios
-      .patch(`http://localhost:3001/user/${idSession}`, formData)
+      .patch(`/user/${idSession}`, formData)
       .then((res) => {
         setInputsDisabled(true);
         setChangesSaved(true);
@@ -69,7 +73,7 @@ export default function UserProfile() {
 
         setUserSession(updatedUserSession);
         localStorage.setItem("avatar", res.data.result.avatar);
-        localStorage.setItem("userData", JSON.stringify(userSession));
+        localStorage.setItem("userData", JSON.stringify(updatedUserSession));
       })
       .catch((err) => console.log("Error:", err));
   };
@@ -80,7 +84,7 @@ export default function UserProfile() {
         <Image
           className="w-32 h-32 rounded-full shadow-lg m-2"
           alt="avatar"
-          src={userSession.avatar}
+          src={userSession.avatar || DefaultImage}
           width={100}
           height={100}
         />

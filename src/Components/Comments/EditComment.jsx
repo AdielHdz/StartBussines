@@ -16,8 +16,8 @@ const EditComment = ({ setEditComment, editComment }) => {
   const { ratingUser, isLoading } = useSelector((state) => state.rating);
 
   const [rating, setRating] = useState({
-    points: 0,
-    comments: "",
+    points: ratingUser.points,
+    comments: ratingUser.comments,
     id: ratingUser.id,
   });
 

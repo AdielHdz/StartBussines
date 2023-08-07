@@ -46,34 +46,49 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const role = localStorage.getItem("role");
-    const formWithRol = { ...form, role: role };
-
-    if (
+    const roleRegister = localStorage.getItem("roleRegister");
+    const formWithRol = { ...form, role: roleRegister };
+    try {
+      await axios.post("/user/register", formWithRol);
+      router.push("https://start-bussines.vercel.app/checkemail");
+    } catch (error) {
+      console.log("Error during form submission:", error);
+      setBackendError(
+        /* error.response.data.error ||  */ "Something went wrong"
+      );
+    }
+  };
+  const handleRoleSelect = (selectedRole) => {
+    setForm({ ...form, role: selectedRole });
+    setError({ ...error, role: "" });
+  };
+  const hasErrorsOrEmptyFields = () => {
+    return (
+      error.role ||
       error.fullName ||
       error.email ||
       error.birthdate ||
       error.password ||
-      error.confirmPassword
-    ) {
-      return;
-    }
-
-    try {
-      await axios.post("/user/register", formWithRol);
-      router.push("/checkemail");
-    } catch (error) {
-      console.log("Error during form submission:", error);
-      setBackendError(error.response.data.error || "Something went wrong");
-    }
+      error.confirmPassword ||
+      !form.role ||
+      !form.fullName ||
+      !form.email ||
+      !form.birthdate ||
+      !form.password ||
+      !form.confirmPassword
+    );
   };
-
   return (
     <div className="py-20 flex justify-center items-center ">
       <div className="p-4  md:shadow-cards max-w-md rounded-xl">
         <NavigationButtons currentPage={"/register"} />
+        <div className="flex justify-center mt-10">
+          <label htmlFor="fullName" className="text-orangeMedium  ">
+            Choose your role
+          </label>
+        </div>
         <div className="flex justify-center items-center gap-3 rounded-xl py-2">
-          <SelectWay />
+          <SelectWay onRoleSelect={handleRoleSelect} />
         </div>
         <form className="max-w-md   flex flex-col gap-2">
           <div className="flex flex-col gap-1 mt-3">
@@ -151,8 +166,7 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium "
-              >
+                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -184,8 +198,7 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium "
-              >
+                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -199,9 +212,11 @@ const RegisterForm = () => {
               <p className="text-redError text-xs py-1 m-0">{backendError}</p>
             )}
             <button
-              className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-5"
+              className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
+                hasErrorsOrEmptyFields() ? "bg-gray-700" : ""
+              }`}
               onClick={handleSubmit}
-            >
+              disabled={hasErrorsOrEmptyFields()}>
               Register
             </button>
           </div>
