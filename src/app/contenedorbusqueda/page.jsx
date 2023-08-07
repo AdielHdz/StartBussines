@@ -21,9 +21,7 @@ const ContenedorBusquedaCard = () => {
   const searchResults = useSelector((state) => state.project.allProjects);
 
   const dispatch = useDispatch();
-  // Función para hacer la solicitud a la API y obtener los datos
 
-  // Utilizamos useEffect para hacer la solicitud a la API cuando el componente se monta
   useEffect(() => {
     dispatch(fetchArticlesData(filters));
     console.log(filters.order);
@@ -62,7 +60,6 @@ const ContenedorBusquedaCard = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 5;
-
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentProjects = articlesData.slice(
@@ -71,8 +68,11 @@ const ContenedorBusquedaCard = () => {
   );
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    window.scrollTo(0, 0);
+    const isValidPage = newPage >= 1 && newPage <= totalPages;
+    if (isValidPage) {
+      setCurrentPage(newPage);
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
   };
 
   return (
