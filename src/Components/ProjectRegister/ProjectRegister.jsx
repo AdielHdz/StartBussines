@@ -108,13 +108,11 @@ const handleCategoryChange = (e) => {
     return `${day}/${month}/${year}`;
   }
 
+ 
   console.log("Nombre: ", businessName);
-  const isStartDateValid = (startDate) => {
-    const today = new Date();
 
-    const selectedStartDate = new Date(startDate);
-    return selectedStartDate >= today;
-  };
+  const isStartDateValid = (selectedStartDate) => selectedStartDate >= new Date();
+
 const isDeadlineValid = (startDate, deadline) => {
   const selectedStartDate = new Date(startDate);
   const selectedDeadline = new Date(deadline);
