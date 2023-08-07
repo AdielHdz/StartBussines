@@ -238,7 +238,7 @@ const RegisterForm = () => {
             )}
             <button
               className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
-                hasErrorsOrEmptyFields() ? "bg-gray-600" : ""
+                hasErrorsOrEmptyFields() ? "bg-grayLight" : ""
               }`}
               onClick={handleSubmit}
               disabled={hasErrorsOrEmptyFields()}>
