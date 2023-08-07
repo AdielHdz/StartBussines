@@ -20,8 +20,8 @@ const InputForm = (props) => {
         Cuanto vas a invertir?
         <span className=" leading-helpers text-xs font-light text-yellowWarning">
           <PiWarningCircleLight className="inline-block mr-1   text-lg  " />
-          Tu cantidad a invertir debe ser en dolares, mercadopago se encargará
-          de la conversión.
+          Tu cantidad a invertir debe ser en dolares USD, mercadopago se
+          encargará de la conversión.
         </span>
       </label>
       <div className="relative">
