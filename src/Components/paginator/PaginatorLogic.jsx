@@ -1,29 +1,22 @@
+"use client"
+
 import React, { useState } from "react";
 
 const PaginationLogic = ({ totalItems, itemsPerPage, onPageChange }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-      onPageChange(currentPage + 1);
-      
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-      onPageChange(currentPage - 1);
-     
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      onPageChange(page);
     }
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
+    <div className="flex flex-col items-center justify-center mt-4 sm:flex-row">
       <button
-        onClick={handlePrevPage}
+        onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`px-4 py-2 rounded-md ${
           currentPage === 1
@@ -35,7 +28,7 @@ const PaginationLogic = ({ totalItems, itemsPerPage, onPageChange }) => {
       </button>
       <span className="mx-4 font-bold">{currentPage}</span>
       <button
-        onClick={handleNextPage}
+        onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`px-4 py-2 rounded-md ${
           currentPage === totalPages

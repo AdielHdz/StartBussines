@@ -4,7 +4,7 @@ export const validateBusinessName = (name) => {
   if (name.length < minLength) {
     throw new Error("The name have to be at least 3 characters long.");
   }
- 
+
   return name;
 };
 
@@ -14,24 +14,31 @@ export const startDate = (date) => {
   return dateObj instanceof Date && !isNaN(dateObj) && dateObj < currentDate;
 };
 
-export const targetAmount = (targetAmount) => {};
-
-export const minAmount = (minAmount) => {};
-
-export const maxAmount = (maxAmount) => {};
-
-export const description = (description) => {
-  const maxLength = 800;
-
-  if (typeof description !== "string") {
-    throw new Error("La descripción debe ser una cadena de texto.");
-  }
-
-  if (description.length > maxLength) {
-    throw new Error("La descripción no puede tener más de 800 caracteres.");
-  }
-
-  return description;
+export const targetAmount = (targetAmount) => {
+  // Add your implementation here
 };
 
-export const addPhoto = (photos) => {};
+export const minAmount = (minAmount) => {
+  // Add your implementation here
+};
+
+export const maxAmount = (maxAmount) => {
+  // Add your implementation here
+};
+
+export const description = (text) => {
+  const maxLength = 800;
+  if (text.length > maxLength) {
+    throw new Error("The description can't be longer than 800 characters.");
+  }
+
+  return text;
+};
+
+export const addPhoto = (photos) => {
+  if (!Array.isArray(photos)) {
+    throw new Error("At least one photo must be add.");
+  }
+
+  return photos;
+};
