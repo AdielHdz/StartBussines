@@ -77,7 +77,9 @@ export default function UserProfile() {
       })
       .catch((err) => console.log("Error:", err));
   };
-
+  const hasErrors = () => {
+    return error.birthdate || error.phone || error.country;
+  };
   return (
     <div className="flex flex-col items-center h-full w-full pt-0.5">
       <div className="flex flex-col items-center ">
@@ -183,9 +185,13 @@ export default function UserProfile() {
               </div>
 
               <button
-                className=" w-full h-10 border text-white bg-primar rounded mt-2 mb-3"
+
+                className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
+                  hasErrors() ? "bg-grayLight" : ""
+                }`}
                 onClick={handleSaveChanges}
-              >
+                disabled={hasErrors()}>
+
                 Save changes
               </button>
             </form>
