@@ -12,7 +12,8 @@ const ConfirmEmailSuccefull = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (token) => {
+      console.log("🚀 ~ file: page.jsx:16 ~ fetchData ~ token:", token)
       try {
         await axios.patch(`/user/register/confirm/${token}`);
         setIsSuccess(true);
@@ -21,7 +22,7 @@ const ConfirmEmailSuccefull = () => {
       }
       setIsLoading(false);
     };
-    fetchData();
+    fetchData(token);
   }, [token]);
 
   if (isLoading) {

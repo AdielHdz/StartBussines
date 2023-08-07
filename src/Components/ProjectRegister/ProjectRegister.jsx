@@ -92,18 +92,14 @@ const ProjectRegister = () => {
     setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
   };
 
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    const isCategorySelected = selectedCategories.includes(selectedCategory);
-
-    if (!isCategorySelected && selectedCategory.trim() !== "") {
-      setSelectedCategories((prevCategories) => [
-        ...prevCategories,
-        selectedCategory,
-      ]);
-    }
-    setSelectedCategory("");
-  };
+const handleCategoryChange = (e) => {
+  const selectedCategory = e.target.value;
+  const isCategorySelected = selectedCategories.includes(selectedCategory);
+  if (!isCategorySelected && selectedCategory.trim() !== "") {
+    setSelectedCategories(prevCategories => [...prevCategories, selectedCategory]);
+  }
+  setSelectedCategory("");
+};
 
   function formatDateToBackendFormat(date) {
     const day = date.slice(8, 10);
