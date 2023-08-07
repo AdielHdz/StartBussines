@@ -84,7 +84,7 @@ export default function UserProfile() {
     <div className="flex flex-col items-center h-full w-full pt-0.5">
       <div className="flex flex-col items-center ">
         <Image
-          className="w-32 h-32 rounded-full shadow-lg m-2"
+          className="w-32 h-32 rounded-full object-cover shadow-lg m-2"
           alt="avatar"
           src={userSession.avatar || DefaultImage}
           width={100}
@@ -94,7 +94,8 @@ export default function UserProfile() {
         <div>
           <button
             className="Sw-10 h-10 text-black  m-2 flex items-center"
-            onClick={toggleInputs}>
+            onClick={toggleInputs}
+          >
             {inputsDisabled ? (
               <AiOutlineEdit className="w-19 h-19 " />
             ) : (
@@ -184,11 +185,13 @@ export default function UserProfile() {
               </div>
 
               <button
+
                 className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
                   hasErrors() ? "bg-grayLight" : ""
                 }`}
                 onClick={handleSaveChanges}
                 disabled={hasErrors()}>
+
                 Save changes
               </button>
             </form>
