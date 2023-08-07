@@ -6,10 +6,10 @@ const CommentsSection = () => {
   console.log(userData);
   return (
     <div className="flex flex-col gap-3">
-      {userData && userData.email ? (
+      {userData && userData.role === "investor" ? (
         <MyCommentsSection />
       ) : (
-        <h5 className="text-center text-sm font-light py-3">
+        <h5 className="text-center   font-light py-3">
           If you are an investor of this project
           <Link href="/logIn" className="underline text-second mx-1">
             log in

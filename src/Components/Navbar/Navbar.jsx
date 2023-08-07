@@ -88,7 +88,8 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="shadow-cards bg-whites rounded-xl text-white">
+      className="shadow-cards bg-whites rounded-xl text-white"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -108,7 +109,8 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 items-center">
                   <a
                     href="/home"
-                    className="flex text-transparent bg-clip-text bg-gradient-to-r to-sky-50 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center">
+                    className="flex text-transparent bg-clip-text bg-gradient-to-r to-sky-50 from-sky-400 mr-4 mt-0 text-4xl font-extrabold items-center"
+                  >
                     <span className="pl-2">
                       <Image
                         src={Logo}
@@ -127,7 +129,8 @@ export default function Navbar() {
                             key={item.name}
                             href={item.href}
                             className=" text-black rounded-md px-3 py-2 text-sm font-medium"
-                            aria-current={item.current ? "page" : undefined}>
+                            aria-current={item.current ? "page" : undefined}
+                          >
                             {item.name}
                           </a>
                         )
@@ -142,7 +145,7 @@ export default function Navbar() {
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <Image
-                          className="h-8 w-8 rounded-full"
+                          className="h-12 w-12 rounded-full object-cover"
                           src={avatar || DefaultImage}
                           alt="avatar"
                           width={100}
@@ -157,7 +160,8 @@ export default function Navbar() {
                       enterTo="transform opacity-100 scale-100"
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95">
+                      leaveTo="transform opacity-0 scale-95"
+                    >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
@@ -166,7 +170,8 @@ export default function Navbar() {
                               className={classNames(
                                 active ? "w-full bg-gray-100" : "",
                                 "w-full block px-4 py-2 text-sm text-gray-700"
-                              )}>
+                              )}
+                            >
                               Profile
                             </button>
                           )}
@@ -178,7 +183,8 @@ export default function Navbar() {
                               className={classNames(
                                 active ? "w-full bg-gray-100" : "",
                                 "w-full block px-4 py-2 text-sm text-gray-700"
-                              )}>
+                              )}
+                            >
                               Sign out
                             </button>
                           )}
@@ -189,7 +195,8 @@ export default function Navbar() {
                 ) : (
                   <a
                     href="/logIn"
-                    className="text-black rounded-md px-3 py-2 text-sm font-medium w-full bg-gray-100 border-1 border-teal-700 hover:bg-teal-700">
+                    className="text-black rounded-md px-3 py-2 text-sm font-medium w-full bg-gray-100 border-1 border-teal-700 hover:bg-teal-700"
+                  >
                     Log in
                   </a>
                 )}
@@ -205,7 +212,8 @@ export default function Navbar() {
                     as="a"
                     href={item.href}
                     className=" text-white flex justify-center px-3 py-2 text-base font-medium"
-                    aria-current={item.current ? "page" : undefined}>
+                    aria-current={item.current ? "page" : undefined}
+                  >
                     {item.name}
                   </Disclosure.Button>
                 ))}
