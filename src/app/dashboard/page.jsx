@@ -5,6 +5,7 @@ import AllUsers from "../../Components/Dashboard/AllUsers/AllUsers";
 import AllProjects from "../../Components/Dashboard/AllProjects/AllProjects";
 import Modal from "../../Components/Modal/Modal";
 import SearchBar from "../../Components/Dashboard/SearchBar/SearchBar";
+// import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -13,6 +14,18 @@ const Dashboard = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAllUsers, setShowAllUsers] = useState(true);
   const [searchPlaceholder, setSearchPlaceholder] = useState("");
+
+  //dejo esto comentado ya que es para que solamente puedan ingresar a la dashboard los usuarios con rol admin (traer localstorage)
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   // rol del usuario desde el localStorage
+  //   const userRole = localStorage.getItem("userRole");
+
+  //   if (userRole !== "admin") {
+  //     router.push("/home"); // Cambia "/home" por la ruta que quieras redireccionar
+  //   }
+  // }, []);
 
   useEffect(() => {
     // Función para obtener todos los usuarios
