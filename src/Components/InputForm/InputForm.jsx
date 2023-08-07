@@ -54,7 +54,7 @@ const InputForm = (props) => {
           ${
             errorAmount &&
             amount &&
-            "outline-1 outline-redError   border-redError"
+            "outline-1 outline-redError border-2  border-redError"
           }
           ${
             !errorAmount &&
