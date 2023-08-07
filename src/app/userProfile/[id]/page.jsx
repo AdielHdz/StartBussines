@@ -21,10 +21,8 @@ export default function UserProfile() {
     if (typeof window !== "undefined") {
       const user = JSON.parse(localStorage.getItem("userData"));
       const id = localStorage.getItem("idSession");
-      const image = localStorage.getItem("");
       setIdSession(id);
       setUserSession(user);
-      setAvatarSession(image);
     }
   }, []);
 
@@ -74,6 +72,8 @@ export default function UserProfile() {
         setUserSession(updatedUserSession);
         localStorage.setItem("avatar", res.data.result.avatar);
         localStorage.setItem("userData", JSON.stringify(updatedUserSession));
+        const avatarUpdatedEvent = new Event("avatarUpdated");
+        window.dispatchEvent(avatarUpdatedEvent);
       })
       .catch((err) => console.log("Error:", err));
   };
