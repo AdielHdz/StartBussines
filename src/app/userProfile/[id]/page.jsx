@@ -84,7 +84,7 @@ export default function UserProfile() {
         <Image
           className="w-32 h-32 rounded-full shadow-lg m-2"
           alt="avatar"
-          src={userSession.avatar}
+          src={userSession.avatar || DefaultImage}
           width={100}
           height={100}
         />
