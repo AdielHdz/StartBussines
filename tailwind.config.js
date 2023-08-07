@@ -55,9 +55,16 @@ module.exports = {
       },
       minWidth: {
         cards: "20rem",
+        nameFirsCell: "9rem",
       },
       animation: {
         "spin-slow": "spin 1s linear infinite",
+      },
+      lineHeight: {
+        helpers: "1rem",
+      },
+      borderRadius: {
+        littleBox: ".3rem",
       },
       // Puedes agregar más opciones de opacidad si es necesario
       opacity: {},
