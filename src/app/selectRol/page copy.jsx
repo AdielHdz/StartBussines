@@ -1,17 +1,21 @@
 'use client';
-import { BsFacebook } from 'react-icons/bs';
-import { FcGoogle } from 'react-icons/fc';
+import OptionEntrepreneur from '../../Components/SelectWay/OptionEntrepreneur';
+import OptionInvestor from '../../Components/SelectWay/OptionInvestor';
+import { useState, useEffect } from 'react';
+import logo from '../../../public/asset/DealUp.png';
+import Image from 'next/image';
 import { useSession, signIn } from 'next-auth/react';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 
-export default function Authentication() {
+const SelectWay = () => {
   const router = useRouter();
 
   const { data: session } = useSession();
 
-  //? Inicio del Object-State que va a enviar la informacion a la bdd
+  const [enIsActive, setEntrepreneur] = useState(false);
+  const [inIsActive, setInvestor] = useState(false);
+
+  //! Inicio del Object-State que va a enviar la informacion a la bdd
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -29,12 +33,17 @@ export default function Authentication() {
     thirdPartyCreated: true,
   });
 
-  // !Captura Rol
+  //! UseEffect para ir directamente a Google Auth solo una vez
   useEffect(() => {
-    localStorage.getItem('roleRegister');
-  }, [form]);
+    const checkReg = localStorage.getItem('checkReg');
 
-  //? Control de la llegada de datos del Google Login
+    if (!checkReg) {
+      signIn();
+      localStorage.setItem('checkReg', true);
+    }
+  }, []);
+
+  //! Control de la llegada de datos del Google Login
   useEffect(() => {
     if (session) {
       console.log(session?.user); //!Check User
@@ -44,7 +53,12 @@ export default function Authentication() {
     }
   }, []);
 
-  //? Captura de datos de GoogleAuth y seteo de Form
+  // !Captura Rol
+  useEffect(() => {
+    localStorage.getItem('roleRegister');
+  }, [form]);
+
+  //! Captura de datos de GoogleAuth y seteo de Form
   const getGoogleData = (setForm) => {
     setForm({
       ...form,
@@ -59,24 +73,34 @@ export default function Authentication() {
     });
   };
 
+  //! Captura data para Login
   const dataLogin = {
     email: form.email,
     password: form.password,
   };
 
+  //!Llenar Form con los datos capturados de google
   useEffect(() => {
     getGoogleData(setForm);
   }, [session]);
 
-  useEffect(() => {
-    console.log('Esto es el form', form);
-  }, [form]);
+  const handleEntrepreneur = () => {
+    setEntrepreneur(true);
+    setInvestor(false);
+    localStorage.setItem('roleRegister', 'entrepreneur');
+  };
+  const handleInvestor = () => {
+    setInvestor(true);
+    setEntrepreneur(false);
+    localStorage.setItem('roleRegister', 'investor');
+  };
 
+  //!Cuando cambia el form ejecuto la funcion para registrarme revisar si se puede mejorar
   useEffect(() => {
-    console.log('Esto es el DataLogin', dataLogin);
     registerGoogleUser(form, dataLogin);
   }, [form]);
 
+  //!Funcion Registro
   const registerGoogleUser = async (form, dataLogin) => {
     if (session?.user && localStorage.getItem('roleRegister')) {
       console.log('form registerGoogle', form);
@@ -192,33 +216,30 @@ export default function Authentication() {
   };
 
   return (
-    <div className='flex flex-col gap-3 mt-3'>
-      <div>
-        <div className=' flex items-center gap-2  justify-between '>
-          <div className='w-full  h-0 border border-black '></div>
-          <p className='  text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
-            Or
-          </p>
-          <div className='w-full  h-0 border border-black '></div>
-        </div>
-        <p className='w-full text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
-          continue with
-        </p>
+    <div className='w-screen h-screen p-20 '>
+      <div className='flex justify-center  w-100'>
+        <Image className='flex justify-center  w-80' src={logo} width={100} />
       </div>
-
-      <div className='flex w-full gap-2 items-center justify-center'>
-        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10  mt-8'>
-          <FcGoogle
-            className='inline-block text-3xl'
-            onClick={() => {
-              signIn();
-            }}
-          />
+      <div className>
+        <div className='flex flex-col justify-center items-center mb-10 w-full'>
+          <h1 className='text-orangeMedium '>Welcome!</h1>
+          <label htmlFor='fullName' className='text-orangeMedium  '>
+            Please choose a role to continue
+          </label>
         </div>
-        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8'>
-          <BsFacebook className='inline-block text-blue-600 text-3xl' />
+        <div className='flex justify-center items-center gap-3 rounded-xl py-2'>
+          <OptionEntrepreneur
+            selected={enIsActive}
+            handleEntrepreneur={handleEntrepreneur}
+          />
+          <OptionInvestor
+            selected={inIsActive}
+            handleInvestor={handleInvestor}
+          />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default SelectWay;
