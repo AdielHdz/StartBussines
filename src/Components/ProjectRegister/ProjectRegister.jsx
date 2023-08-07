@@ -115,99 +115,92 @@ const handleCategoryChange = (e) => {
     const selectedStartDate = new Date(startDate);
     return selectedStartDate >= today;
   };
-  const isDeadlineValid = (startDate, deadline) => {
-    const selectedStartDate = new Date(startDate);
-    const selectedDeadline = new Date(deadline);
-    const daysDifference = differenceInDays(
-      selectedDeadline,
-      selectedStartDate
-    );
-    return daysDifference >= 30;
+const isDeadlineValid = (startDate, deadline) => {
+  const selectedStartDate = new Date(startDate);
+  const selectedDeadline = new Date(deadline);
+  const daysDifference = Math.floor((selectedDeadline - selectedStartDate) / (1000 * 60 * 60 * 24));
+  return daysDifference >= 30;
+};
+
+const handlePostProject = async () => {
+  setLoading(true);
+
+  const projectData = {
+    name: businessName,
+    description: description(descriptionInput),
+    min_amount: minAmount,
+    max_amount: maxAmount,
+    goal_amount: targetAmount,
+    initial_date: formatDateToBackendFormat(startDate),
+    deadline: formatDateToBackendFormat(deadline),
+    category: selectedCategories,
+    status: "Pending",
+    city: city,
+    UserId: idSessionhome,
   };
 
-  const handlePostProject = async () => {
-    setLoading(true);
-    const projectData = {
-      name: businessName,
-      description: description(descriptionInput),
-      min_amount: minAmount,
-      max_amount: maxAmount,
-      goal_amount: targetAmount,
-      initial_date: formatDateToBackendFormat(startDate),
-      deadline: formatDateToBackendFormat(deadline),
-      category: selectedCategories,
-      status: "Pending",
-      city: city,
-      UserId: idSessionhome,
-    };
-  
-    try {
-      const validatedName = validateBusinessName(businessName);
-      setBusinessName(validatedName);
-    } catch (error) {
-      setLoading(false);
-      setBusinessNameError(error.message);
-      return;
-    }
-  
-    if (!isStartDateValid(startDate)) {
-      setLoading(false);
-      console.log("The start date is not valid or is before the current date.");
-      return;
-    }
-  
-    if (!isDeadlineValid(startDate, deadline)) {
-      setLoading(false);
-      setDeadlineError("The deadline date must be at least 30 days after the start date.");
-      return;
+  try {
+    validateBusinessName(businessName);
+  } catch (error) {
+    setLoading(false);
+    setBusinessNameError(error.message);
+    return;
+  }
+
+  if (!isStartDateValid(startDate)) {
+    setLoading(false);
+    console.log("The start date is not valid or is before the current date.");
+    return;
+  }
+
+  if (!isDeadlineValid(startDate, deadline)) {
+    setLoading(false);
+    setDeadlineError("The deadline date must be at least 30 days after the start date.");
+    return;
+  } else {
+    setDeadlineError("");
+  }
+
+  const formData = new FormData();
+
+  Object.entries(projectData).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((item) => {
+        formData.append(`${key}[]`, item);
+      });
     } else {
-      setDeadlineError("");
+      formData.append(key, value);
     }
-  
-    const formData = new FormData();
-    formData.append("name", projectData.name);
-    formData.append("description", projectData.description);
-    formData.append("min_amount", projectData.min_amount);
-    formData.append("max_amount", projectData.max_amount);
-    formData.append("goal_amount", projectData.goal_amount);
-    formData.append("initial_date", projectData.initial_date);
-    formData.append("deadline", projectData.deadline);
-    projectData.category.forEach((category) => {
-      formData.append("category[]", category);
-    });
-    formData.append("status", projectData.status);
-    formData.append("city", projectData.city);
-    formData.append("UserId", projectData.UserId);
+  });
 
-    if (photos.length > 0) {
-      formData.append("image_cover", photos[0]);
-    }
-  
-    try {
-      const response = await axios.post("/projects/file", formData);
-      console.log("Respuesta del servidor:", response.data);
-        const { name, status } = response.data.newProject;
-        setLoading(false);
-        alert(`Your new project ${name} has been created successfully. Currently, its status is ${status}. A moderator will review and approve it if it complies with our policies.`);
-        setBusinessName("");
-        setCity("");
-        setStartDate("");
-        setTargetAmount("");
-        setSelectedCategory("");
-        setDeadline("");
-        setDescriptionInput("");
-        setMinAmount("");
-        setMaxAmount("");
-        setSelectedCategories([]);
-        setPhotos([]);
-        setDescriptionError(false);
-        setDeadlineError("");
-        setBusinessNameError("");
-      } catch (error) {
-        setLoading(false);
-        console.error("Error al crear el proyecto:", error);
-      }
-  };
+  if (photos.length > 0) {
+    formData.append("image_cover", photos[0]);
+  }
+
+  try {
+    const response = await axios.post("/projects/file", formData);
+    const { name, status } = response.data.newProject;
+    setLoading(false);
+    alert(`Your new project ${name} has been created successfully. Currently, its status is ${status}. A moderator will review and approve it if it complies with our policies.`);
+    setBusinessName("");
+    setCity("");
+    setStartDate("");
+    setTargetAmount("");
+    setSelectedCategory("");
+    setDeadline("");
+    setDescriptionInput("");
+    setMinAmount("");
+    setMaxAmount("");
+    setSelectedCategories([]);
+    setPhotos([]);
+    setDescriptionError(false);
+    setDeadlineError("");
+    setBusinessNameError("");
+  } catch (error) {
+    setLoading(false);
+    console.error("Error creating the project:", error);
+  }
+};
   
   return (
     <>
