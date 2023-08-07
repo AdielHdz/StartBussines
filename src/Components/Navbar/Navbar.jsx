@@ -39,7 +39,7 @@ export default function Navbar() {
 
   const [rolSession, setRolSession] = useState("");
   const [idSession, setIdSession] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState("");
   useEffect(() => {
     if (typeof window !== "undefined") {
       const role = localStorage.getItem("role");
@@ -143,7 +143,7 @@ export default function Navbar() {
                         <span className="sr-only">Open user menu</span>
                         <Image
                           className="h-8 w-8 rounded-full"
-                          src={/* avatar */ DefaultImage}
+                          src={avatar || DefaultImage}
                           alt="avatar"
                           width={100}
                           height={100}
