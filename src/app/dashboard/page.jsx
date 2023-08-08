@@ -4,7 +4,6 @@ import axios from "axios";
 import AllUsers from "../../Components/Dashboard/AllUsers/AllUsers";
 import AllProjects from "../../Components/Dashboard/AllProjects/AllProjects";
 import SearchBar from "../../Components/Dashboard/SearchBar/SearchBar";
-// import { useRouter } from "next/navigation";
 import UserDetails from '../../Components/Dashboard/UserDetails/UserDetails';
 import ProjectDetails from '../../Components/Dashboard/ProjectDetails/ProjectDetails';
 
@@ -16,18 +15,6 @@ const Dashboard = () => {
   const [showAllUsers, setShowAllUsers] = useState(true);
   const [searchPlaceholder, setSearchPlaceholder] = useState("");
   const [filter, setFilter] = useState("Most Recent");
-
-  //dejo esto comentado ya que es para que solamente puedan ingresar a la dashboard los usuarios con rol admin (traer localstorage)
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   // rol del usuario desde el localStorage
-  //   const userRole = localStorage.getItem("userRole");
-
-  //   if (userRole !== "admin") {
-  //     router.push("/home"); // Cambia "/home" por la ruta que quieras redireccionar
-  //   }
-  // }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
