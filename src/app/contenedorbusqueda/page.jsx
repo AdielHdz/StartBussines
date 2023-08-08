@@ -10,7 +10,7 @@ import { fetchArticlesData } from "../../Redux/Fetching/Projects/ProjectSlice";
 import { ordered } from "../../Redux/Fetching/Filters/FiltersSlice";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import PaginationLogic from "../../Components/Paginator/PaginatorLogic";
+import PaginationLogic from "../../Components/paginator/PaginatorLogic";
 const ContenedorBusquedaCard = () => {
   const filters = useSelector((state) => state.filters);
   const articlesData = useSelector((state) => state.project.projectsFiltered);
