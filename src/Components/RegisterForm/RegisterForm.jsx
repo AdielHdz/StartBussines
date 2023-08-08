@@ -46,7 +46,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const role = localStorage.getItem("roleRegister");
+    const role = localStorage.getItem("rol");
     const formWithRol = { ...form, role: role };
     try {
       await axios.post("/user/register", formWithRol);
