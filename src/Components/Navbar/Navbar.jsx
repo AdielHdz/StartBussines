@@ -28,6 +28,12 @@ const navigation = [
     current: true,
     allowedRoles: ["investor"],
   },
+  {
+    name: "My projects",
+    href: "/myprojects",
+    current: true,
+    allowedRoles: ["entrepreneur"],
+  },
 ];
 
 function classNames(...classes) {
