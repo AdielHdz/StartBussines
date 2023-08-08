@@ -30,7 +30,7 @@ const NewProjects = () => {
     return <div>Loading Projects.</div>;
   }
 
-  const currentSlide = newProjects[currentSlideIndex];
+  const currentSlide = newProjects[currentSlideIndex] || {};
 
   return (
     <>

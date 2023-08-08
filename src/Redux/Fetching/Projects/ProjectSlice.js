@@ -46,7 +46,7 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
 export const getTopProjects = createAsyncThunk("getTopProjects", async () => {
   try {
     const response = await axios.get(`https://deal-up-api.onrender.com/projects/filter`);
-    console.log("API Response:", response.data); 
+    
     return response.data;
   } catch (error) {
     console.log(`Failed to get projects: ${error.message}`);
