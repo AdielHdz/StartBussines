@@ -10,13 +10,13 @@ const SelectWay = ({ onRoleSelect }) => {
     setEntrepreneur(true);
     setInvestor(false);
     onRoleSelect("entrepreneur");
-    localStorage.setItem("roleRegister", "entrepreneur");
+    localStorage.setItem("role", "entrepreneur");
   };
   const handleInvestor = () => {
     setInvestor(true);
     setEntrepreneur(false);
     onRoleSelect("investor");
-    localStorage.setItem("roleRegister", "investor");
+    localStorage.setItem("role", "investor");
   };
   return (
     <>
