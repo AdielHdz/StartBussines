@@ -13,8 +13,6 @@ const TopTenProjects = () => {
     dispatch(getTopProjects());
   }, [dispatch]);
 
-  console.log(tenProjects);
-
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const handleNextSlide = () => {
