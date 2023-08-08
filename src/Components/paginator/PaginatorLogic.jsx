@@ -1,47 +1,44 @@
+"use client"
+
 import React, { useState } from "react";
 
 const PaginationLogic = ({ totalItems, itemsPerPage, onPageChange }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-      onPageChange(currentPage + 1);
-      
+  const handlePageChange = (page) => {
+    const isValidPage = page >= 1 && page <= totalPages;
+    if (isValidPage) {
+      setCurrentPage(page);
+      onPageChange(page);
     }
   };
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-      onPageChange(currentPage - 1);
-     
-    }
-  };
+  const isPrevButtonDisabled = currentPage === 1;
+  const isNextButtonDisabled = currentPage === totalPages;
+
+  const prevButtonClassName = isPrevButtonDisabled
+    ? "bg-gray-300 cursor-not-allowed"
+    : "bg-teal-600 hover:bg-teal-700 cursor-pointer";
+
+  const nextButtonClassName = isNextButtonDisabled
+    ? "bg-gray-300 cursor-not-allowed"
+    : "bg-teal-600 hover:bg-teal-700 cursor-pointer";
 
   return (
-    <div className="flex items-center justify-center mt-4">
+    <div className="flex flex-col items-center justify-center mt-4 sm:flex-row">
       <button
-        onClick={handlePrevPage}
-        disabled={currentPage === 1}
-        className={`px-4 py-2 rounded-md ${
-          currentPage === 1
-            ? "bg-gray-300 cursor-not-allowed"
-            : "bg-teal-600 hover:bg-teal-700 cursor-pointer"
-        } text-white`}
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={isPrevButtonDisabled}
+        className={`px-4 py-2 rounded-md ${prevButtonClassName} text-white`}
       >
         Prev
       </button>
       <span className="mx-4 font-bold">{currentPage}</span>
       <button
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages}
-        className={`px-4 py-2 rounded-md ${
-          currentPage === totalPages
-            ? "bg-gray-300 cursor-not-allowed"
-            : "bg-teal-600 hover:bg-teal-700 cursor-pointer"
-        } text-white`}
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={isNextButtonDisabled}
+        className={`px-4 py-2 rounded-md ${nextButtonClassName} text-white`}
       >
         Next
       </button>
