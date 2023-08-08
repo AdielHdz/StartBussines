@@ -6,34 +6,31 @@ import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 const NewProjects = () => {
-  //traer estado para acceder a las imagenes de los nuevos proyectos
   const dispatch = useDispatch();
-  const projects = useSelector((state) => state.project.allProjects);
   const newProjects = useSelector((state) => state.project.topProjects.last_created)
 
   useEffect(() => {
     dispatch(getTopProjects());
   }, [dispatch]);
 
-  console.log(newProjects);
-
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const handleNextSlide = () => {
-    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % newProjects.length);
+    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % (newProjects.length || 1));
   };
 
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
-      prevIndex === 0 ? newProjects.length - 1 : prevIndex - 1
+      prevIndex === 0 ? (newProjects.length || 1) - 1 : prevIndex - 1
     );
   };
 
-  const currentSlide = newProjects[currentSlideIndex];
-
-  if (!currentSlide) {
+  // Verificar si newProjects no está definido o está vacío
+  if (!newProjects || newProjects.length === 0) {
     return <div>Loading Projects.</div>;
   }
+
+  const currentSlide = newProjects[currentSlideIndex];
 
   return (
     <>
