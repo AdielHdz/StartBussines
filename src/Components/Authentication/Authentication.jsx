@@ -9,7 +9,7 @@ import axios from 'axios';
 export default function Authentication() {
   const router = useRouter();
 
-  const { data: session, status: statusGoogle } = useSession();
+  const { data: session, status: statusGoogle } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
 
   const handleSingOut = () => {
     localStorage.setItem('checkReg', false);
@@ -86,8 +86,7 @@ export default function Authentication() {
           email: form.email,
           password: form.password,
         };
-
-        console.log(dataLogin);
+        // console.log(dataLogin);
         const responseLogin = await axios.post('/user/login', dataLogin);
         const user = responseLogin.data;
 
@@ -126,6 +125,7 @@ export default function Authentication() {
       } catch (error) {
         console.log(error.response.data);
         setErrorOccurred(true);
+
         alert('Email registered, Please Login');
       }
     }
