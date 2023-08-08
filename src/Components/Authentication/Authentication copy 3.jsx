@@ -9,7 +9,7 @@ import axios from 'axios';
 export default function Authentication() {
   const router = useRouter();
 
-  const { data: session, status: statusGoogle } = useSession();
+  const { data: session, status } = useSession();
 
   const handleSingOut = () => {
     localStorage.setItem('checkReg', false);
@@ -25,8 +25,6 @@ export default function Authentication() {
 
   //! 02. Formar valor inicial de Form objeto para la peticion
 
-  const [errorOccurred, setErrorOccurred] = useState(false);
-
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -38,9 +36,10 @@ export default function Authentication() {
     phone: '',
     country: '',
     avatar: '',
-    status: null,
-    confirmEmail: null,
-    thirdPartyCreated: null,
+    avatar: session?.user?.image,
+    status: true,
+    confirmEmail: true,
+    thirdPartyCreated: true,
   });
 
   //!  03. Captura Rol
@@ -49,8 +48,7 @@ export default function Authentication() {
   }, [form, session]);
 
   //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
-
-  const getGoogleData = () => {
+  const getGoogleData = (setForm) => {
     setForm({
       ...form,
       fullName: session?.user?.name,
@@ -64,15 +62,9 @@ export default function Authentication() {
     });
   };
 
-  //! 05. Ejecutar la funcion de arriba
-
-  useEffect(() => {
-    getGoogleData();
-  }, [session]);
-
   //! 06. Funcion para hacer la Peticion a Google y hacer el Registe y Login
   const registerGoogleUser = async (form) => {
-    if (statusGoogle === 'authenticated' && session?.user?.name) {
+    if (status === 'authenticated' && session.user.name) {
       console.log('form a peticion', form);
 
       try {
@@ -101,7 +93,7 @@ export default function Authentication() {
         localStorage.setItem('fullName', user.userRegistered.data.fullName);
         localStorage.setItem('avatar', user.userRegistered.data.avatar);
         localStorage.setItem('role', user.userRegistered.data.role);
-        localStorage.setItem('savedEmail', user.userRegistered.data.email);
+        localStorage.setItem('savedEmail', c);
 
         localStorage.setItem(
           'userData',
@@ -122,31 +114,22 @@ export default function Authentication() {
         );
 
         console.log('Debe estar seteado todo Register');
-        await router.push('/home');
       } catch (error) {
-        console.log(error.response.data);
-        setErrorOccurred(true);
+        console.log(error);
         alert('Email registered, Please Login');
       }
     }
   };
 
-  useEffect(() => {
-    if (errorOccurred) {
-      router.push('/logIn');
-    }
-  }, [errorOccurred]);
+  //! Unir funciones para ejecutar el orden
+  const getGoogleDataAndRegister = () => {
+    getGoogleData(setForm);
+    registerGoogleUser(form);
+  };
 
   useEffect(() => {
-    if (
-      statusGoogle === 'authenticated' &&
-      typeof session?.user?.name === 'string'
-    ) {
-      console.log(statusGoogle);
-      console.log(session?.user?.name);
-      registerGoogleUser(form);
-    }
-  }, [form]);
+    if (status === 'authenticated' && session?.user) getGoogleDataAndRegister();
+  }, [status, session]);
 
   return (
     <div className='flex flex-col gap-3 mt-3'>

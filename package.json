@@ -30,6 +30,7 @@
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "flowbite-react": "^0.5.0",
+    "js-cookie": "^3.0.5",
     "next": "13.4.10",
     "next-auth": "^4.22.3",
     "postcss": "8.4.26",
@@ -40,6 +41,7 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.11",
-    "tailwindcss": "3.3.3"
+    "tailwindcss": "3.3.3",
+    "universal-cookie": "^4.0.4"
   }
 }
