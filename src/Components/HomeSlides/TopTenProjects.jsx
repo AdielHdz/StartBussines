@@ -6,10 +6,8 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 
 const TopTenProjects = () => {
-  //traer estado para acceder a las imagenes de los nuevos proyectos
   const dispatch = useDispatch();
-  const projects = useSelector((state) => state.project.allProjects);
-  const tenProjects = useSelector((state) => state.project.topProjects.topRated)
+  const tenProjects = useSelector((state) => state.project.topProjects.topRated);
 
   useEffect(() => {
     dispatch(getTopProjects());
@@ -20,21 +18,22 @@ const TopTenProjects = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const handleNextSlide = () => {
-    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % tenProjects.length);
+    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % (tenProjects.length || 1));
   };
 
   const handlePreviousSlide = () => {
     setCurrentSlideIndex((prevIndex) =>
-      prevIndex === 0 ? tenProjects.length - 1 : prevIndex - 1
+      prevIndex === 0 ? (tenProjects.length || 1) - 1 : prevIndex - 1
     );
   };
 
-  const currentSlide = tenProjects[currentSlideIndex];
-
-  if (!currentSlide) {
+  // Verificar si tenProjects no está definido o está vacío
+  if (!tenProjects || tenProjects.length === 0) {
     return <div>Loading Projects.</div>;
   }
 
+  const currentSlide = tenProjects[currentSlideIndex] || {};
+  
   return (
     <>
       <figure className="flex md:flex-row bg-indigo-200 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 w-96 h-60 bg-contain bg-center" style={{ backgroundImage: `url(${currentSlide.image_cover})` }}>
