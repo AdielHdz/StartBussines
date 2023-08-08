@@ -43,12 +43,24 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
   }
 });
 
+export const getTopProjects = createAsyncThunk("getTopProjects", async () => {
+  try {
+    const response = await axios.get(`https://deal-up-api.onrender.com/projects/filter`);
+    
+    return response.data;
+  } catch (error) {
+    console.log(`Failed to get projects: ${error.message}`);
+    return [];
+  }
+});
+
 const ProjectSlice = createSlice({
   name: "Project",
   initialState: {
     allProjects: [],
     project: {},
     projectsFiltered: [],
+    topProjects: []
   },
   reducers: {
     cleanDataProject: (state) => {
@@ -67,6 +79,9 @@ const ProjectSlice = createSlice({
       .addCase(fetchArticlesData.fulfilled, (state, action) => {
         state.projectsFiltered = action.payload;
         /* console.log(state.projectsFiltered); */
+      })
+      .addCase(getTopProjects.fulfilled, (state, action) => {
+        state.topProjects = action.payload;
       });
   },
 });
