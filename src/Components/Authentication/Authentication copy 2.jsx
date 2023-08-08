@@ -9,7 +9,7 @@ import axios from 'axios';
 export default function Authentication() {
   const router = useRouter();
 
-  const { data: session, status: statusGoogle } = useSession();
+  const { data: session, status } = useSession();
 
   const handleSingOut = () => {
     localStorage.setItem('checkReg', false);
@@ -25,8 +25,6 @@ export default function Authentication() {
 
   //! 02. Formar valor inicial de Form objeto para la peticion
 
-  const [errorOccurred, setErrorOccurred] = useState(false);
-
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -38,9 +36,10 @@ export default function Authentication() {
     phone: '',
     country: '',
     avatar: '',
-    status: null,
-    confirmEmail: null,
-    thirdPartyCreated: null,
+    avatar: session?.user?.image,
+    status: true,
+    confirmEmail: true,
+    thirdPartyCreated: true,
   });
 
   //!  03. Captura Rol
@@ -49,8 +48,7 @@ export default function Authentication() {
   }, [form, session]);
 
   //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
-
-  const getGoogleData = () => {
+  const getGoogleData = (setForm) => {
     setForm({
       ...form,
       fullName: session?.user?.name,
@@ -64,15 +62,17 @@ export default function Authentication() {
     });
   };
 
-  //! 05. Ejecutar la funcion de arriba
-
+  //! 05. Aplicar la funcion de arriba cuando cambie session, lo modifico a status
   useEffect(() => {
-    getGoogleData();
-  }, [session]);
+    console.log('Check status para llenar Fom', status);
+    if (status === 'authenticated') {
+      getGoogleData(setForm);
+    }
+  }, [status, session]);
 
   //! 06. Funcion para hacer la Peticion a Google y hacer el Registe y Login
   const registerGoogleUser = async (form) => {
-    if (statusGoogle === 'authenticated' && session?.user?.name) {
+    if (status === 'authenticated' && session.user.name) {
       console.log('form a peticion', form);
 
       try {
@@ -82,72 +82,29 @@ export default function Authentication() {
 
         //! 09. Datos para hacer Login
 
-        const dataLogin = {
+        dataLogin = {
           email: form.email,
           password: form.password,
         };
-
-        console.log(dataLogin);
         const responseLogin = await axios.post('/user/login', dataLogin);
         const user = responseLogin.data;
 
         console.log('Esto datos del usuario loggeado', user);
         console.log('Muy Bien!');
-        console.log(user.userRegistered.accessToken);
-        console.log(user.userRegistered.data.fullName);
-
-        localStorage.setItem('token_DealUp', user.userRegistered.accessToken);
-        localStorage.setItem('idSession', user.userRegistered.data.id);
-        localStorage.setItem('fullName', user.userRegistered.data.fullName);
-        localStorage.setItem('avatar', user.userRegistered.data.avatar);
-        localStorage.setItem('role', user.userRegistered.data.role);
-        localStorage.setItem('savedEmail', user.userRegistered.data.email);
-
-        localStorage.setItem(
-          'userData',
-          JSON.stringify({
-            fullName: user.userRegistered.data.fullName,
-            email: user.userRegistered.data.email,
-            role: user.userRegistered.data.role,
-            address: user.userRegistered.data.address,
-            password: user.userRegistered.data.password,
-            gender: user.userRegistered.data.gender,
-            birthdate: user.userRegistered.data.birthdate,
-            phone: user.userRegistered.data.phone,
-            country: user.userRegistered.data.country,
-            avatar: user.userRegistered.data.avatar,
-            status: user.userRegistered.data.status,
-            thirdPartyCreated: user.userRegistered.data.thirdPartyCreated,
-          })
-        );
-
-        console.log('Debe estar seteado todo Register');
-        await router.push('/home');
       } catch (error) {
-        console.log(error.response.data);
-        setErrorOccurred(true);
+        console.log(error);
         alert('Email registered, Please Login');
       }
     }
   };
 
+  //! 07. Ejecutar la funcion de arriba
   useEffect(() => {
-    if (errorOccurred) {
-      router.push('/logIn');
-    }
-  }, [errorOccurred]);
-
-  useEffect(() => {
-    if (
-      statusGoogle === 'authenticated' &&
-      typeof session?.user?.name === 'string'
-    ) {
-      console.log(statusGoogle);
-      console.log(session?.user?.name);
+    console.log('Check status para llenar Fom', status);
+    if (status === 'authenticated' && session) {
       registerGoogleUser(form);
     }
-  }, [form]);
-
+  }, [status, session]);
   return (
     <div className='flex flex-col gap-3 mt-3'>
       <div>
