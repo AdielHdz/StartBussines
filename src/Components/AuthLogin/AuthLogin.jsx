@@ -1,16 +1,29 @@
 'use client';
 import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
+import { useEffect, useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import Cookies from 'universal-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function AuthLogin() {
-  // const cookies = new Cookies();
+  const router = useRouter();
+
+  const [registerFailed, setRegisterFailed] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const reg = localStorage.getItem('registerFailed');
+      setRegisterFailed(reg);
+
+      if (reg === 'true') {
+        signOut();
+        localStorage.setItem('registerFailed', 'false');
+      }
+    }
+  }, []);
 
   const handleSingOut = () => {
     signOut();
-
-    router.push('/home');
   };
   return (
     <div className='flex flex-col gap-3 mt-3'>

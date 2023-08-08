@@ -13,8 +13,15 @@ export default function Authentication() {
 
   const handleSingOut = () => {
     localStorage.setItem('checkReg', false);
+
     signOut();
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('registerFailed', '');
+    }
+  }, []);
 
   //! 01. Chequeo los datos que recibo de de Google Auth
   useEffect(() => {
@@ -124,6 +131,7 @@ export default function Authentication() {
         await router.push('/home');
       } catch (error) {
         console.log(error.response.data);
+        localStorage.setItem('registerFailed', 'true');
         setErrorOccurred(true);
 
         alert('Email registered, Please Login');
