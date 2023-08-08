@@ -44,15 +44,18 @@ const ProjectDetail = () => {
     /*    console.log(id); */
     /*   console.log("score ", score);
     console.log(usersRelated); */
-    /*  return () => {
-      dispatch(cleanDataProject());
-    }; */
   }, [
     project?.name,
     project?.Ratings?.length,
     usersRelated?.id,
     Changefullfiled,
   ]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(cleanDataProject());
+    };
+  }, []);
 
   return (
     <>
