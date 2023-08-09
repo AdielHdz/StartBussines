@@ -40,7 +40,7 @@ export const registerUser = createAsyncThunk(
 );
 
 export const getUserById = createAsyncThunk("getUserById", async (id) => {
-  const response = await axios.get(`http://localhost:3001/user/${id}`);
+  const response = await axios.get(`/user/${id}`);
   return response.data;
 });
 
