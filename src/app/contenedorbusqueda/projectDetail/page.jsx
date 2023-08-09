@@ -89,7 +89,7 @@ const ProjectDetail = () => {
               />
               <TextPair
                 text1={"Collected so far:"}
-                text2={project.collected_amount}
+                text2={`$${project.collected_amount}`}
               />
               <TextPair
                 text1={"Minimun investmen:"}
@@ -160,7 +160,7 @@ const ProjectDetail = () => {
           </section>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-screen absolute top-0 w-full -z-10">
+        <div className="flex items-center justify-center h-screen   w-full -z-10">
           <Loading
             width={20}
             height={20}
