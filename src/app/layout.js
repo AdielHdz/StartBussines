@@ -5,6 +5,7 @@ import { Sora } from 'next/font/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavbarRenderer } from '../utils/NavbarRenderer';
 import AuthProvider from '../features/AuthProvider';
+import Footer from '../Components/Footer/Footer';
 
 const sora = Sora({ subsets: ['latin'] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
             {children}
           </AuthProvider>
         </Providers>
+        <Footer />
       </body>
     </html>
   );

@@ -48,10 +48,6 @@ const Landing = () => {
           <Cards />
         </div>
       </div>
-
-      <div className=" w-full h-32 flex justify-center items-center text-whites  bg-darkGray p-4">
-        Footer
-      </div>
     </div>
   );
 };
