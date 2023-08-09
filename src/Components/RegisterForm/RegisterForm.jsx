@@ -102,8 +102,8 @@ const RegisterForm = () => {
       <div className="p-4  md:shadow-cards max-w-md rounded-xl">
         <NavigationButtons currentPage={"/register"} />
         <div className="flex justify-center mt-10">
-          <label htmlFor="fullName" className="text-orangeMedium  ">
-            Choose your role
+          <label htmlFor="fullName" className="text-darkGray  ">
+            Choose your way
           </label>
         </div>
         <div className="flex justify-center items-center gap-3 rounded-xl py-2">
@@ -117,7 +117,7 @@ const RegisterForm = () => {
 
         <form className="max-w-md   flex flex-col gap-2">
           <div className="flex flex-col gap-1 mt-3">
-            <label htmlFor="fullName" className="text-orangeMedium  ">
+            <label htmlFor="fullName" className="text-darkGray  ">
               Full Name
             </label>
             <input
@@ -135,7 +135,7 @@ const RegisterForm = () => {
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
-            <label htmlFor="email" className="text-orangeMedium  ">
+            <label htmlFor="email" className="text-darkGray  ">
               Email
             </label>
             <input
@@ -151,7 +151,7 @@ const RegisterForm = () => {
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
-            <label htmlFor="birthdate" className="text-orangeMedium  ">
+            <label htmlFor="birthdate" className="text-darkGray  ">
               Birthday
             </label>
             <input
@@ -169,7 +169,7 @@ const RegisterForm = () => {
             )}
           </div>
           <div className="flex flex-col gap-1  mt-3">
-            <label htmlFor="password" className="text-orangeMedium  ">
+            <label htmlFor="password" className="text-darkGray  ">
               Password
             </label>
             <div className="relative">
@@ -191,7 +191,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute  transform top-2.5 right-2 text-orangeMedium ">
+                className="absolute  transform top-2.5 right-2 text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -201,7 +202,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="flex flex-col gap-1  mt-3">
-            <label htmlFor="confirmPassword" className="text-orangeMedium  ">
+            <label htmlFor="confirmPassword" className="text-darkGray  ">
               Confirm Password
             </label>
             <div className="relative">
@@ -223,7 +224,8 @@ const RegisterForm = () => {
               <button
                 type="button"
                 onClick={handlePassword}
-                className="absolute   transform top-2.5 right-2   text-orangeMedium ">
+                className="absolute   transform top-2.5 right-2   text-orangeMedium "
+              >
                 {showPassword ? (
                   <AiFillEyeInvisible className="text-3xl " />
                 ) : (
@@ -241,7 +243,8 @@ const RegisterForm = () => {
                 hasErrorsOrEmptyFields() ? "bg-grayLight" : ""
               }`}
               onClick={handleSubmit}
-              disabled={hasErrorsOrEmptyFields()}>
+              disabled={hasErrorsOrEmptyFields()}
+            >
               Register
             </button>
           </div>
