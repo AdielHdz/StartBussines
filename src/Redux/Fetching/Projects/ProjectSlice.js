@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../utils/axiosConfig";
 
 export const getProjectById = createAsyncThunk("getProjectById", async (id) => {
-  return await axios.get(`projects/${id}`).then((response) => response.data);
+  return await axios.get(`/projects/${id}`).then((response) => response.data);
 });
 
 export const fetchArticlesData = createAsyncThunk(
@@ -11,7 +11,7 @@ export const fetchArticlesData = createAsyncThunk(
     console.log(filters);
     try {
       const response = await fetch(
-        "https://deal-up-api.onrender.com/projects/filter",
+        "/projects/filter",
         {
           method: "PUT",
           headers: {
@@ -43,7 +43,7 @@ export const getProjects = createAsyncThunk("getProjects", async () => {
 
 export const getTopProjects = createAsyncThunk("getTopProjects", async () => {
   try {
-    const response = await axios.get(`https://deal-up-api.onrender.com/projects/filter`);
+    const response = await axios.get(`/projects/filter`);
     
     return response.data;
   } catch (error) {

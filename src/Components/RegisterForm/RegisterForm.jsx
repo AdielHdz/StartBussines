@@ -46,11 +46,11 @@ const RegisterForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const roleRegister = localStorage.getItem("roleRegister");
-    const formWithRol = { ...form, role: roleRegister };
+    const role = localStorage.getItem("roleRegister");
+    const formWithRol = { ...form, role: role };
     try {
       await axios.post("/user/register", formWithRol);
-      router.push("https://start-bussines.vercel.app/checkemail");
+      router.push("/checkemail");
     } catch (error) {
       console.log("Error during form submission:", error);
       setBackendError(
@@ -61,6 +61,25 @@ const RegisterForm = () => {
   const handleRoleSelect = (selectedRole) => {
     setForm({ ...form, role: selectedRole });
     setError({ ...error, role: "" });
+  };
+  const checkRoleError = () => {
+    if (!form.role) {
+      setError({ ...error, role: "Please select a role" });
+    } else {
+      setError({ ...error, role: "" });
+    }
+  };
+  const handleConfirmPassword = (event) => {
+    handleChange(event);
+    checkRoleError();
+    setError((prevError) => ({
+      ...prevError,
+      role: prevError.role, // Mantener el estado actual del error de rol
+      confirmPassword: validations({
+        ...form,
+        confirmPassword: event.target.value,
+      }).confirmPassword,
+    }));
   };
   const hasErrorsOrEmptyFields = () => {
     return (
@@ -90,6 +109,12 @@ const RegisterForm = () => {
         <div className="flex justify-center items-center gap-3 rounded-xl py-2">
           <SelectWay onRoleSelect={handleRoleSelect} />
         </div>
+        {error.role && (
+          <p className="text-redError text-xs py-1 m-0 text-center">
+            {error.role}
+          </p>
+        )}
+
         <form className="max-w-md   flex flex-col gap-2">
           <div className="flex flex-col gap-1 mt-3">
             <label htmlFor="fullName" className="text-orangeMedium  ">
@@ -183,7 +208,7 @@ const RegisterForm = () => {
               <input
                 name="confirmPassword"
                 type={showPassword ? "text" : "password"}
-                onChange={handleChange}
+                onChange={handleConfirmPassword}
                 className={`pl-1 h-12 border-2 rounded-md outline-none  ${
                   error.confirmPassword
                     ? "border-redError"
@@ -213,7 +238,7 @@ const RegisterForm = () => {
             )}
             <button
               className={`w-full h-10 border text-white bg-primar rounded mt-2 mb-5 ${
-                hasErrorsOrEmptyFields() ? "bg-gray-700" : ""
+                hasErrorsOrEmptyFields() ? "bg-grayLight" : ""
               }`}
               onClick={handleSubmit}
               disabled={hasErrorsOrEmptyFields()}>

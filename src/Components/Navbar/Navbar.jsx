@@ -28,6 +28,12 @@ const navigation = [
     current: true,
     allowedRoles: ["investor"],
   },
+  {
+    name: "My projects",
+    href: "/myprojects",
+    current: true,
+    allowedRoles: ["entrepreneur"],
+  },
 ];
 
 function classNames(...classes) {
@@ -40,6 +46,7 @@ export default function Navbar() {
   const [rolSession, setRolSession] = useState("");
   const [idSession, setIdSession] = useState("");
   const [avatar, setAvatar] = useState("");
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const role = localStorage.getItem("role");
@@ -49,6 +56,17 @@ export default function Navbar() {
       setIdSession(id);
       setAvatar(picture);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleAvatarUpdated = () => {
+      const updatedAvatar = localStorage.getItem("avatar");
+      setAvatar(updatedAvatar);
+    };
+    window.addEventListener("avatarUpdated", handleAvatarUpdated);
+    return () => {
+      window.addEventListener("avatarUpdated", handleAvatarUpdated);
+    };
   }, []);
 
   const navigationWithRoles = navigation.filter((item) =>

@@ -87,7 +87,10 @@ const ProjectDetail = () => {
                 text1={"Target amount:"}
                 text2={`$${project?.goal_amount}`}
               />
-              <TextPair text1={"Collected so far:"} text2={"aun no se pasa"} />
+              <TextPair
+                text1={"Collected so far:"}
+                text2={project.collected_amount}
+              />
               <TextPair
                 text1={"Minimun investmen:"}
                 text2={`$${project?.min_amount}`}

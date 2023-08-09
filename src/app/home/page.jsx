@@ -64,27 +64,33 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="ml-4 mt-5 mr-4">
       <div className="relative">
         <div className="relative top-[1.5rem] mb-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-900 dark:text-white text-4xl font-bold text-center">
-          {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
+          {rolSession === "entrepreneur" ? "Entrepreneur" : 
+          rolSession === "investor" ? "Investor" :
+          rolSession === "moderator" ? "Moderator" :
+          rolSession === "admin" ? "Admin" :
+          "Guest"}
         </div>
       </div>
       <div>
-        <h1 className="text-blue-500 fw-semibold text-xl text-center">
+        <h1 className="text-redBrown fw-semibold text-xl text-center">
           {rolSession === "entrepreneur"
             ? "¡Get the help you need to start!"
             : "Help to start and win in the way"}
         </h1>
         {rolSession === "entrepreneur" && (
           <div className="flex items-center justify-center mt-3">
-            <button
-              className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
-              onClick={handleOpenModal}>
-              Start Project
-              <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
-            </button>
-          </div>
+          <button
+            className="bg-primar group border border-white rounded-md px-4 py-2 flex items-center justify-center mt-4 text-white font-semibold hover:bg-primar hover:bg-opacity-80 focus:outline-none "
+            onClick={handleOpenModal}
+          >
+            Start Project
+            <i className="bi bi-shop ml-2 text-white text-4xl group-hover:text-white"></i>
+          </button>
+        </div>
+
         )}
 
         <div className="flex items-center justify-center">
@@ -105,27 +111,28 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="mt-20 mb-16">
-        <h2 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          The top 10 best ranked projects.{" "}
-          <a href="/contenedorbusqueda" className="text-pink-200">
-            {" "}
-            see all
-          </a>
-        </h2>
-        <div className="flex items-center justify-center mt-3">
+      <div className="mt-17 mb-10">
+      <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        The top 10 best ranked projects.{" "}
+        <a href="/contenedorbusqueda" className="text-blue-500 border-b border-blue-500">
+          {" "}
+          see all
+        </a>
+      </h2>
+        <div className="flex items-center justify-center">
           <TopTenProjects />
         </div>
       </div>
-      <div className="mt-3 mb-16">
-        <h2 className="text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          New Projects.{" "}
-          <a href="/contenedorbusqueda" className="text-pink-200">
-            {" "}
-            see all
-          </a>
-        </h2>
-        <div className="flex items-center justify-center mt-3">
+      <div className="mt-3 mb-10">
+      <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        New Projects.{" "}
+        <a href="/contenedorbusqueda" className="text-blue-500 border-b border-blue-500">
+          {" "}
+          see all
+        </a>
+      </h2>
+
+        <div className="flex items-center justify-center">
           <NewProjects />
         </div>
       </div>

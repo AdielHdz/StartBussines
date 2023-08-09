@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 export default function ProjectCard(props) {
   return (
@@ -15,22 +16,34 @@ export default function ProjectCard(props) {
         />
       </div>
       <div className="p-6">
-        <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 ">
-          {props.name}
-        </h5>
-        <p className="mb-4 text-base text-neutral-600">{props.description}</p>
-        <p className="mb-4 text-base text-neutral-600">
-          Categories: {props.categories}
-        </p>
-        <p className="mb-4 text-base text-neutral-600 ">
-          Goal amount: {props.goalAmount}
-        </p>
-        <p className="mb-4 text-base text-neutral-600 ">
-          Collected amount: {props.collectedAmount}
-        </p>
-        <p className="mb-4 text-base text-neutral-600 ">
-          Contribution: {props.investedAmount}
-        </p>
+        <Link href={`/contenedorbusqueda/projectDetail?id=${props.id}`}>
+          <h5 className="text-xl font-semibold mb-2 text-darkGray">
+            {props.name}
+          </h5>
+        </Link>
+        <div className="text-sm flex flex-col items-center">
+          <p className="mb-4 text-base ">{props.description}</p>
+          <p className="mb-2">
+            Goal amount:{" "}
+            <span className="text-sm  text-primar">${props.goalAmount}</span>
+          </p>
+          <p className="mb-2">
+            Collected amount:{" "}
+            <span className="text-sm  text-primar">
+              ${props.collectedAmount}
+            </span>
+          </p>
+          <p className="mb-2">
+            Contribution:{" "}
+            <span className="text-sm  text-primar">
+              ${props.investedAmount}
+            </span>
+          </p>
+          <p className="mb-2">
+            Categories:{" "}
+            <span className=" text-second">{props.categories.join(", ")}</span>
+          </p>
+        </div>
       </div>
     </div>
   );
