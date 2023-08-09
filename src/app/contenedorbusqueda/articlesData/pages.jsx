@@ -12,7 +12,12 @@ const ArticleCard = ({ data }) => {
     status,
     image_cover,
     id,
+    Ratings
   } = data;
+
+  console.log(Ratings.map(rating => rating.points))
+
+  const ratings = Ratings.map(rating => rating.points)
 
   return (
     <article className="  w-full shadow-cards rounded-lg max-w-registerMd p-2">
@@ -40,10 +45,15 @@ const ArticleCard = ({ data }) => {
             <span className="text-sm  text-primar">${maxAmount}</span>
           </p>
 
-          {/* <p className="mb-2">
+          <p className="mb-2">
             Categories:{" "}
             <span className="  text-second">{category.join(", ")}</span>
-          </p> */}
+          </p>
+
+          <p className="mb-2">
+            Ratings:{" "}
+            <span className="font-semibold  text-yellow-500">{ratings.join(", ")}</span>
+          </p>
         </div>
       </div>
     </article>

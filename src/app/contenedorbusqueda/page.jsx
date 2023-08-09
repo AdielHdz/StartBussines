@@ -77,12 +77,12 @@ const ContenedorBusquedaCard = () => {
   return (
     <div className="pb-5">
       <Link href="/home">
-        <button className="absolute flex items-center right-0 md:right-60 md:ml-2 bg-teal-700 text-white py-2 px-4 rounded-3xl shadow">
+        <button className="absolute flex items-center right-0 md:right-60 md:ml-2 bg-teal-700 text-white py-2 px-4 rounded-3xl shadow mr-3">
           <FaArrowLeft />
           <span className="ml-2">Home</span>
         </button>
       </Link>
-      <div className="flex flex-col left-0 items-center justify-center mt-3">
+      <div className="flex flex-col left-0 items-center justify-center mt-3 mr-8">
         <SearchProjects
           setSuggestions={handleSetSuggestions}
           projects={searchResults}
