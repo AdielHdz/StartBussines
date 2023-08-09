@@ -12,12 +12,8 @@ const ArticleCard = ({ data }) => {
     status,
     image_cover,
     id,
-    Ratings
+    average_rating
   } = data;
-
-  console.log(Ratings.map(rating => rating.points))
-
-  const ratings = Ratings.map(rating => rating.points)
 
   return (
     <article className="  w-full shadow-cards rounded-lg max-w-registerMd p-2">
@@ -51,8 +47,8 @@ const ArticleCard = ({ data }) => {
           </p>
 
           <p className="mb-2">
-            Ratings:{" "}
-            <span className="font-semibold  text-yellow-500">{ratings.join(", ")}</span>
+            Rating:{" "}
+            <span className="font-semibold  text-yellow-500">{average_rating}</span>
           </p>
         </div>
       </div>
