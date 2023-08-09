@@ -25,6 +25,7 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
           status: selectedStatus,
         });
         console.log("User role and status updated successfully!");
+        window.alert("User role and status updated successfully!");
         onUsersUpdated();
       } catch (error) {
         console.error("Error updating user role and status:", error);
@@ -40,10 +41,25 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
       try {
         await axios.delete(`/user/${user.id}`);
         console.log("User deleted successfully!");
+        window.alert("User deleted successfully!");
         onUsersUpdated();
         onClose();
       } catch (error) {
         console.error("Error deleting user:", error);
+      }
+    }
+  };
+
+  const handleBanUser = async () => {
+    const confirmBan = window.confirm("Are you sure you want to ban this user?");
+    if (confirmBan) {
+      try {
+        await axios.delete(`/user/logic/${user.id}`);
+        console.log("User banned successfully!");
+        window.alert("User banned successfully!");
+        onUsersUpdated();
+      } catch (error) {
+        console.error("Error banning user:", error);
       }
     }
   };
@@ -117,7 +133,10 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
       >
         Update Role
       </button>
-      <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2">
+      <button
+        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+        onClick={handleBanUser}
+      >
         Ban
       </button>
       <button

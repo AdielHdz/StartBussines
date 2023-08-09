@@ -31,12 +31,12 @@ export default function RecoverPass() {
     const { name, value } = e.target;
     const newPasswordError =
       name === "password" && !validatePassword(value)
-        ? "La contraseña debe tener al menos una mayúscula, una minúscula, un carácter especial, un dígito y tener al menos 6 caracteres de longitud."
+        ? "The password must have at least one uppercase letter, one lowercase letter, one digit and be at least 6 characters long."
         : "";
     const confirmPasswordError =
       name === "confirmPassword" &&
       value !== document.querySelector("[name='password']").value
-        ? "Las contraseñas no coinciden"
+        ? "The passwords do not match"
         : "";
 
     setErrorText({
@@ -54,12 +54,12 @@ export default function RecoverPass() {
     const { name, value } = e.target;
     const newPasswordError =
       name === "password" && !validatePassword(value)
-        ? "La contraseña debe tener al menos una mayúscula, una minúscula, un carácter especial, un dígito y tener al menos 6 caracteres de longitud."
+        ? "The password must have at least one uppercase letter, one lowercase letter, one digit and be at least 6 characters long."
         : "";
     const confirmPasswordError =
       name === "confirmPassword" &&
       value !== document.querySelector("[name='password']").value
-        ? "Las contraseñas no coinciden"
+        ? "The passwords do not match"
         : "";
 
     setErrorText({
@@ -80,7 +80,7 @@ export default function RecoverPass() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formValid) {
-      console.log("El formulario contiene errores y no puede enviarse.");
+      console.log("Form is not valid");
       return;
     }
 
@@ -129,7 +129,7 @@ export default function RecoverPass() {
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter new password"
                 onChange={handleInputChange}
-                onBlur={handleInputBlur} // Añadimos el evento onBlur
+                onBlur={handleInputBlur} 
               />
               <span
                 className="absolute inset-y-0 end-0 grid place-content-center px-4"
@@ -183,7 +183,7 @@ export default function RecoverPass() {
               formValid ? "" : "opacity-50"
             }`}
             style={{ backgroundColor: "#065A46" }}
-            disabled={!formValid} // Deshabilitar el botón si el formulario no es válido
+            disabled={!formValid} 
           >
             Send
           </button>
