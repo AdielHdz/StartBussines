@@ -19,14 +19,13 @@ export default function Investments() {
   useEffect(() => {
     dispatch(getProjects());
   }, [dispatch]);
-  const investedProject = projects?.filter((project) =>
-    project.Investments?.some((investment) =>
-      investment.Users?.some((user) => user.id === idSession)
-    )
-  );
 
+  const investedProject = projects.filter((project) =>
+    project.Investments.some((investment) => investment.User?.id === idSession)
+  );
+  console.log(investedProject);
   return (
-    <div className="w-full h-screen ">
+    <div className="w-full h-full ">
       <h1 className="text-primar fw-semibold text-xl text-center m-5">
         Your investments
       </h1>
@@ -36,10 +35,10 @@ export default function Investments() {
           There are not investments yet
         </p>
       ) : (
-        <div className="flex  flex-row flex-wrap items-center justify-center">
+        <div className=" flex flex-row flex-wrap items-center justify-center">
           {investedProject?.map((project) => {
-            const userInvestment = project.Investments?.find((investment) =>
-              investment.Users?.some((user) => user.id === idSession)
+            const userInvestment = project.Investments?.find(
+              (investment) => investment.User?.id === idSession
             );
             /* const userContribution = userInvestment.contribution; */
             /* console.log(userContribution); */
@@ -49,7 +48,6 @@ export default function Investments() {
                 key={project.id}
                 image={project.image_cover}
                 name={project.name}
-                description={project.description}
                 categories={project.category}
                 goalAmount={project.goal_amount}
                 collectedAmount={project.collected_amount}
