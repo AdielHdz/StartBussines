@@ -20,8 +20,8 @@ export default function Investments() {
     dispatch(getProjects());
   }, [dispatch]);
   const investedProject = projects?.filter((project) =>
-    project.Investments.some((investment) =>
-      investment.Users.some((user) => user.id === idSession)
+    project.Investments?.some((investment) =>
+      investment.Users?.some((user) => user.id === idSession)
     )
   );
 
@@ -32,14 +32,14 @@ export default function Investments() {
       </h1>
       <hr />
       {investedProject.length === 0 ? (
-        <p className="flex justify-center m-20 text-gray-400 font-bold">
+        <p className="flex text-center justify-center m-20 text-gray-400 font-bold">
           There are not investments yet
         </p>
       ) : (
         <div className="flex  flex-row flex-wrap items-center justify-center">
           {investedProject?.map((project) => {
-            const userInvestment = project.Investments.find((investment) =>
-              investment.Users.some((user) => user.id === idSession)
+            const userInvestment = project.Investments?.find((investment) =>
+              investment.Users?.some((user) => user.id === idSession)
             );
             /* const userContribution = userInvestment.contribution; */
             /* console.log(userContribution); */
