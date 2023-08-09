@@ -40,10 +40,7 @@ const ProjectDetail = () => {
       dispatch(saveRatingUser(userIsRelated(project.Ratings, userID)));
     }
 
-    /*  console.log(project); */
-    /*    console.log(id); */
-    /*   console.log("score ", score);
-    console.log(usersRelated); */
+
   }, [
     project?.name,
     project?.Ratings?.length,
@@ -103,7 +100,7 @@ const ProjectDetail = () => {
                 text1={"Categories:"}
                 text2={`${project?.category.toString().replace(",", ", ")}.`}
               />
-              <TextPair text1={"Score:"} text2={score ? score : "0.0"} />
+              <TextPair text1={"Score:"} text2={project?.average_rating } />
 
               <TextPair text1={"Status:"} text2={project?.status} />
 

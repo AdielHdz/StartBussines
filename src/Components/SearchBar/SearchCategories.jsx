@@ -10,13 +10,16 @@ export const SearchCategories = ({ selectedTags, onSelectTag }) => {
       <h2 className="font-medium text-sm text-gray-900 ">Categories </h2> <hr />
       <div className="mt-3 flex  flex-wrap gap-2">
         <button
+
           className="text-sm rounded-lg border-2 border-second text-second hover:bg-second hover:text-white transition-colors duration-300 px-2 py-1 "
+
           onClick={() => handleTagClick("Art")}
         >
           Art
         </button>
         <button
           className="text-sm rounded-lg border-2 border-second text-second hover:bg-second hover:text-white transition-colors duration-300 px-2 py-1 "
+
           onClick={() => handleTagClick("Comics")}
         >
           Comics
@@ -85,7 +88,14 @@ export const SearchCategories = ({ selectedTags, onSelectTag }) => {
           className="text-sm rounded-lg border-2 border-second text-second hover:bg-second hover:text-white transition-colors duration-300 px-2 py-1 "
           onClick={() => handleTagClick("Theater")}
         >
+
           Theater
+        </button>
+        <button 
+            className="rounded-lg border border-teal-700 text-teal-700 hover:bg-teal-700 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
+            onClick={() => handleTagClick("Sport")}
+            >
+          Sport
         </button>
       </div>
     </div>
