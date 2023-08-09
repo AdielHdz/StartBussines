@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        mp: "#009ee3",
         whites: "#FFFFFF",
         blacks: "#000000",
         primar: "#1C997F",
@@ -33,6 +34,7 @@ module.exports = {
         containerCards: "15rem",
         inputs: "3rem",
         textArea: "6rem",
+        succesInvestment: "30rem",
       },
       width: {
         allContent: "100%",

@@ -1,16 +1,16 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { PiWarningCircleLight } from "react-icons/pi";
 import { MdOutlineError } from "react-icons/md";
+
 const InputForm = (props) => {
   const {
     amount,
     errorAmount,
     handlerInputAmount,
-    min_amount,
-    max_amount,
     inputIsActive,
     setInputIsActive,
   } = props;
+
   return (
     <div className=" flex flex-col text-blacks  gap-2">
       <label

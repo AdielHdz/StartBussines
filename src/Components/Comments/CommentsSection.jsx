@@ -9,13 +9,14 @@ const CommentsSection = () => {
       {userData && userData.role === "investor" ? (
         <MyCommentsSection />
       ) : (
-        <h5 className="text-center   font-light py-3">
+        <></>
+        /*   <h5 className="text-center   font-light py-3">
           If you are an investor of this project
           <Link href="/logIn" className="underline text-second mx-1">
             log in
           </Link>
           to give your opinion or to see your opinion.
-        </h5>
+        </h5> */
       )}
 
       <OtherCommentsSection />

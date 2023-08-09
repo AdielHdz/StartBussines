@@ -1,41 +1,61 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DataCellsTable from "./DataCellsTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseButtonX from "../CloseButtonX/CloseButtonX";
 import Image from "next/image";
 import { BiArrowToTop, BiArrowToBottom } from "react-icons/bi";
 import { GoGoal } from "react-icons/go";
 import { GiStairsGoal } from "react-icons/gi";
+import { SiMercadopago } from "react-icons/si";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import InputForm from "../InputForm/InputForm";
+import {
+  investInProject,
+  activeFetchStatus,
+} from "../../Redux/Fetching/Investment/InvestmentSlice";
+
+import Loading from "../Loading/Loading";
 const InvestInProyect = ({ setInvestmenView }) => {
+  const dispatch = useDispatch();
   const projectData = useSelector((state) => state.project.project);
   const [amount, setAmount] = useState("");
   const [inputIsActive, setInputIsActive] = useState(false);
   const [errorAmount, setErrorAmount] = useState("");
+  const [disabledPayBtn, setDisabledPayBtn] = useState(true);
+  const userId = localStorage.getItem("idSession");
 
+  const fetchStatus = useSelector((state) => state.investment.fetchStatus);
+  console.log(userId);
   const handlerInputAmount = (e) => {
     const inputAmount = e.target.value.replace("$", "");
 
     setAmount(inputAmount);
+    console.log(inputAmount, errorAmount);
 
     if (!inputAmount) {
       setErrorAmount("");
     } else if (isNaN(inputAmount)) {
       setErrorAmount("Solo numeros");
+      setDisabledPayBtn(true);
       return setAmount("");
     } else if (inputAmount < projectData.min_amount) {
       setErrorAmount(
         `Invierte al menos lo establecido! $${projectData.min_amount}`
       );
+      setDisabledPayBtn(true);
     } else if (inputAmount > projectData.max_amount) {
       setErrorAmount(
         `No puedes invertir más de lo establecido! $${projectData.max_amount}`
       );
+      setDisabledPayBtn(true);
     } else {
       setErrorAmount("");
+      setDisabledPayBtn(false);
     }
   };
+
+  /* useEffect(() => {}, [disabledPayBtn]); */
+
   return (
     <section className="bg-blacks bg-opacity-70 fixed z-20 w-full h-screen top-0 left-0 flex justify-center items-center py-2 px-3">
       <article className="relative max-w-registerMd bg-whites w-full flex flex-col gap-3 p-3 font-light">
@@ -103,7 +123,36 @@ const InvestInProyect = ({ setInvestmenView }) => {
           En este momento puedes hacer tu inversion con tu mercado pago wallet
         </p>
 
-        <button>Mercadopago</button>
+        <button
+          onClick={() => {
+            dispatch(activeFetchStatus());
+            dispatch(
+              investInProject({
+                contribution: Number(amount),
+                ProjectId: projectData.id,
+                UserId: userId,
+              })
+            );
+          }}
+          className={` ${
+            disabledPayBtn ? "bg-darkGray" : "bg-mp hover:bg-blacks "
+          } flex justify-center items-center gap-2  transition duration-200 text-whites font-medium py-3 rounded-md`}
+          disabled={disabledPayBtn}
+        >
+          {fetchStatus === "pending" ? (
+            <Loading
+              height={7}
+              width={7}
+              borderWeight={2}
+              border_t_color={"border-t-mp"}
+            />
+          ) : (
+            <p className="relative ">
+              Mercadopago
+              <SiMercadopago className="absolute text-whites w-7 h-7 -top-0.5 -right-9 " />
+            </p>
+          )}
+        </button>
       </article>
     </section>
   );
