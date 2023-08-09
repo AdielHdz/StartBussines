@@ -2,7 +2,7 @@
 import { getTopProjects } from "../../Redux/Fetching/Projects/ProjectSlice";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaArrowLeft, FaArrowRight, FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 const NewProjects = () => {

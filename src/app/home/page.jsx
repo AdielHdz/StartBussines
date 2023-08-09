@@ -66,17 +66,6 @@ const Home = () => {
   return (
     <div>
       <div className="relative">
-        {/*       <img
-          src="https://uwm.edu/set/wp-content/uploads/sites/631/2023/04/HandshakeBanner.png"
-          alt=""
-          className="w-full h-[27rem] opacity-75"
-        />
-        <h1 className=" absolute top-[4rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          Deal Up!
-        </h1>
-        <p className=" absolute top-[8rem] left-1/2 transform -translate-x-1/2 -translate-y-1/2 mb-6 text-lg font-normal text-gray-900 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-          The website where your idea can reach the maximum
-        </p> */}
         <div className="relative top-[1.5rem] mb-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-900 dark:text-white text-4xl font-bold text-center">
           {rolSession === "entrepreneur" ? "Entrepreneur" : "Investor"}
         </div>
@@ -99,15 +88,7 @@ const Home = () => {
         )}
 
         <div className="flex items-center justify-center">
-          {/* <button
-            className="group border border-blue-300 rounded-md px-4 py-2 flex items-center justify-center mt-4 text-blue-300 font-semibold hover:bg-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
-            onClick={handleOpenModal}>
-            Start Project
-            <i className="bi bi-shop ml-2 text-blue-300 text-4xl group-hover:text-white"></i>
-          </button> */}
-
           <Modal isVisible={isModalVisible} onClose={handleCloseModal}>
-            {/* Render the ProjectRegister component inside the modal */}
             <ProjectRegister />
           </Modal>
         </div>
