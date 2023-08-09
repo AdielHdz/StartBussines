@@ -12,6 +12,7 @@ const ArticleCard = ({ data }) => {
     status,
     image_cover,
     id,
+    average_rating
   } = data;
 
   return (
@@ -22,7 +23,6 @@ const ArticleCard = ({ data }) => {
           style={{ backgroundImage: `url(${image_cover})` }}
         />
       ) : null}
-      {/* <img src={image_cover} alt={name ? name : ""} className="h-96"/> */}
       <div className="text-center ">
         <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
           <h5 className="text-xl font-semibold mb-2 text-darkGray">{name}</h5>
@@ -41,10 +41,15 @@ const ArticleCard = ({ data }) => {
             <span className="text-sm  text-primar">${maxAmount}</span>
           </p>
 
-          {/* <p className="mb-2">
+          <p className="mb-2">
             Categories:{" "}
             <span className="  text-second">{category.join(", ")}</span>
-          </p> */}
+          </p>
+
+          <p className="mb-2">
+            Rating:{" "}
+            <span className="font-semibold  text-yellow-500">{average_rating}</span>
+          </p>
         </div>
       </div>
     </article>

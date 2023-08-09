@@ -7,7 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 const TopTenProjects = () => {
   const dispatch = useDispatch();
-  const tenProjects = useSelector((state) => state.project.topProjects.topRated);
+  const tenProjects = useSelector(
+    (state) => state.project.topProjects.topRated
+  );
 
   useEffect(() => {
     dispatch(getTopProjects());
@@ -16,7 +18,9 @@ const TopTenProjects = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const handleNextSlide = () => {
-    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % (tenProjects.length || 1));
+    setCurrentSlideIndex(
+      (prevIndex) => (prevIndex + 1) % (tenProjects.length || 1)
+    );
   };
 
   const handlePreviousSlide = () => {
@@ -31,37 +35,36 @@ const TopTenProjects = () => {
   }
 
   const currentSlide = tenProjects[currentSlideIndex] || {};
-  
+
   return (
-    <>
-      <figure className="flex md:flex-row bg-indigo-200 rounded-xl p-4 md:p-8 m-8 dark:bg-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300 w-96 h-60 bg-contain bg-center" style={{ backgroundImage: `url(${currentSlide.image_cover})` }}>
-          <button
-            className="text-2xl text-gray-50 font-bold focus:outline-none"
-            onClick={handlePreviousSlide}
-          >
-            <FaArrowLeft className="inline-block align-text-bottom mr-1" />
-          </button>
-        <div className="pt-6 md:p-8 mx-4 text-center md:text-left space-y-4 w-96 flex-grow md:flex-grow-0">
-          <figcaption className="font-medium">
-            <div className="flex items-center justify-center mt-12">
-              <div className="text-gray-50 font-semibold dark:text-sky-400">
-                <Link href={`/contenedorbusqueda/projectDetail?id=${currentSlide.id}`}>
-                  {currentSlide.name}
-                </Link>
-              </div>
-            </div>
-          </figcaption>
-        </div>
-          <button
-            className="text-2xl text-gray-50 font-bold focus:outline-none "
-            onClick={handleNextSlide}
-          >
-            <FaArrowRight className="inline-block align-text-bottom " />
-          </button>
-      </figure>
-    </>
+    <figure
+      className="relative w-full h-60 md:h-80 bg-cover bg-no-repeat bg-center transition-shadow duration-300 hover:shadow-cards rounded-lg"
+      style={{ backgroundImage: `url(${currentSlide.image_cover})` }}
+    >
+      <div className="absolute top-0 left-0 w-full h-full bg-blacks bg-opacity-40  flex md:flex-row justify-between items-center  rounded-lg p-2 md:p-4  bg-cover bg-center">
+        <button
+          className="text-2xl text-gray-50 font-bold focus:outline-none "
+          onClick={handlePreviousSlide}
+        >
+          <FaArrowLeft className="inline-block align-text-bottom mr-1" />
+        </button>
+
+        <Link
+          href={`/contenedorbusqueda/projectDetail?id=${currentSlide.id}`}
+          className="text-whites md:text-lg transition duration-200 transform hover:font-medium hover:scale-105"
+        >
+          {currentSlide.name}
+        </Link>
+
+        <button
+          className="text-2xl text-gray-50 font-bold focus:outline-none "
+          onClick={handleNextSlide}
+        >
+          <FaArrowRight className="inline-block align-text-bottom " />
+        </button>
+      </div>
+    </figure>
   );
 };
 
 export default TopTenProjects;
-

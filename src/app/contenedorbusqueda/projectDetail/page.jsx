@@ -40,10 +40,7 @@ const ProjectDetail = () => {
       dispatch(saveRatingUser(userIsRelated(project.Ratings, userID)));
     }
 
-    /*  console.log(project); */
-    /*    console.log(id); */
-    /*   console.log("score ", score);
-    console.log(usersRelated); */
+
   }, [
     project?.name,
     project?.Ratings?.length,
@@ -89,7 +86,7 @@ const ProjectDetail = () => {
               />
               <TextPair
                 text1={"Collected so far:"}
-                text2={project.collected_amount}
+                text2={`$${project.collected_amount}`}
               />
               <TextPair
                 text1={"Minimun investmen:"}
@@ -103,7 +100,7 @@ const ProjectDetail = () => {
                 text1={"Categories:"}
                 text2={`${project?.category.toString().replace(",", ", ")}.`}
               />
-              <TextPair text1={"Score:"} text2={score ? score : "0.0"} />
+              <TextPair text1={"Score:"} text2={project?.average_rating } />
 
               <TextPair text1={"Status:"} text2={project?.status} />
 
@@ -160,7 +157,7 @@ const ProjectDetail = () => {
           </section>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-screen absolute top-0 w-full -z-10">
+        <div className="flex items-center justify-center h-screen   w-full -z-10">
           <Loading
             width={20}
             height={20}

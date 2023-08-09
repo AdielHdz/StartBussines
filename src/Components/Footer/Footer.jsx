@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import './Footer.css';
+import "./Footer.css";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import namesData from "./namesData";
-
 
 const Footer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,7 +24,7 @@ const Footer = () => {
   const currentPerson = namesData[currentIndex];
 
   return (
-    <footer className="bg-primar text-white py-4">
+    <footer className=" bg-primar text-white py-4">
       <div className="container mx-auto">
         <div className="flex flex-col justify-between items-center">
           <div className="flex flex-row gap-2">
@@ -41,17 +40,33 @@ const Footer = () => {
           </div>
           <div className="flex flex-row gap-2">
             <p className="mt-2 name-container">
-              Made with ❤️ by {" "}
-              <span className={`name-animation-footer name-fixed-width-footer ${showName ? "show" : ""}`}>
+              Made with ❤️ by{" "}
+              <span
+                className={`name-animation-footer name-fixed-width-footer ${
+                  showName ? "show" : ""
+                }`}
+              >
                 {currentPerson.name}
               </span>
             </p>
           </div>
-          <div className={`flex flex-row gap-3 social-icons-footer mt-3 ${showName ? "show" : ""}`}>
-            <a href={`https://github.com/${currentPerson.github}`} target="_blank" rel="noopener noreferrer">
+          <div
+            className={`flex flex-row gap-3 social-icons-footer mt-3 ${
+              showName ? "show" : ""
+            }`}
+          >
+            <a
+              href={`https://github.com/${currentPerson.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaGithub className="social-icon github-icon-footer" />
             </a>
-            <a href={currentPerson.linkedin} target="_blank" rel="noopener noreferrer">
+            <a
+              href={currentPerson.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaLinkedin className="social-icon linkedin-icon-footer" />
             </a>
           </div>
