@@ -52,8 +52,6 @@ const TopTenProjects = () => {
             </div>
           </figcaption>
         </div>
-
-        
           <button
             className="text-2xl text-gray-50 font-bold focus:outline-none "
             onClick={handleNextSlide}
