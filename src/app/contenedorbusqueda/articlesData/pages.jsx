@@ -22,7 +22,6 @@ const ArticleCard = ({ data }) => {
           style={{ backgroundImage: `url(${image_cover})` }}
         />
       ) : null}
-      {/* <img src={image_cover} alt={name ? name : ""} className="h-96"/> */}
       <div className="text-center ">
         <Link href={`/contenedorbusqueda/projectDetail?id=${id}`}>
           <h5 className="text-xl font-semibold mb-2 text-darkGray">{name}</h5>
