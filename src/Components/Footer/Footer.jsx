@@ -25,7 +25,7 @@ const Footer = () => {
   const currentPerson = namesData[currentIndex];
 
   return (
-    <footer className="bg-green-600 text-white py-4">
+    <footer className="bg-primar text-white py-4">
       <div className="container mx-auto">
         <div className="flex flex-col justify-between items-center">
           <div className="flex flex-row gap-2">
