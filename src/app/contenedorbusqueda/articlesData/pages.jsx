@@ -41,10 +41,10 @@ const ArticleCard = ({ data }) => {
             <span className="text-sm  text-primar">${maxAmount}</span>
           </p>
 
-          <p className="mb-2">
+          {/* <p className="mb-2">
             Categories:{" "}
             <span className="  text-second">{category.join(", ")}</span>
-          </p>
+          </p> */}
         </div>
       </div>
     </article>
