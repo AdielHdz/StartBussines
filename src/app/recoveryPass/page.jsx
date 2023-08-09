@@ -1,6 +1,6 @@
 "use client";
-
-import { validateEmail } from "./validation";
+import axios from "axios";
+import { validateEmail } from "./validations";
 import { useState } from "react";
 
 export default function RecoverMail() {
@@ -14,7 +14,9 @@ export default function RecoverMail() {
 
     if (isEmailField) {
       const isValidEmail = validateEmail(value);
-      const errorMessage = isValidEmail ? "" : "Please insert a valid email address";
+      const errorMessage = isValidEmail
+        ? ""
+        : "Please insert a valid email address";
       setEmailError(errorMessage);
       setFormValid(isValidEmail && value !== "");
     }
@@ -29,13 +31,13 @@ export default function RecoverMail() {
     const email = form.email.value;
 
     form.reset();
-
+    axios.post("/user/forgotPassword", { email });
     setSuccessMessage("The email has been sent to " + email);
-  
+
     setTimeout(() => {
       setSuccessMessage("");
     }, 3000);
-  }
+  };
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -52,8 +54,7 @@ export default function RecoverMail() {
         <form
           action=""
           className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
-          onSubmit={handleSubmit}
-        >
+          onSubmit={handleSubmit}>
           <p className="text-center text-lg font-medium">
             Enter your email address
           </p>
@@ -61,10 +62,7 @@ export default function RecoverMail() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              
-            </label>
+              className="block text-sm font-medium text-gray-700"></label>
             <input
               type="email"
               name="email"
@@ -83,12 +81,13 @@ export default function RecoverMail() {
               formValid ? "" : "opacity-50"
             }`}
             style={{ backgroundColor: "#065A46" }}
-            disabled={!formValid} 
-          >
+            disabled={!formValid}>
             Send email
           </button>
           {successMessage && (
-            <p className="text-green-600 text-sm text-center">{successMessage}</p>
+            <p className="text-green-600 text-sm text-center">
+              {successMessage}
+            </p>
           )}
         </form>
       </div>

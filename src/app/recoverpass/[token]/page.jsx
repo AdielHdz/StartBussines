@@ -4,8 +4,12 @@ import { validatePassword } from "../validation";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
-export default function RecoverPassword() {
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+export default function RecoverPass() {
+  const router = useRouter();
+  const { token } = useParams();
   const [showPassword, setShowPassword] = useState({
     newPassword: false,
     confirmPassword: false,
@@ -84,16 +88,13 @@ export default function RecoverPassword() {
     const newPassword = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
-    // Procede con el envío del correo electrónico u otras acciones para recuperar la contraseña
-    // Después del envío exitoso, limpiamos el formulario y redirigimos al usuario
     setShowPassword({
       newPassword: false,
       confirmPassword: false,
     });
-    form.reset(); // Limpia el formulario
-    console.log("Formulario enviado correctamente");
-    // Aquí puedes agregar el código para redirigir al usuario a ResetPasswordConfirm
-    window.location.href = "/resetpasswordconfirm";
+    form.reset();
+    axios.patch(`/user/resetPassword/${token}`, { password: newPassword });
+    /* router.push("/resetpasswordconfirm"); */
   };
 
   return (
@@ -111,8 +112,7 @@ export default function RecoverPassword() {
         <form
           action=""
           className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
-          onSubmit={handleSubmit}
-        >
+          onSubmit={handleSubmit}>
           <p className="text-center text-lg font-medium">
             Create your new password
           </p>
@@ -133,8 +133,7 @@ export default function RecoverPassword() {
               />
               <span
                 className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                onClick={() => handleClick("newPassword")}
-              >
+                onClick={() => handleClick("newPassword")}>
                 <FontAwesomeIcon
                   icon={showPassword.newPassword ? faEyeSlash : faEye}
                   className="h-4 w-4 text-gray-400"
@@ -164,8 +163,7 @@ export default function RecoverPassword() {
               />
               <span
                 className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                onClick={() => handleClick("confirmPassword")}
-              >
+                onClick={() => handleClick("confirmPassword")}>
                 <FontAwesomeIcon
                   icon={showPassword.confirmPassword ? faEyeSlash : faEye}
                   className="h-4 w-4 text-gray-400"
@@ -187,7 +185,7 @@ export default function RecoverPassword() {
             style={{ backgroundColor: "#065A46" }}
             disabled={!formValid} // Deshabilitar el botón si el formulario no es válido
           >
-            Send email
+            Send
           </button>
         </form>
       </div>
