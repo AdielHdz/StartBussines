@@ -5,7 +5,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import Cookies from 'universal-cookie';
 
 export default function AuthLogin() {
-  // const cookies = new Cookies();
+  const cookies = new Cookies();
 
   const handleSingOut = () => {
     signOut();

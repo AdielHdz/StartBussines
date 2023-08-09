@@ -16,7 +16,7 @@ export const RangeSlider = ({
   const [maxValue, setMaxValue] = useState(initialMax);
   const progressRef = useRef(null);
   const dispatch = useDispatch();
-  
+
   const handleMin = (e) => {
     if (maxValue - minValue >= priceCap && maxValue <= max) {
       if (parseInt(e.target.value) > parseInt(maxValue)) {

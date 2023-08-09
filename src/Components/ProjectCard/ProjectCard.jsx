@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 export default function ProjectCard(props) {
   return (
-    <div className=" rounded-lg bg-white w-33 h-25 m-5 border border-gray-400">
+    <div className=" rounded-lg bg-white w-full  max-w-registerMd h-25 m-5 border border-gray-400">
       <div
         className="relative overflow-hidden bg-cover bg-no-repeat"
         data-te-ripple-init
@@ -22,7 +22,6 @@ export default function ProjectCard(props) {
           </h5>
         </Link>
         <div className="text-sm flex flex-col items-center">
-          <p className="mb-4 text-base ">{props.description}</p>
           <p className="mb-2">
             Goal amount:{" "}
             <span className="text-sm  text-primar">${props.goalAmount}</span>

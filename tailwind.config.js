@@ -48,6 +48,7 @@ module.exports = {
         cards: "20rem",
         registerMd: "30rem",
         registerXs: "30rem",
+        sliderContainer: "40rem",
         images: "22rem",
         projectDetail: "60rem",
       },
