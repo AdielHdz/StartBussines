@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigation , useParams } from "next/router";
-
-
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const ConfirmEmailSuccess = () => {
-  const navigation = useNavigation();
+  const router = useRouter();
+  /*  const navigation = useNavigation(); */
   const { token } = useParams();
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
@@ -15,7 +15,7 @@ const ConfirmEmailSuccess = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.patch(`/user/register/confirm/`, { token });
+        await axios.patch(`/user/register/confirm/${token}`);
         setSuccess(true);
       } catch (error) {
         setSuccess(false);
@@ -28,14 +28,16 @@ const ConfirmEmailSuccess = () => {
     }
   }, [token]);
 
-  const handleBackToRegistration = () => {
+  /* const handleBackToRegistration = () => {
     navigation.push("/register");
-  };
+  }; */
 
   const successMessage = "Email Confirmed Successfully";
   const errorMessage = "Email Confirmation Failed";
-  const successText = "Congratulations! Your email has been successfully confirmed.";
-  const errorText = "Something went wrong with the email confirmation. Please try again later.";
+  const successText =
+    "Congratulations! Your email has been successfully confirmed.";
+  const errorText =
+    "Something went wrong with the email confirmation. Please try again later.";
 
   const buttonContent = success ? (
     <svg
@@ -43,16 +45,25 @@ const ConfirmEmailSuccess = () => {
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      aria-hidden="true"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 13l4 4L19 7"
+      />
+      <a
+        className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
+        href="/register"
+        onClick={() => router.push("/logIn")}>
+        Back to Login
+      </a>
     </svg>
   ) : (
     <a
-      className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
+      className="text-white bg-primar hover:bg-green-700 px-4 py-2 rounded-md"
       href="/register"
-      onClick={() => navigation.push("/register")}
-    >
+      onClick={() => router.push("/register")}>
       Back to Registration
     </a>
   );
@@ -63,8 +74,7 @@ const ConfirmEmailSuccess = () => {
         <h1
           className={`text-center text-2xl font-bold ${
             success ? "text-green-600" : "text-red-600"
-          } sm:text-3xl`}
-        >
+          } sm:text-3xl`}>
           {success ? successMessage : errorMessage}
         </h1>
 
@@ -72,9 +82,7 @@ const ConfirmEmailSuccess = () => {
           {success ? successText : errorText}
         </p>
 
-        <div className="flex justify-center mt-6">
-          {buttonContent}
-        </div>
+        <div className="flex justify-center mt-6">{buttonContent}</div>
       </div>
     </div>
   );
