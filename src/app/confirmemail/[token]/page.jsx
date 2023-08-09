@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const ConfirmEmailSuccess = () => {
+  const router = useRouter();
   /*  const navigation = useNavigation(); */
   const { token } = useParams();
   const [loading, setLoading] = useState(true);
@@ -50,12 +52,18 @@ const ConfirmEmailSuccess = () => {
         strokeWidth={2}
         d="M5 13l4 4L19 7"
       />
+      <a
+        className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
+        href="/register"
+        onClick={() => router.push("/logIn")}>
+        Back to Login
+      </a>
     </svg>
   ) : (
     <a
-      className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md"
+      className="text-white bg-primar hover:bg-green-700 px-4 py-2 rounded-md"
       href="/register"
-      onClick={() => navigation.push("/register")}>
+      onClick={() => router.push("/register")}>
       Back to Registration
     </a>
   );

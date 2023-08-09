@@ -94,7 +94,7 @@ export default function RecoverPass() {
     });
     form.reset();
     axios.patch(`/user/resetPassword/${token}`, { password: newPassword });
-    /* router.push("/resetpasswordconfirm"); */
+    router.push("/resetpasswordconfirm");
   };
 
   return (
