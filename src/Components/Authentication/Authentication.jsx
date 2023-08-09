@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export default function Authentication() {
   const router = useRouter();
+  const [errorOccurred, setErrorOccurred] = useState(false);
 
   const { data: session, status: statusGoogle } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
 
@@ -32,8 +33,6 @@ export default function Authentication() {
 
   //! 02. Formar valor inicial de Form objeto para la peticion
 
-  const [errorOccurred, setErrorOccurred] = useState(false);
-
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -55,7 +54,7 @@ export default function Authentication() {
     localStorage.getItem('roleRegister');
   }, [form, session]);
 
-  //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
+  //! 04. Funcion Captura de datos de GoogleAuth y seteo de Form
 
   const getGoogleData = () => {
     setForm({
@@ -77,7 +76,7 @@ export default function Authentication() {
     getGoogleData();
   }, [session]);
 
-  //! 06. Funcion para hacer la Peticion a Google y hacer el Registe y Login
+  //! 06. Funcion para hacer la Peticion al Back y hacer el Registe y Login
   const registerGoogleUser = async (form) => {
     if (statusGoogle === 'authenticated' && session?.user?.name) {
       console.log('form a peticion', form);
