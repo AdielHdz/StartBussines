@@ -11,7 +11,7 @@ export const fetchArticlesData = createAsyncThunk(
     console.log(filters);
     try {
       const response = await fetch(
-        "/projects/filter",
+        "https://deal-up-api.onrender.com/projects/filter",
         {
           method: "PUT",
           headers: {
