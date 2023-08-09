@@ -57,9 +57,9 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
   };
 
   return (
-    <div className="flex flex-col w-50 ">
+    <div className="flex flex-col w-full ">
       <input
-        className="form-control me-2 rounded-pill border border-blue-500"
+        className=" me-2  outline-none px-2 h-12 rounded-lg w-full focus:border-primar  border-2 border-blue-500"
         type="search"
         placeholder="Find Projects"
         value={name}
@@ -76,12 +76,12 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
             {selectedTags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-yellow-800 bg-yellow-100 rounded dark:bg-yellow-900 dark:text-yellow-300"
+                className="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-whites bg-second rounded "
               >
                 {tag}
                 <button
                   type="button"
-                  className="inline-flex items-center p-1 ml-2 text-sm text-yellow-400 bg-transparent rounded-sm hover:bg-yellow-200 hover:text-yellow-900 dark:hover:bg-yellow-800 dark:hover:text-yellow-300"
+                  className="inline-flex items-center p-1 ml-2 text-sm text-whites bg-transparent rounded-sm "
                   data-dismiss-target="#badge-dismiss-yellow"
                   aria-label="Remove"
                 >
@@ -107,7 +107,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
             ))}
           </div>
           <div>
-            <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
+            <h2 className="  text-gray-900 font-medium text-sm ">
               Investment Range
             </h2>
             <select
@@ -122,7 +122,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
               </option>
             </select>
           </div>
-          <h2 className="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 mt-3">
+          <h2 className="block mb-2 font-medium text-sm text-gray-900   mt-3">
             Min-Max Range
           </h2>
           <RangeSlider
@@ -137,10 +137,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
           <div className="flex justify-center mt-4">
             {" "}
             <Link href={`/contenedorbusqueda`}>
-              <button
-                className="rounded-lg border border-green-300 text-white hover:bg-green-300 hover:text-white transition-colors duration-300 px-4 py-2"
-                style={{ backgroundColor: "#a7f3d0" }}
-              >
+              <button className="rounded-md text-sm  px-4 py-2  bg-second text-white hover:scale-110  transition transform duration-300 md:px-5 md:py-3">
                 Search
               </button>
             </Link>
