@@ -14,6 +14,7 @@ const categories = [
     "Publishing",
     "Technology",
     "Theater",
+    "Sport"
   ];
 
   export default categories;

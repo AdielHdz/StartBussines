@@ -55,6 +55,18 @@ export const SearchCategories = ({ selectedTags, onSelectTag }) => {
         </button>
         <button 
             className="rounded-lg border border-pink-200 text-pink-200 hover:bg-pink-200 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
+            onClick={() => handleTagClick("Food")}
+        >
+          Food
+        </button>
+        <button 
+            className="rounded-lg border border-pink-200 text-pink-200 hover:bg-pink-200 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
+            onClick={() => handleTagClick("Games")}
+        >
+          Games
+        </button>
+        <button 
+            className="rounded-lg border border-pink-200 text-pink-200 hover:bg-pink-200 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
             onClick={() => handleTagClick("Journalism")}
             >
           Journalism
@@ -88,6 +100,12 @@ export const SearchCategories = ({ selectedTags, onSelectTag }) => {
             onClick={() => handleTagClick("Theater")}
             >
           Theater
+        </button>
+        <button 
+            className="rounded-lg border border-pink-200 text-pink-200 hover:bg-pink-200 hover:text-white transition-colors duration-300 px-4 py-2 mr-2 mb-2"
+            onClick={() => handleTagClick("Sport")}
+            >
+          Sport
         </button>
       </div>
     </div>
