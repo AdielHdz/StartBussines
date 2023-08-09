@@ -66,7 +66,7 @@ const Home = () => {
   return (
     <div className="ml-4 mt-5 mr-4">
       <div className="relative">
-        <div className="relative top-[1.5rem] mb-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-900 dark:text-white text-4xl font-bold text-center">
+        <div className="relative top-[1.5rem] mb-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-900 text-4xl font-bold text-center">
           {rolSession === "entrepreneur" ? "Entrepreneur" : 
           rolSession === "investor" ? "Investor" :
           rolSession === "moderator" ? "Moderator" :
@@ -111,8 +111,8 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="mt-17 mb-10">
-      <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <div className="mt-17 mb-10 mt-5">
+      <h2 className="text-2xl md:text-2xl lg:text-3xl font-extrabold leading-tight text-gray-900 ">
         The top 10 best ranked projects.{" "}
         <a href="/contenedorbusqueda" className="text-blue-500 border-b border-blue-500">
           {" "}
@@ -124,7 +124,7 @@ const Home = () => {
         </div>
       </div>
       <div className="mt-3 mb-10">
-      <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h2 className="text-2xl md:text-2xl lg:text-3xl font-extrabold leading-tight text-gray-900 ">
         New Projects.{" "}
         <a href="/contenedorbusqueda" className="text-blue-500 border-b border-blue-500">
           {" "}
