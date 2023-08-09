@@ -7,19 +7,7 @@ import Cookies from 'universal-cookie';
 export default function AuthLogin() {
   // const cookies = new Cookies();
 
-  const clearAllCookies = () => {
-    const cookies = document.cookie.split('; ');
-
-    console.log(cookies);
-
-    cookies.forEach((cookie) => {
-      const [name] = cookie.split('=');
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    });
-  };
-
   const handleSingOut = () => {
-    clearAllCookies();
     signOut();
 
     router.push('/home');
