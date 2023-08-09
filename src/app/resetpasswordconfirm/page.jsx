@@ -1,12 +1,21 @@
 "use client";
-import React from "react";
-import Image from "next/image"
+import React, { useEffect } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const ResetPasswordConfirm = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.push("/logIn");
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <Image
-         src="/asset/DealUp.png"
+        src="/asset/DealUp.png"
         alt="Lock"
         className="mx-auto h-20 w-20"
         width={100}

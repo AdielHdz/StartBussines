@@ -13,7 +13,6 @@ const PaginationLogic = ({ totalItems, itemsPerPage, onPageChange }) => {
       onPageChange(page);
     }
   };
-
   const isPrevButtonDisabled = currentPage === 1;
   const isNextButtonDisabled = currentPage === totalPages;
 
