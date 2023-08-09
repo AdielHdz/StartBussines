@@ -14,7 +14,7 @@ const NavigationButtons = ({ currentPage }) => {
           href="/"
           className="absolute pl-2 h-full flex justify-start items-center "
         >
-          <FiArrowLeft className="text-3xl text-second hover:text-orangeMedium " />
+          <FiArrowLeft className="text-3xl text-primar hover:text-orangeMedium " />
         </Link>
         <div className="flex items-center justify-center">
           <Image
@@ -32,8 +32,8 @@ const NavigationButtons = ({ currentPage }) => {
           href="/register"
           className={`${
             isSignUp
-              ? "font-medium text-lg no-underline text-darkGray cursor-default"
-              : "font-normal  text-second hover:text-orangeMedium "
+              ? "font-medium  text-lg no-underline text-second cursor-default"
+              : "font-normal  text-grayLightMedium hover:text-orangeMedium "
           } `}
         >
           Sign Up
@@ -43,8 +43,8 @@ const NavigationButtons = ({ currentPage }) => {
           href="/logIn"
           className={`${
             isSignIn
-              ? "font-medium text-lg no-underline text-darkGray cursor-default"
-              : "font-normal  text-second hover:text-orangeMedium"
+              ? "font-medium text-lg no-underline text-second cursor-default"
+              : "font-normal  text-grayLightMedium hover:text-orangeMedium"
           }  `}
         >
           Sign In

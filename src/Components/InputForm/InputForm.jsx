@@ -17,11 +17,11 @@ const InputForm = (props) => {
         htmlFor="amount"
         className=" text-darkGray  flex flex-col font-medium"
       >
-        Cuanto vas a invertir?
+        How much are you going to invest?
         <span className=" leading-helpers text-xs font-light text-yellowWarning">
           <PiWarningCircleLight className="inline-block mr-1   text-lg  " />
-          Tu cantidad a invertir debe ser en dolares USD, mercadopago se
-          encargará de la conversión.
+          Your amount to invest must be in USD dollars, Mercadopago will handle
+          the conversion.
         </span>
       </label>
       <div className="relative">

@@ -83,25 +83,25 @@ const InvestInProyect = ({ setInvestmenView }) => {
             />
 
             <DataCellsTable
-              name={"Cantidad meta"}
+              name={"Goal amount"}
               data={`$${projectData.goal_amount} usd`}
               Icons={GoGoal}
               iconColor="text-redError"
             />
             <DataCellsTable
-              name={"Cantidad reunida"}
+              name={"Collected amount"}
               data={`$${projectData.collected_amount} usd`}
               Icons={GiStairsGoal}
               iconColor="text-second"
             />
             <DataCellsTable
-              name={"Inversion máxima"}
+              name={"Max investment"}
               data={`$${projectData.max_amount} usd`}
               Icons={BiArrowToTop}
               iconColor="text-yellow-500"
             />
             <DataCellsTable
-              name={"Inversion minima"}
+              name={"Min investment"}
               data={`$${projectData.min_amount} usd`}
               Icons={BiArrowToBottom}
               iconColor="text-orangeMedium"
@@ -120,7 +120,8 @@ const InvestInProyect = ({ setInvestmenView }) => {
           setInputIsActive={setInputIsActive}
         />
         <p className="text-xs text-center">
-          En este momento puedes hacer tu inversion con tu mercado pago wallet
+          At this time you can make your investment with your wallet payment
+          market
         </p>
 
         <button

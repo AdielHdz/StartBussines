@@ -71,6 +71,7 @@ export const SearchProjects = ({ setSuggestions, projects }) => {
           <SearchCategories
             selectedTags={selectedTags}
             onSelectTag={handleSelectTag}
+            setShowCategories={setShowCategories}
           />
           <div className="flex flex-wrap mb-2 mt-2">
             {selectedTags.map((tag, index) => (

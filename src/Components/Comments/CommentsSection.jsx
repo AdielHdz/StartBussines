@@ -1,22 +1,31 @@
+import { useSelector } from "react-redux";
 import MyCommentsSection from "./MyCommentsSection";
 import OtherCommentsSection from "./OthersCommentsSection ";
 import Link from "next/link";
+import { useEffect } from "react";
 const CommentsSection = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  console.log(userData);
+  const userId = localStorage.getItem("idSession");
+
+  /*   const [isPartner, setParner] = useState({}); */
+
+  const projectName = useSelector((state) => state.project.project.name);
+  const userIsPartner = useSelector((state) =>
+    state.project.project.Investments.find(
+      (invest) => invest.User?.id === userId && invest.status === "approved"
+    )
+  );
+
+  console.log(userIsPartner);
+
   return (
     <div className="flex flex-col gap-3">
-      {userData && userData.role === "investor" ? (
+      {userIsPartner && userIsPartner.id ? (
         <MyCommentsSection />
       ) : (
-        <></>
-        /*   <h5 className="text-center   font-light py-3">
-          If you are an investor of this project
-          <Link href="/logIn" className="underline text-second mx-1">
-            log in
-          </Link>
-          to give your opinion or to see your opinion.
-        </h5> */
+        <h5 className="text-center text-primar font-light py-3">
+          Only partners can comment, invest for join to {projectName}
+        </h5>
       )}
 
       <OtherCommentsSection />
