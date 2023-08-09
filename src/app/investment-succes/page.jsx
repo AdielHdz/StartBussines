@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 const Investment_Succes = () => {
   const router = useRouter();
-  const [timeReturn, setTimeReturn] = useState(10);
+  const [timeReturn, setTimeReturn] = useState(100000);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -24,7 +24,7 @@ const Investment_Succes = () => {
     return () => clearInterval(intervalo);
   }, [timeReturn]);
   return (
-    <article className="flex  items-center justify-center h-screen w-full absolute top-0 -z-10 p-2 ">
+    <article className="flex  items-center justify-center h-screen w-full relative  -z-10 p-2 ">
       <section className="flex flex-col justify-evenly items-center px-3  bg-whites-600 md:shadow-cards h-succesInvestment w-full max-w-registerMd rounded-lg">
         <BsCheckCircle className="w-32 h-32  text-green-600" />
         <div className="flex flex-col items-center w-full  text-green-600">
