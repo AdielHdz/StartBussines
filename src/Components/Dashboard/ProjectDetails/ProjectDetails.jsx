@@ -28,6 +28,7 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
           status: selectedStatus,
         });
         console.log("Project status updated successfully!");
+        window.alert("Project status updated successfully!");
         onProjectUpdated();
       } catch (error) {
         console.error("Error updating project status:", error);
@@ -43,6 +44,7 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
       try {
         await axios.delete(`/projects/${project.id}`);
         console.log("Project deleted successfully!");
+        window.alert("Project deleted successfully!");
         onProjectDeleted();
         onClose();
       } catch (error) {
