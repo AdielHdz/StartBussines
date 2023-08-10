@@ -5,7 +5,9 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
+import { handlerStatus } from "../../Redux/UserRealSlice/UserRealSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../Loading/Loading";
 export default function Authentication() {
   //Desactivar boton google
   const [isGoogleButtonEnabled, setGoogleButtonEnabled] = useState(false);
@@ -25,146 +27,112 @@ export default function Authentication() {
   }, []);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const { data: session, status: statusGoogle } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
+  const {
+    data: session,
+    status: statusGoogle,
+    update: UpdateSession,
+  } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
 
-  const handleSingOut = () => {
-    localStorage.setItem("checkReg", false);
-    signOut();
-  };
+  console.log({ session, statusGoogle, UpdateSession });
+  const isGoogleActive = "isGoogleActive";
 
-  //! 01. Chequeo los datos que recibo de de Google Auth
-  useEffect(() => {
-    console.log(session?.user.name);
-    console.log(session?.user.email);
-    console.log(session?.user.image);
-  }, [session]);
-
-  //! 02. Formar valor inicial de Form objeto para la peticion
-
-  const [errorOccurred, setErrorOccurred] = useState(false);
-
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    role: "",
-    password: "",
-    dni: null,
-    gender: "",
-    birthdate: "",
-    phone: "",
-    country: "",
-    avatar: "",
-    status: null,
-    confirmEmail: null,
-    thirdPartyCreated: null,
-  });
-
-  //!  03. Captura Rol
-  useEffect(() => {
-    localStorage.getItem("roleRegister");
-  }, [form, session]);
-
-  //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
-
-  const getGoogleData = () => {
-    setForm({
-      ...form,
-      fullName: session?.user?.name,
-      email: session?.user?.email,
-      role: localStorage.getItem("roleRegister"),
-      password: "ThirdPartyHenry12345!",
-      avatar: session?.user?.image,
-      status: true,
-      confirmEmail: true,
-      thirdPartyCreated: true,
+  const handleSignOut = () => {
+    signOut({
+      callbackUrl: "/logIn", // Redirige a esta URL después del cierre de sesión
+      redirect: true, // Evita la redirección automática (puedes hacerlo manualmente)
     });
   };
 
-  //! 05. Ejecutar la funcion de arriba
-
   useEffect(() => {
-    getGoogleData();
-  }, [session]);
-
-  //! 06. Funcion para hacer la Peticion al Back y Google y hacer el Register y Login
-  const registerGoogleUser = async (form) => {
-    if (statusGoogle === "authenticated" && session?.user?.name) {
-      console.log("form a peticion", form);
-
-      try {
-        const responseRegister = await axios.post("/user", form);
-        const newUserData = responseRegister.data;
-        console.log("Esto es newUserData Register", newUserData);
-
-        //! 09. Datos para hacer Login
-
-        const dataLogin = {
-          email: form.email,
-          password: form.password,
-        };
-        // console.log(dataLogin);
-        const responseLogin = await axios.post("/user/login", dataLogin);
-        const user = responseLogin.data;
-
-        console.log("Esto datos del usuario loggeado", user);
-        console.log("Muy Bien!");
-        console.log(user.userRegistered.accessToken);
-        console.log(user.userRegistered.data.fullName);
-
-        localStorage.setItem("token_DealUp", user.userRegistered.accessToken);
-        localStorage.setItem("idSession", user.userRegistered.data.id);
-        localStorage.setItem("fullName", user.userRegistered.data.fullName);
-        localStorage.setItem("avatar", user.userRegistered.data.avatar);
-        localStorage.setItem("role", user.userRegistered.data.role);
-        localStorage.setItem("savedEmail", user.userRegistered.data.email);
-
-        localStorage.setItem(
-          "userData",
-          JSON.stringify({
-            fullName: user.userRegistered.data.fullName,
-            email: user.userRegistered.data.email,
-            role: user.userRegistered.data.role,
-            address: user.userRegistered.data.address,
-            password: user.userRegistered.data.password,
-            gender: user.userRegistered.data.gender,
-            birthdate: user.userRegistered.data.birthdate,
-            phone: user.userRegistered.data.phone,
-            country: user.userRegistered.data.country,
-            avatar: user.userRegistered.data.avatar,
-            status: user.userRegistered.data.status,
-            thirdPartyCreated: user.userRegistered.data.thirdPartyCreated,
-          })
-        );
-
-        console.log("Debe estar seteado todo Register");
-        await router.push("/home");
-      } catch (error) {
-        console.log(error.response.data);
-        setErrorOccurred(true);
-
-        alert('Email already registered, Please Login');
-
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (errorOccurred) {
-      router.push("/logIn");
-    }
-  }, [errorOccurred]);
-
-  useEffect(() => {
+    const isRegisterActive = JSON.parse(localStorage.getItem(isGoogleActive));
     if (
+      isRegisterActive &&
       statusGoogle === "authenticated" &&
-      typeof session?.user?.name === "string"
+      session.user.name
     ) {
-      console.log(statusGoogle);
-      console.log(session?.user?.name);
-      registerGoogleUser(form);
+      const userData = {
+        fullName: session.user.name,
+        email: session.user.email,
+        role: localStorage.getItem("roleRegister"),
+        password: "ThirdPartyHenry12345!",
+        avatar: session.user.image,
+        status: true,
+        confirmEmail: true,
+        thirdPartyCreated: true,
+      };
+      const createUser = async () => {
+        await axios
+          .post("/user", userData)
+          .then((response) => {
+            console.log(response.data);
+            axios
+              .post("user/login", {
+                email: userData.email,
+                password: userData.password,
+              })
+              .then((response) => {
+                const user = response.data;
+                console.log(user);
+
+                localStorage.setItem(
+                  "token_DealUp",
+                  user.userRegistered.accessToken
+                );
+                localStorage.setItem("idSession", user.userRegistered.data.id);
+                localStorage.setItem(
+                  "fullName",
+                  user.userRegistered.data.fullName
+                );
+                localStorage.setItem("avatar", user.userRegistered.data.avatar);
+                localStorage.setItem("role", user.userRegistered.data.role);
+                localStorage.setItem(
+                  "savedEmail",
+                  user.userRegistered.data.email
+                );
+
+                localStorage.setItem(
+                  "userData",
+                  JSON.stringify({
+                    fullName: user.userRegistered.data.fullName,
+                    email: user.userRegistered.data.email,
+                    role: user.userRegistered.data.role,
+                    address: user.userRegistered.data.address,
+                    password: user.userRegistered.data.password,
+                    gender: user.userRegistered.data.gender,
+                    birthdate: user.userRegistered.data.birthdate,
+                    phone: user.userRegistered.data.phone,
+                    country: user.userRegistered.data.country,
+                    avatar: user.userRegistered.data.avatar,
+                    status: user.userRegistered.data.status,
+                    thirdPartyCreated:
+                      user.userRegistered.data.thirdPartyCreated,
+                  })
+                );
+                localStorage.setItem(isGoogleActive, false);
+                localStorage.setItem("userFetch", "succes");
+                dispatch(handlerStatus("success"));
+                alert("Register successfull");
+                router.push("/home");
+              });
+          })
+          .catch((error) => {
+            if (error.response.data.error === "Email already registered") {
+              localStorage.setItem(isGoogleActive, false);
+              localStorage.setItem("userFetch", "failure");
+              dispatch(handlerStatus("failure"));
+              alert("Email already registered! Please login");
+              handleSignOut();
+            } else {
+              consol.log(error);
+            }
+          });
+      };
+
+      createUser();
     }
-  }, [form]);
+  }, [session?.user?.name]);
 
   return (
     <div className="flex flex-col gap-3 mt-3">
@@ -185,11 +153,15 @@ export default function Authentication() {
         <div
           className={`flex items-center m-0 justify-center w-10 hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10 mt-8 ${
             isGoogleButtonEnabled ? "" : "opacity-50 pointer-events-none"
-          }`}>
+          }`}
+        >
           <FcGoogle
             className="inline-block text-3xl"
             onClick={() => {
-              signIn();
+              dispatch(handlerStatus("pending"));
+              localStorage.setItem("userFetch", "pending");
+              localStorage.setItem(isGoogleActive, true);
+              console.log(signIn());
             }}
           />
         </div>
@@ -197,8 +169,9 @@ export default function Authentication() {
           <BsFacebook className="inline-block text-blue-600 text-3xl" />
           <button
             onClick={() => {
-              handleSingOut();
-            }}>
+              signOut();
+            }}
+          >
             Sign Out
           </button>
         </div>
