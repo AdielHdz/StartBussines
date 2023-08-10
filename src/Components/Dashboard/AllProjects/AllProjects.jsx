@@ -4,6 +4,7 @@ import { FiCopy, FiRefreshCcw } from 'react-icons/fi';
 const AllProjects = ({ projects, onProjectClick, filter, onFilterChange, onRefresh }) => {
   const [sortDirection, setSortDirection] = useState("desc");
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [showBannedProjects, setShowBannedProjects] = useState(false);
 
   const handleFilterClick = (value) => {
     if (value === "Most Recent") {
@@ -18,10 +19,12 @@ const AllProjects = ({ projects, onProjectClick, filter, onFilterChange, onRefre
   };
 
   const sortedProjects = projects.filter((project) => {
-    if (selectedStatus) {
+    if (showBannedProjects) {
+      return project.deletedAt !== null;
+    } else if (selectedStatus) {
       return project.status === selectedStatus;
     }
-    return true; 
+    return true;
   }).sort((a, b) => {
     if (sortDirection === "desc") {
       return new Date(b.createdAt) - new Date(a.createdAt);
@@ -33,6 +36,7 @@ const AllProjects = ({ projects, onProjectClick, filter, onFilterChange, onRefre
   const arrowIcon = sortDirection === "desc" ? "▼" : "▲";
   const mostRecentText = sortDirection === "desc" ? "Most Recent ▼" : "Oldest First ▲";
   const statusFilterText = selectedStatus ? ` - Status - ${selectedStatus}` : "";
+  const bannedProjectsButtonText = showBannedProjects ? "Show All Projects" : "Show Banned Projects";
 
   const handleCopyId = (id) => {
     try {
@@ -80,16 +84,24 @@ const AllProjects = ({ projects, onProjectClick, filter, onFilterChange, onRefre
             <option value="Active">Active</option>
           </select>
         </div>
+        <button
+          className={`py-2 px-4 font-semibold rounded ${
+            showBannedProjects ? "bg-red-500 text-white" : "bg-gray-300 text-gray-600 mt-3"
+          } md:mx-2`}
+          onClick={() => setShowBannedProjects(!showBannedProjects)}
+        >
+          {bannedProjectsButtonText}
+        </button>
       </div>
       <ul>
         {sortedProjects.map((project) => (
-          <li key={project.id} onClick={() => onProjectClick(project)} className="cursor-pointer mb-2 border border-gray-400 rounded-lg px-4 py-2 hover:text-blue-500">
+          <li key={project.id} onClick={() => onProjectClick(project)} className={`cursor-pointer mb-2 border border-gray-400 rounded-lg px-4 py-2 hover:text-blue-500 ${project.deletedAt ? "border-red-500 text-red-500" : ""}`}>
             {project.name}
             <br />
-            Id: {project.id}
-            <button className="ml-2 text-blue-500" onClick={(e) => { e.stopPropagation(); handleCopyId(project.id); }}>
-              <FiCopy />
-            </button>
+            <span className={`text-blue-500 cursor-pointer ${project.deletedAt ? "text-red-500" : ""}`} onClick={(e) => { e.stopPropagation(); handleCopyId(project.id); }}>
+              Id: {project.id}
+              <FiCopy className="inline-block ml-1" />
+            </span>
             <br />
             Status: {project.status}
           </li>

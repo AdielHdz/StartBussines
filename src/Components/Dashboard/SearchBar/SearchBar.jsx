@@ -7,22 +7,40 @@ const SearchBar = ({ onSearch, placeholder }) => {
     onSearch(searchTerm);
   };
 
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    onSearch('');
+  };
+
+  
   return (
-    <div className="flex items-center">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="border rounded-l px-2 py-1 focus:outline-none focus:border-blue-500"
-        placeholder={placeholder}
-      />
-      <button
-        onClick={handleSearch}
-        className="bg-blue-500 text-white px-4 py-1 rounded-r"
-      >
-        Search
-      </button>
-    </div>
+    <>
+      <div className="flex items-center relative">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border rounded-full px-4 py-2 focus:outline-none focus:border-blue-500"
+          placeholder={placeholder}
+        />
+        {searchTerm && (
+          <button
+            onClick={handleClearSearch}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 rounded-full p-2 font-bold"
+          >
+            x
+          </button>
+        )}
+      </div>
+      <div className="flex justify-center mt-2">
+        <button
+          onClick={handleSearch}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Search
+        </button>
+      </div>
+    </>
   );
 };
 
