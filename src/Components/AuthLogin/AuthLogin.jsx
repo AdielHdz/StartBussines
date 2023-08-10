@@ -139,16 +139,6 @@ export default function Authentication() {
             }}
           />
         </div>
-        <div className=" flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8">
-          <BsFacebook className="inline-block text-blue-600 text-3xl" />
-          <button
-            onClick={() => {
-              signOut();
-            }}
-          >
-            Sign Out
-          </button>
-        </div>
       </div>
     </div>
   );
