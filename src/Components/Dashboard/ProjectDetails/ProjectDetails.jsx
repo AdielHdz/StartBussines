@@ -42,13 +42,27 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
     );
     if (confirmDelete) {
       try {
-        await axios.delete(`/projects/${project.id}`);
+        await axios.delete(`projects/logic/${project.id}`);
         console.log("Project deleted successfully!");
         window.alert("Project deleted successfully!");
-        onProjectDeleted();
+        onProjectUpdated();
         onClose();
       } catch (error) {
         console.error("Error deleting project:", error);
+      }
+    }
+  };
+
+  const handleRestoreProject = async () => {
+    const confirmRestore = window.confirm("Are you sure you want to restore this project?");
+    if (confirmRestore) {
+      try {
+        await axios.patch(`/projects/restore/${project.id}`);
+        console.log("Project restored successfully!");
+        window.alert("Project restored successfully!");
+        onProjectUpdated();
+      } catch (error) {
+        console.error("Error restoring project:", error);
       }
     }
   };
@@ -95,7 +109,9 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
       <p className="mb-2">
         <span className="text-sky-700">Status: </span>
         <select
-          className="px-2 py-1 rounded bg-gray-100"
+          className={`px-2 py-1 rounded bg-gray-100 ${
+            project.deletedAt ? "text-red-500" : ""
+          }`}
           onChange={handleStatusChange}
           value={selectedStatus}
         >
@@ -104,6 +120,11 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
           <option value="Pending">Pending</option>
           <option value="Active">Active</option>
         </select>
+        {project.deletedAt && (
+          <span className="ml-2 text-red-500">
+            <i className="fas fa-trash-alt"></i> (Deleted)
+          </span>
+        )}
       </p>
       <p className="mb-2">
         <span className="text-sky-700">Categories: </span>
@@ -150,12 +171,21 @@ const ProjectDetails = ({ project, onClose, onProjectDeleted, onProjectUpdated }
       <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2">
         Edit
       </button>
-      <button
-        className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded"
-        onClick={handleDeleteProject}
-      >
-        Delete
-      </button>
+      {project.deletedAt ? (
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+            onClick={handleRestoreProject}
+          >
+            Restore
+          </button>
+        ) : (
+          <button
+            className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded mr-2"
+            onClick={handleDeleteProject}
+          >
+            Delete
+          </button>
+        )}
     </Modal>
   );
 };
