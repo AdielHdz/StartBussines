@@ -11,12 +11,16 @@ const SelectWay = ({ onRoleSelect }) => {
     setInvestor(false);
     onRoleSelect("entrepreneur");
     localStorage.setItem("roleRegister", "entrepreneur");
+    //Para desactivar boton google
+    window.dispatchEvent(new Event("roleSelected"));
   };
   const handleInvestor = () => {
     setInvestor(true);
     setEntrepreneur(false);
     onRoleSelect("investor");
     localStorage.setItem("roleRegister", "investor");
+    //Para desactivar boton google
+    window.dispatchEvent(new Event("roleSelected"));
   };
   return (
     <>
