@@ -1,7 +1,7 @@
 'use client';
 import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -9,9 +9,24 @@ import axios from 'axios';
 export default function Authentication() {
   const router = useRouter();
 
-  const { data: session } = useSession();
+  const { data: session, status: statusGoogle } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
 
-  //? Inicio del Object-State que va a enviar la informacion a la bdd
+  const handleSingOut = () => {
+    localStorage.setItem('checkReg', false);
+    signOut();
+  };
+
+  //! 01. Chequeo los datos que recibo de de Google Auth
+  useEffect(() => {
+    console.log(session?.user.name);
+    console.log(session?.user.email);
+    console.log(session?.user.image);
+  }, [session]);
+
+  //! 02. Formar valor inicial de Form objeto para la peticion
+
+  const [errorOccurred, setErrorOccurred] = useState(false);
+
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -23,34 +38,24 @@ export default function Authentication() {
     phone: '',
     country: '',
     avatar: '',
-    avatar: session?.user?.image,
-    status: true,
-    confirmEmail: true,
-    thirdPartyCreated: true,
+    status: null,
+    confirmEmail: null,
+    thirdPartyCreated: null,
   });
 
-  // !Captura Rol
+  //!  03. Captura Rol
   useEffect(() => {
     localStorage.getItem('roleRegister');
-  }, [form]);
+  }, [form, session]);
 
-  //? Control de la llegada de datos del Google Login
-  useEffect(() => {
-    if (session) {
-      console.log(session?.user); //!Check User
-      console.log(session?.user?.name);
-      console.log(session?.user?.email);
-      console.log(session?.user?.image);
-    }
-  }, []);
+  //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
 
-  //? Captura de datos de GoogleAuth y seteo de Form
-  const getGoogleData = (setForm) => {
+  const getGoogleData = () => {
     setForm({
       ...form,
       fullName: session?.user?.name,
       email: session?.user?.email,
-      role: '',
+      role: localStorage.getItem('roleRegister'),
       password: 'ThirdPartyHenry12345!',
       avatar: session?.user?.image,
       status: true,
@@ -59,137 +64,89 @@ export default function Authentication() {
     });
   };
 
-  const dataLogin = {
-    email: form.email,
-    password: form.password,
-  };
+  //! 05. Ejecutar la funcion de arriba
 
   useEffect(() => {
-    getGoogleData(setForm);
+    getGoogleData();
   }, [session]);
 
-  useEffect(() => {
-    console.log('Esto es el form', form);
-  }, [form]);
+  //! 06. Funcion para hacer la Peticion al Back y Google y hacer el Register y Login
+  const registerGoogleUser = async (form) => {
+    if (statusGoogle === 'authenticated' && session?.user?.name) {
+      console.log('form a peticion', form);
 
-  useEffect(() => {
-    console.log('Esto es el DataLogin', dataLogin);
-    registerGoogleUser(form, dataLogin);
-  }, [form]);
-
-  const registerGoogleUser = async (form, dataLogin) => {
-    if (session?.user && localStorage.getItem('roleRegister')) {
-      console.log('form registerGoogle', form);
-
-      (form.role = localStorage.getItem('roleRegister')),
-        console.log('FormWithRole', form);
       try {
         const responseRegister = await axios.post('/user', form);
         const newUserData = responseRegister.data;
-        // console.log('Esto es newUserData Register', newUserData);
+        console.log('Esto es newUserData Register', newUserData);
 
+        //! 09. Datos para hacer Login
+
+        const dataLogin = {
+          email: form.email,
+          password: form.password,
+        };
+        // console.log(dataLogin);
         const responseLogin = await axios.post('/user/login', dataLogin);
-        const loginUserData = responseLogin.data;
-        console.log('Esto es loginUserData Register', loginUserData);
+        const user = responseLogin.data;
 
-        localStorage.setItem(
-          'token_DealUp',
-          loginUserData.userRegistered.accessToken
-        );
-        localStorage.setItem('idSession', loginUserData.userRegistered.data.id);
-        localStorage.setItem(
-          'fullName',
-          loginUserData.userRegistered.data.fullName
-        );
-        localStorage.setItem(
-          'avatar',
-          loginUserData.userRegistered.data.avatar
-        );
-        localStorage.setItem('role', loginUserData.userRegistered.data.role);
-        localStorage.setItem(
-          'savedEmail',
-          loginUserData.userRegistered.data.email
-        );
+        console.log('Esto datos del usuario loggeado', user);
+        console.log('Muy Bien!');
+        console.log(user.userRegistered.accessToken);
+        console.log(user.userRegistered.data.fullName);
+
+        localStorage.setItem('token_DealUp', user.userRegistered.accessToken);
+        localStorage.setItem('idSession', user.userRegistered.data.id);
+        localStorage.setItem('fullName', user.userRegistered.data.fullName);
+        localStorage.setItem('avatar', user.userRegistered.data.avatar);
+        localStorage.setItem('role', user.userRegistered.data.role);
+        localStorage.setItem('savedEmail', user.userRegistered.data.email);
 
         localStorage.setItem(
           'userData',
           JSON.stringify({
-            fullName: loginUserData.userRegistered.data.fullName,
-            email: loginUserData.userRegistered.data.email,
-            role: loginUserData.userRegistered.data.role,
-            address: loginUserData.userRegistered.data.address,
-            password: loginUserData.userRegistered.data.password,
-            gender: loginUserData.userRegistered.data.gender,
-            birthdate: loginUserData.userRegistered.data.birthdate,
-            phone: loginUserData.userRegistered.data.phone,
-            country: loginUserData.userRegistered.data.country,
-            avatar: loginUserData.userRegistered.data.avatar,
-            status: loginUserData.userRegistered.data.status,
-            thirdPartyCreated:
-              loginUserData.userRegistered.data.thirdPartyCreated,
+            fullName: user.userRegistered.data.fullName,
+            email: user.userRegistered.data.email,
+            role: user.userRegistered.data.role,
+            address: user.userRegistered.data.address,
+            password: user.userRegistered.data.password,
+            gender: user.userRegistered.data.gender,
+            birthdate: user.userRegistered.data.birthdate,
+            phone: user.userRegistered.data.phone,
+            country: user.userRegistered.data.country,
+            avatar: user.userRegistered.data.avatar,
+            status: user.userRegistered.data.status,
+            thirdPartyCreated: user.userRegistered.data.thirdPartyCreated,
           })
         );
 
         console.log('Debe estar seteado todo Register');
-
-        // console.log(responseRegister);
+        await router.push('/home');
       } catch (error) {
-        // console.error('Register User Error:', error);
+        console.log(error.response.data);
+        setErrorOccurred(true);
 
-        // console.log('DataLogin para logear', dataLogin);
-        try {
-          const responseLogin = await axios.post('/user/login', dataLogin);
-          const loginUserData = responseLogin.data;
-          console.log('Esto es loginUserData Register', loginUserData);
-
-          localStorage.setItem(
-            'token_DealUp',
-            loginUserData.userRegistered.accessToken
-          );
-          localStorage.setItem(
-            'idSession',
-            loginUserData.userRegistered.data.id
-          );
-          localStorage.setItem(
-            'fullName',
-            loginUserData.userRegistered.data.fullName
-          );
-          localStorage.setItem(
-            'avatar',
-            loginUserData.userRegistered.data.avatar
-          );
-          localStorage.setItem('role', loginUserData.userRegistered.data.role);
-          localStorage.setItem(
-            'savedEmail',
-            loginUserData.userRegistered.data.email
-          );
-
-          localStorage.setItem(
-            'userData',
-            JSON.stringify({
-              fullName: loginUserData.userRegistered.data.fullName,
-              email: loginUserData.userRegistered.data.email,
-              role: loginUserData.userRegistered.data.role,
-              address: loginUserData.userRegistered.data.address,
-              password: loginUserData.userRegistered.data.password,
-              gender: loginUserData.userRegistered.data.gender,
-              birthdate: loginUserData.userRegistered.data.birthdate,
-              phone: loginUserData.userRegistered.data.phone,
-              country: loginUserData.userRegistered.data.country,
-              avatar: loginUserData.userRegistered.data.avatar,
-              status: loginUserData.userRegistered.data.status,
-              thirdPartyCreated:
-                loginUserData.userRegistered.data.thirdPartyCreated,
-            })
-          );
-
-          console.log('Debe estar seteado todo error Register Login');
-        } catch (error) {
-          // console.error('Login User Error:', error);
-        }
+        alert('Email already registered, Please Login');
       }
     }
   };
+
+  useEffect(() => {
+    if (errorOccurred) {
+      router.push('/logIn');
+    }
+  }, [errorOccurred]);
+
+  useEffect(() => {
+    if (
+      statusGoogle === 'authenticated' &&
+      typeof session?.user?.name === 'string'
+    ) {
+      console.log(statusGoogle);
+      console.log(session?.user?.name);
+      registerGoogleUser(form);
+    }
+  }, [form]);
 
   return (
     <div className='flex flex-col gap-3 mt-3'>
@@ -217,6 +174,13 @@ export default function Authentication() {
         </div>
         <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8'>
           <BsFacebook className='inline-block text-blue-600 text-3xl' />
+          <button
+            onClick={() => {
+              handleSingOut();
+            }}
+          >
+            Sign Out
+          </button>
         </div>
       </div>
     </div>

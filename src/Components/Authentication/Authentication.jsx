@@ -87,7 +87,7 @@ export default function Authentication() {
     getGoogleData();
   }, [session]);
 
-  //! 06. Funcion para hacer la Peticion a Google y hacer el Registe y Login
+  //! 06. Funcion para hacer la Peticion al Back y Google y hacer el Register y Login
   const registerGoogleUser = async (form) => {
     if (statusGoogle === "authenticated" && session?.user?.name) {
       console.log("form a peticion", form);
@@ -143,7 +143,8 @@ export default function Authentication() {
         console.log(error.response.data);
         setErrorOccurred(true);
 
-        alert("Email registered, Please Login");
+        alert('Email already registered, Please Login');
+
       }
     }
   };
