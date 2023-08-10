@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-
+import Loading from "../Loading/Loading";
 const TopTenProjects = () => {
   const dispatch = useDispatch();
   const tenProjects = useSelector(
@@ -31,7 +31,16 @@ const TopTenProjects = () => {
 
   // Verificar si tenProjects no está definido o está vacío
   if (!tenProjects || tenProjects.length === 0) {
-    return <div>Loading Projects.</div>;
+    return (
+      <div className="w-full flex items-center justify-center h-20 ">
+        <Loading
+          borderWeight={4}
+          height={10}
+          width={10}
+          border_t_color={"border-t-primar"}
+        />
+      </div>
+    );
   }
 
   const currentSlide = tenProjects[currentSlideIndex] || {};

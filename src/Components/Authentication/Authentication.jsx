@@ -1,18 +1,35 @@
-'use client';
-import { BsFacebook } from 'react-icons/bs';
-import { FcGoogle } from 'react-icons/fc';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+"use client";
+import { BsFacebook } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Authentication() {
+  //Desactivar boton google
+  const [isGoogleButtonEnabled, setGoogleButtonEnabled] = useState(false);
+  useEffect(() => {
+    const handleRoleSelected = () => {
+      const roleRegister = localStorage.getItem("roleRegister");
+      setGoogleButtonEnabled(
+        roleRegister === "investor" || roleRegister === "entrepreneur"
+      );
+    };
+
+    window.addEventListener("roleSelected", handleRoleSelected);
+
+    return () => {
+      window.removeEventListener("roleSelected", handleRoleSelected);
+    };
+  }, []);
+
   const router = useRouter();
 
   const { data: session, status: statusGoogle } = useSession() || {}; // Inicializa con un objeto vacío si useSession() es undefined
 
   const handleSingOut = () => {
-    localStorage.setItem('checkReg', false);
+    localStorage.setItem("checkReg", false);
     signOut();
   };
 
@@ -28,16 +45,16 @@ export default function Authentication() {
   const [errorOccurred, setErrorOccurred] = useState(false);
 
   const [form, setForm] = useState({
-    fullName: '',
-    email: '',
-    role: '',
-    password: '',
+    fullName: "",
+    email: "",
+    role: "",
+    password: "",
     dni: null,
-    gender: '',
-    birthdate: '',
-    phone: '',
-    country: '',
-    avatar: '',
+    gender: "",
+    birthdate: "",
+    phone: "",
+    country: "",
+    avatar: "",
     status: null,
     confirmEmail: null,
     thirdPartyCreated: null,
@@ -45,7 +62,7 @@ export default function Authentication() {
 
   //!  03. Captura Rol
   useEffect(() => {
-    localStorage.getItem('roleRegister');
+    localStorage.getItem("roleRegister");
   }, [form, session]);
 
   //! 04. Fumcion Captura de datos de GoogleAuth y seteo de Form
@@ -55,8 +72,8 @@ export default function Authentication() {
       ...form,
       fullName: session?.user?.name,
       email: session?.user?.email,
-      role: localStorage.getItem('roleRegister'),
-      password: 'ThirdPartyHenry12345!',
+      role: localStorage.getItem("roleRegister"),
+      password: "ThirdPartyHenry12345!",
       avatar: session?.user?.image,
       status: true,
       confirmEmail: true,
@@ -72,13 +89,13 @@ export default function Authentication() {
 
   //! 06. Funcion para hacer la Peticion al Back y Google y hacer el Register y Login
   const registerGoogleUser = async (form) => {
-    if (statusGoogle === 'authenticated' && session?.user?.name) {
-      console.log('form a peticion', form);
+    if (statusGoogle === "authenticated" && session?.user?.name) {
+      console.log("form a peticion", form);
 
       try {
-        const responseRegister = await axios.post('/user', form);
+        const responseRegister = await axios.post("/user", form);
         const newUserData = responseRegister.data;
-        console.log('Esto es newUserData Register', newUserData);
+        console.log("Esto es newUserData Register", newUserData);
 
         //! 09. Datos para hacer Login
 
@@ -87,23 +104,23 @@ export default function Authentication() {
           password: form.password,
         };
         // console.log(dataLogin);
-        const responseLogin = await axios.post('/user/login', dataLogin);
+        const responseLogin = await axios.post("/user/login", dataLogin);
         const user = responseLogin.data;
 
-        console.log('Esto datos del usuario loggeado', user);
-        console.log('Muy Bien!');
+        console.log("Esto datos del usuario loggeado", user);
+        console.log("Muy Bien!");
         console.log(user.userRegistered.accessToken);
         console.log(user.userRegistered.data.fullName);
 
-        localStorage.setItem('token_DealUp', user.userRegistered.accessToken);
-        localStorage.setItem('idSession', user.userRegistered.data.id);
-        localStorage.setItem('fullName', user.userRegistered.data.fullName);
-        localStorage.setItem('avatar', user.userRegistered.data.avatar);
-        localStorage.setItem('role', user.userRegistered.data.role);
-        localStorage.setItem('savedEmail', user.userRegistered.data.email);
+        localStorage.setItem("token_DealUp", user.userRegistered.accessToken);
+        localStorage.setItem("idSession", user.userRegistered.data.id);
+        localStorage.setItem("fullName", user.userRegistered.data.fullName);
+        localStorage.setItem("avatar", user.userRegistered.data.avatar);
+        localStorage.setItem("role", user.userRegistered.data.role);
+        localStorage.setItem("savedEmail", user.userRegistered.data.email);
 
         localStorage.setItem(
-          'userData',
+          "userData",
           JSON.stringify({
             fullName: user.userRegistered.data.fullName,
             email: user.userRegistered.data.email,
@@ -120,27 +137,28 @@ export default function Authentication() {
           })
         );
 
-        console.log('Debe estar seteado todo Register');
-        await router.push('/home');
+        console.log("Debe estar seteado todo Register");
+        await router.push("/home");
       } catch (error) {
         console.log(error.response.data);
         setErrorOccurred(true);
 
         alert('Email already registered, Please Login');
+
       }
     }
   };
 
   useEffect(() => {
     if (errorOccurred) {
-      router.push('/logIn');
+      router.push("/logIn");
     }
   }, [errorOccurred]);
 
   useEffect(() => {
     if (
-      statusGoogle === 'authenticated' &&
-      typeof session?.user?.name === 'string'
+      statusGoogle === "authenticated" &&
+      typeof session?.user?.name === "string"
     ) {
       console.log(statusGoogle);
       console.log(session?.user?.name);
@@ -149,36 +167,38 @@ export default function Authentication() {
   }, [form]);
 
   return (
-    <div className='flex flex-col gap-3 mt-3'>
+    <div className="flex flex-col gap-3 mt-3">
       <div>
-        <div className=' flex items-center gap-2  justify-between '>
-          <div className='w-full  h-0 border border-black '></div>
-          <p className='  text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
+        <div className=" flex items-center gap-2  justify-between ">
+          <div className="w-full  h-0 border border-black "></div>
+          <p className="  text-center m-0 text-blacks text-xs font-medium h-full inline-block">
             Or
           </p>
-          <div className='w-full  h-0 border border-black '></div>
+          <div className="w-full  h-0 border border-black "></div>
         </div>
-        <p className='w-full text-center m-0 text-blacks text-xs font-medium h-full inline-block'>
+        <p className="w-full text-center m-0 text-blacks text-xs font-medium h-full inline-block">
           continue with
         </p>
       </div>
 
-      <div className='flex w-full gap-2 items-center justify-center'>
-        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10  mt-8'>
+      <div className="flex w-full gap-2 items-center justify-center">
+        <div
+          className={`flex items-center m-0 justify-center w-10 hover:shadow-cards transition duration-300 cursor-pointer rounded-lg h-10 mt-8 ${
+            isGoogleButtonEnabled ? "" : "opacity-50 pointer-events-none"
+          }`}>
           <FcGoogle
-            className='inline-block text-3xl'
+            className="inline-block text-3xl"
             onClick={() => {
               signIn();
             }}
           />
         </div>
-        <div className=' flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8'>
-          <BsFacebook className='inline-block text-blue-600 text-3xl' />
+        <div className=" flex items-center m-0 justify-center w-10  hover:shadow-cards transition duration-300 cursor-pointer rounded-lg  h-10  mt-8">
+          <BsFacebook className="inline-block text-blue-600 text-3xl" />
           <button
             onClick={() => {
               handleSingOut();
-            }}
-          >
+            }}>
             Sign Out
           </button>
         </div>
