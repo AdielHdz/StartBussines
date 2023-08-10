@@ -28,7 +28,7 @@ const Footer = () => {
       <div className="container mx-auto">
         <div className="flex flex-col justify-between items-center">
           <div className="flex flex-row gap-2">
-            <a href="/" className="hover:text-gray-300">
+            <a href="/home" className="hover:text-gray-300">
               Home
             </a>
             <a href="" className="hover:text-gray-300">
