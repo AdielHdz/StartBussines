@@ -4,7 +4,8 @@ import axios from "axios";
 
 const UserDetails = ({ user, onClose, onUsersUpdated }) => {
   const [selectedRole, setSelectedRole] = useState(user.role);
-  const [selectedStatus, setSelectedStatus] = useState(user.status);
+  const [selectedStatus, setSelectedStatus] = useState(user.deletedAt ? "Banned" : "Active");
+
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
@@ -64,6 +65,20 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
     }
   };
 
+  const handleUnbanUser = async () => {
+  const confirmUnban = window.confirm("Are you sure you want to unban this user?");
+  if (confirmUnban) {
+    try {
+      await axios.patch(`/user/restore/${user.id}`);
+      console.log("User unbanned successfully!");
+      window.alert("User unbanned successfully!");
+      onUsersUpdated();
+    } catch (error) {
+      console.error("Error unbanning user:", error);
+    }
+  }
+};
+
   return (
     <Modal isVisible={true} onClose={onClose}>
       <h2 className="mb-4 font-semibold text-xl">
@@ -106,12 +121,14 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
       <p className="mb-2">
         <span className="text-sky-700">Status: </span>
         <select
-          className="px-2 py-1 rounded bg-gray-100"
+          className={`px-2 py-1 rounded bg-gray-100 ${
+            user.deletedAt ? "text-red-500" : ""
+          }`}
           onChange={handleStatusChange}
           value={selectedStatus}
         >
-          <option value="Inactive">Inactive</option>
           <option value="Active">Active</option>
+          <option value="Banned">Banned</option>
         </select>
       </p>
       <p className="mb-2">
@@ -134,10 +151,14 @@ const UserDetails = ({ user, onClose, onUsersUpdated }) => {
         Update Role
       </button>
       <button
-        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
-        onClick={handleBanUser}
+        className={`${
+          user.deletedAt ? "bg-green-500" : "bg-yellow-500"
+        } hover:${
+          user.deletedAt ? "bg-green-600" : "bg-yellow-600"
+        } text-white font-bold py-2 px-4 rounded mr-2`}
+        onClick={user.deletedAt ? handleUnbanUser : handleBanUser}
       >
-        Ban
+        {user.deletedAt ? "Unban" : "Ban"}
       </button>
       <button
         className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded"

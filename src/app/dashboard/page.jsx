@@ -73,9 +73,16 @@ const Dashboard = () => {
         const isId = searchTerm.match(
           /^[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/
         );
+        const isEmail = searchTerm.match(
+          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        );
+  
         if (isId) {
           const response = await axios.get(`/user/${searchTerm}`);
           setUsers([response.data]);
+        } else if (isEmail) {
+          const filteredUsers = users.filter(user => user.email === searchTerm);
+          setUsers(filteredUsers);
         } else {
           const response = await axios.get(`/user?fullName=${searchTerm}`);
           setUsers(response.data);
