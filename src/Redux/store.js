@@ -4,6 +4,7 @@ import ProjectSlice from "./Fetching/Projects/ProjectSlice";
 import RatingSlice from "./Fetching/Rating/Rating";
 import FilterSlice from "./Fetching/Filters/FiltersSlice";
 import InvestmentSlice from "./Fetching/Investment/InvestmentSlice";
+import UserRealSlice from "./UserRealSlice/UserRealSlice";
 export const store = configureStore({
   reducer: {
     user: User.reducer,
@@ -11,5 +12,6 @@ export const store = configureStore({
     rating: RatingSlice.reducer,
     filters: FilterSlice.reducer,
     investment: InvestmentSlice.reducer,
+    userReal: UserRealSlice.reducer,
   },
 });

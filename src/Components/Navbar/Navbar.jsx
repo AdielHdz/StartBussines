@@ -101,7 +101,7 @@ export default function Navbar() {
         thirdPartyCreated: "",
       })
     );
-    router.push("https://start-bussines.vercel.app/logIn");
+    /*   router.push("/logIn"); */
   };
   return (
     <Disclosure

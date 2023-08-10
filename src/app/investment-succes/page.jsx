@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 const Investment_Succes = () => {
   const router = useRouter();
-  const [timeReturn, setTimeReturn] = useState(100000);
+  const [timeReturn, setTimeReturn] = useState(5);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
